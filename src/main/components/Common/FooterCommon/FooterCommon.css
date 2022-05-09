@@ -1,0 +1,17 @@
+.footer-welcome {
+    display: grid;
+    grid-area: footer;
+    grid-template-rows: 40px 40px;
+    grid-gap: 10px;
+    place-items: center;
+    height: 200px;
+    background-color: #012b36;
+    place-content: center;
+}
+
+.footer-welcome span {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #fff;
+}

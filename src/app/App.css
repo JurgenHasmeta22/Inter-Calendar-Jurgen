@@ -1,0 +1,31 @@
+* {
+    box-sizing: border-box;
+    margin: 0 0;
+    padding: 0 0;
+}
+
+a {
+   text-decoration: none; 
+}
+
+li {
+    list-style: none;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    overflow-x: hidden; /* removes scroll in bottom */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.loading-wrapper {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    z-index: 1;
+    background-color: #fff;
+}
