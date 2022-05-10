@@ -8,6 +8,12 @@ import { navigateTo } from "../../main/store/stores/navigation/navigation.store"
 import { useDispatch, useSelector } from "react-redux"
 import { setUser } from "../../main/store/stores/user/user.store"
 import onRegister from "../../main/store/stores/user/register.store.on-register"
+import { useRadioGroup } from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -25,15 +31,19 @@ import {
     setFirstName, 
     setLastName, 
     setEmailRegister, 
-    setBirthDate,
+    setBio,
+    setAddress,
+    setIsDoctor,
     setPhoneNumber,
     setUserNameRegister,
-    setPasswordRegister
+    setPasswordRegister,
+    setAvatar
 } from "../../main/store/stores/register/register.store"
 
 import IRegister from "../../main/interfaces/IRegister"
 import IUser from "../../main/interfaces/IUser"
 
+import AuthManager from "../../main/utils/authManager"
 // #endregion 
 
 
@@ -50,30 +60,34 @@ const RegisterPage : FC = ()=> {
     // #region "Getting the state from redux toolkiit with using use Selector"
     const firstName = useSelector((state: RootState) => state.registration.firstName);
     const lastName = useSelector((state: RootState) => state.registration.lastName);
-    const username = useSelector((state: RootState) => state.registration.username);
-    const birthdate = useSelector((state: RootState) => state.registration.birthdate);
+    const userName = useSelector((state: RootState) => state.registration.userName);
+    const bio = useSelector((state: RootState) => state.registration.bio);
+    const address = useSelector((state: RootState) => state.registration.address);
     const phone = useSelector((state: RootState) => state.registration.phone);
     const email = useSelector((state: RootState) => state.registration.email);
     const password = useSelector((state: RootState) => state.registration.password);
+    const isDoctor = useSelector((state: RootState) => state.registration.isDoctor);
+    const avatar = useSelector((state: RootState) => state.registration.avatar);
     // #endregion
     
     
     // #region "Form Register event handler"
     const registerData: IUser = {
+        userName,
+        email,
+        password,
         firstName,
         lastName,
-        username,
-        birthdate,
+        address,
+        bio,
         phone,
-        email,
-        password
+        avatar,
+        isDoctor
     }
 
-    const handleRegisterUser = (e:any) => {
+    const handleRegisterUser = () => {
 
-        e.preventDefault()
-
-        fetch('http://reimusabelli-001-site1.itempurl.com/api/authentication/register', {
+        fetch('http://localhost:4000/sign-up', {
 
             method: 'POST',
 
@@ -225,7 +239,11 @@ const RegisterPage : FC = ()=> {
                             Sign up
                         </Typography>
 
-                        <Box component="form" noValidate onSubmit={handleRegisterUser} sx={{ mt: 3 }}>
+                        <Box component="form" noValidate onSubmit={function (e: any) { 
+                            e.preventDefault() 
+                            // handleRegisterUser() 
+                            dispatch(AuthManager.register(registerData))
+                        }} sx={{ mt: 8, mb: 8 }}>
 
                             <Grid container spacing={2}>
 
@@ -278,12 +296,12 @@ const RegisterPage : FC = ()=> {
                                     <TextField
                                         required
                                         fullWidth
-                                        id="birthdate"
-                                        label="birthdate"
-                                        name="birthdate"
-                                        autoComplete="birthdate"
+                                        id="bio"
+                                        label="bio"
+                                        name="bio"
+                                        autoComplete="bio"
                                         onChange={(e: any) => {
-                                            dispatch(setBirthDate(e.target.value))
+                                            dispatch(setBio(e.target.value))
                                         }}
                                     />
                                 </Grid>
@@ -314,6 +332,72 @@ const RegisterPage : FC = ()=> {
                                             dispatch(setUserNameRegister(e.target.value))
                                         }}
                                     />
+                                </Grid>
+
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        name="address"
+                                        label="address"
+                                        type="address"
+                                        id="address"
+                                        autoComplete="address"
+                                        onChange={(e: any) => {
+                                            dispatch(setAddress(e.target.value))
+                                        }}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        name="avatar"
+                                        label="avatar"
+                                        type="avatar"
+                                        id="avatar"
+                                        autoComplete="avatar"
+                                        onChange={(e: any) => {
+                                            dispatch(setAvatar(e.target.value))
+                                        }}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12}>
+
+                                    <FormControl>
+
+                                        <Grid item xs={12}>
+
+                                            <FormLabel id="demo-controlled-radio-buttons-group">Are you a doctor: </FormLabel>
+                                            
+                                            <RadioGroup
+                                                aria-labelledby="demo-controlled-radio-buttons-group"
+                                                name="controlled-radio-buttons-group"
+                                                
+                                                value = {isDoctor}
+                                                
+                                                onChange={(e: any) => {
+                                                    dispatch(setIsDoctor((e.target.value)))
+                                                }}
+
+                                                // sx={{
+                                                //     marginTop: 8,
+                                                //     display: 'flex',
+                                                //     flexDirection: 'column',
+                                                //     alignItems: 'center',
+                                                // }}
+
+                                            >
+                                                <FormControlLabel value="false" control={<Radio />} label="false" />
+                                                <FormControlLabel value="true" control={<Radio />} label="true" />
+                                            </RadioGroup>
+
+                                        </Grid>
+
+                                    </FormControl>
+                                    
                                 </Grid>
 
                                 <Grid item xs={12}>

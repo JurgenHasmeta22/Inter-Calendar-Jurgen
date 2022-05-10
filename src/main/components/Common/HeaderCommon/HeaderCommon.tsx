@@ -25,6 +25,7 @@ export default function HeaderCommon(this: any) {
     const dispatch = useDispatch();
     // #endregion
 
+
     return (
 
       <>
@@ -35,7 +36,7 @@ export default function HeaderCommon(this: any) {
 
                 <Link to="/dashboard" onClick={() => {
 					
-				}}>Bank System</Link>
+				}}>Hospital Appointment System</Link>
                 
                 <ul className="list-nav">
 
@@ -47,52 +48,6 @@ export default function HeaderCommon(this: any) {
 
                     </div>
 
-                    <div className="div-inside-li-special">
-
-                      <div className="dropdown">
-
-                        <div className="genre-drop">
-
-                            <img src="/assets/logos/list_blu.png" alt="" />
-                            
-                            <li className="special-uppercase">
-								Categories
-							</li>
-
-                        </div>
-              
-                        <div className="dropdown-content">
-
-                            <ul>
-                                
-                              <li onClick={() => {
-                              }}>
-
-                            		Show All
-
-                              </li>
-
-                              {
-                                
-                                //@ts-ignore
-                                // categories.map(category => 
-
-                                //     <li className = "special-list-drop" key={category?.id} onClick={function (e: any) {
-                                //     }}>{category.description}</li>
-
-                                // )
-
-                              }
-
-                            </ul>
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-
                 </ul>
 
             </div>
@@ -103,7 +58,7 @@ export default function HeaderCommon(this: any) {
 					e.preventDefault()
                 }}>
 
-                    <input type="search" name="searchMovie"  placeholder="Search for Products..." aria-label="Search through site content" 
+                    <input type="search" name="searchMovie"  placeholder="Search for Appointments..." aria-label="Search through site content" 
                         
 						onChange={function (e) {
 						}}
@@ -138,13 +93,13 @@ export default function HeaderCommon(this: any) {
                         <li
                           className="dropbtn"
                           onClick={function () {
-                            navigate(`/profile/${user?.username}`)
+                            navigate(`/profile/${user?.userName}`)
                           }}
                         >
 
                           <img src={"https://villagesonmacarthur.com/wp-content/uploads/2020/12/Blank-Avatar.png"} />
                           
-						  {user.username}
+						  {user.userName}
                           
                         </li>
               
@@ -172,7 +127,7 @@ export default function HeaderCommon(this: any) {
 
                     <i className ="fa fa-shopping-cart" aria-hidden="true" 
                     onClick={function () {
-                      navigate(`/${user.username}/cart`)
+                      navigate(`/${user.userName}/cart`)
                     }}></i>
 
                   </div>

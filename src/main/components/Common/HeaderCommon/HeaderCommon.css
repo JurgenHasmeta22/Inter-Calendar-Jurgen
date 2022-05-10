@@ -14,7 +14,7 @@ header.header {
 header.header .header-group-1 {
 grid-area: header-group-1;
 display: grid;
-grid-template-columns: 200px 200px;
+grid-template-columns: 400px 200px;
 grid-gap: 50px;
 place-items: center;
 padding-left: 50px;

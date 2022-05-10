@@ -12,17 +12,12 @@ import {
     invalidateTransactions
 } from "../../main/store/stores/profile/profile.store"
 
-import {
-    setBankAccounts
-} from "../../main/store/stores/cart/cart.store"
 
 import ITransaction from '../../main/interfaces/ITransaction';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../main/store/redux/rootState';
 import axios from 'axios';
-import { IBankAccount } from '../../main/store/stores/cart/cart.store';
 import ReactPaginate from 'react-paginate';
-import { setCurrencies } from '../../main/store/stores/dashboard/dashboard.store';
 import ICurrency from '../../main/interfaces/ICurrency';
 
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
@@ -34,8 +29,6 @@ export default function UserProfilePage({validateUser}:any) {
 
     // #region "state redux and other react hooks here"
     const transactions: ITransaction[] = useSelector((state: RootState) => state.profile.transactions);
-    const bankAccounts: IBankAccount[] = useSelector((state: RootState) => state.cart.bankAccounts);
-    const currencies: ICurrency[] = useSelector((state: RootState) => state.dashboard.currencies);
 
     const [tab, setTab] = useState<any>("home")
     const [transactionsNumber, setTransactionsNumber] = useState<any>(null)
@@ -43,71 +36,12 @@ export default function UserProfilePage({validateUser}:any) {
     const [pageNumber, setPageNumber] = useState<any>(0)
     const [itemsPerPage, setItemsPerPage] = useState<any>(10)
 
-    const [selectedBankProfile, setSelectedBankProfile] = useState<any>(bankAccounts[0])
-    const [selectedBankProfileName, setSelectedBankProfileName] = useState<any>(bankAccounts[0]?.name)
-
     const navigate = useNavigate()
     const params = useParams()
 
     const user = useGetUser()
 
     const dispatch = useDispatch()
-    // #endregion
-
-
-    // #region "fetch things"
-    async function getTransactionsFromServer() {
-
-        if (params.pageNumber && params.tab) {
-
-            let result = await (await axios.get(`bankaccount/${selectedBankProfile?.id}/transactions?PageNumber=${params.pageNumber}&PageSize=10`)).data;
-            
-            setTransactionsNumber(result.totalCount)
-            dispatch(setTransactions(result.data))
-
-        }
-
-        else if (params.pageNumber === undefined && params.tab) {
-
-            let result = await (await axios.get(`bankaccount/${selectedBankProfile?.id}/transactions?PageNumber=1&PageSize=10`)).data;
-            
-            setTransactionsNumber(result.totalCount)
-            dispatch(setTransactions(result.data))
-
-        }
-
-        else {
-
-            let result = await (await axios.get(`bankaccount/bkt/transactions?PageNumber=1&PageSize=10`)).data;
-            
-            setTransactionsNumber(result.totalCount)
-            dispatch(setTransactions(result.data))
-
-        }
-        
-    }
-
-    useEffect(()=> {
-        getTransactionsFromServer()
-    }, [selectedBankProfile, params.pageNumber])
-
-    async function getBankAccountsFromServer() {
-        let result = await (await axios.get(`/bankaccount/get-all?PageNumber=1&PageSize=10`)).data;
-        dispatch(setBankAccounts(result.data))
-    }
-
-    useEffect(() => {
-        getBankAccountsFromServer()
-    }, [])
-
-    async function getCurrenciesFromServer() {
-        let result = await (await axios.get(`/currency/get-all?PageNumber=1&PageSize=10`)).data;
-        dispatch(setCurrencies(result.data))
-    }
-
-    useEffect(()=> {
-        getCurrenciesFromServer()
-    }, [])
     // #endregion
 
 
@@ -124,30 +58,14 @@ export default function UserProfilePage({validateUser}:any) {
     
     const changePage = ({ selected }:any) => {
         handleChangingPageNumber(selected)
-        navigate(`../profile/${user.username}/transactions/page/${selected + 1}`)
+        navigate(`../profile/${user.userName}/transactions/page/${selected + 1}`)
     }
 
     // #endregion
 
-
-    // #region "Helpers functions"
-    function handleOnChangeSelect(e:any) {
-        setSelectedBankProfileName(e.target.value)
-    }
-
-    function handleOnChangeBankAccount(e:any) {
-
-        const newBankAccounts = [...bankAccounts]
-        const bankAccountFinal = newBankAccounts.find(bankAccount => bankAccount.name === e.target.value )
-
-        setSelectedBankProfile(bankAccountFinal)
-
-    }
-    // #endregion
-    
 
     // #region "Checking stuff from server wich came and loading"
-    if(user === null || user?.username === undefined) {
+    if(user === null || user?.userName === undefined) {
 
         return (
 
@@ -157,14 +75,6 @@ export default function UserProfilePage({validateUser}:any) {
 
         )
         
-    }
-    // #endregion
-
-
-    // #region "Helpers functions"
-    function findingCurrenciesNamesForBankAccounts(currencyId: number) {
-        const bankAccountCurrencyName: any = currencies?.find(currency => currency?.id === currencyId)
-        return bankAccountCurrencyName?.description
     }
     // #endregion
 
@@ -232,8 +142,7 @@ export default function UserProfilePage({validateUser}:any) {
     for (const element of rowsOld) {
 
         const newObject = {
-            ...element,
-            bankName: selectedBankProfile?.name
+            ...element
         }
 
         newArray.push(newObject)
@@ -256,7 +165,7 @@ export default function UserProfilePage({validateUser}:any) {
 
                     <div className="profile-info">
                         <img src="https://villagesonmacarthur.com/wp-content/uploads/2020/12/Blank-Avatar.png" />
-                        <span className="userName-span">{user?.username}</span>
+                        <span className="userName-span">{user?.userName}</span>
                     </div>
 
                 </div>
@@ -266,11 +175,11 @@ export default function UserProfilePage({validateUser}:any) {
                     <ul className="list-tabs">
 
                         <li className= {params.tab === "favoriteMovies" ? "clicked": "videos-tab"} onClick={() => {
-                            navigate(`/profile/${user?.username}/transactions`)
+                            navigate(`/profile/${user?.userName}/transactions`)
                         }}>User Transactions</li>
                         
                         <li className= {params.tab === "aboutUs" ? "clicked": "about-tab"} onClick={() => {
-                            navigate(`/profile/${user?.username}/about`)
+                            navigate(`/profile/${user?.userName}/about`)
                         }}>User Information</li>
 
                     </ul>
@@ -281,69 +190,31 @@ export default function UserProfilePage({validateUser}:any) {
 
                             <>
                             
-                                <h3 className="special-video-you">User Transactions</h3>
+                                <h3 className="special-video-you">Random Tab</h3>
                                 
                                 <form id="filter-by-sort" className='form-transaction'>
 
                                     <label htmlFor="filter-by-type">
-                                        <h3>Choose bank account: </h3>
+                                        <h3>Rnadom Select:  </h3>
                                     </label>
                             
                                     <select name="filter-by-sort" id="filter-by-sort" 
                                     onChange={function (e: any) {
-                                        handleOnChangeSelect(e)
-                                        handleOnChangeBankAccount(e)
+                                        
                                     }}>
-                                        
-                                        {
-                                        
-                                            bankAccounts?.length === 0 ? (
-                                                <option value="Default">No Bank Account</option>
-                                            ): (
-                            
-                                                //@ts-ignore
-                                                bankAccounts.map(bankAccount =>  
-                                                    <option key={bankAccount.id} value={bankAccount.name}>{bankAccount.name}</option>
-                                                )
 
-                                            )
-
-                                        }
 
                                     </select>
 
                                     <label htmlFor="filter-by-type">
-                                        <h3>Bank Balance: {selectedBankProfile?.balance}</h3>
                                     </label>
 
-                                    <h3>Currency Description: {findingCurrenciesNamesForBankAccounts(selectedBankProfile?.currencyId)}</h3>         
                     
                                 </form>
 
                                 <div className="container-transactions">
 
                                     <ul className='transactions'>
-
-                                        {
-
-                                            transactions.map(transaction => 
-                                                
-                                                <li key={transaction.id} className="transaction-element">
-
-                                                    <h3>Transaction ID: <strong>{transaction.id}</strong></h3>
-                                                    <span>Transaction bank account ID: <strong>{transaction.bankAccountId}</strong></span>
-                                                    <span>Transaction bank account name: <strong>{selectedBankProfileName}</strong></span>
-                                                    <span>Transaction action: <strong>{transaction.action}</strong></span>
-                                                    <span>Transaction amount: <strong>{transaction.amount}</strong></span>
-                                                    <span>Transaction description: <strong>{transaction.description}</strong></span>
-                                                    <span>Transaction isActive: <strong>{transaction.isActive ? "true" : "false"}</strong></span>
-                                                    <span>Transaction dateCreated: <strong>{transaction.dateCreated}</strong></span>
-
-                                                </li>
-
-                                            )
-
-                                        }
 
                                     </ul>
 
@@ -380,18 +251,21 @@ export default function UserProfilePage({validateUser}:any) {
                         ): params.tab === "about" ? (
 
                             <div className="container-about">
-                                <span>This is my account {user?.username}</span>
-                                <span>My name is: {user?.firstName}</span>
-                                <span>My name is: {user?.lastName}</span>
+                                <span>This is my account username: {user?.userName}</span>
+                                <span>My firstname is: {user?.firstName}</span>
+                                <span>My lastname is: {user?.lastName}</span>
                                 <span>My email is: {user?.email}</span>
-                                <span>My birthdate is: {user?.birthdate}</span>
+                                <span>My bio is: {user?.bio}</span>
                                 <span>My phone number is: {user?.phone}</span>
+                                <span>My address is: {user?.address}</span>
+                                <span>My avatar is: {user?.avatar}</span>
+                                <span>Am i a doctor: {String(user?.isDoctor)}</span>
                             </div>
 
                         ): (
 
                             <div className="container-void">
-                                <span>Click in the tabs and select a bank to see transactions {user?.username}</span>
+                                <span>Click in the tabs and select random {user?.userName}</span>
                             </div>
 
                         )

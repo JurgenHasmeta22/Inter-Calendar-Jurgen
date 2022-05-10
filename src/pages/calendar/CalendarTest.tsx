@@ -4,17 +4,21 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
-import "@fullcalendar/core/main.css";
-import "@fullcalendar/daygrid/main.css";
-import "@fullcalendar/timegrid/main.css";
+// import "@fullcalendar/core/main.css";
+// import "@fullcalendar/daygrid/main.css";
+// import "@fullcalendar/timegrid/main.css";
 
 import events from "./events";
+import HeaderCommon from "../../main/components/Common/HeaderCommon/HeaderCommon";
+import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon";
 
 export default function CalendarTest() {
 
   return (
 
     <>
+
+      <HeaderCommon />
 
       <FullCalendar
 
@@ -31,6 +35,8 @@ export default function CalendarTest() {
         events={events}
 
       />
+
+      <FooterCommon />
 
     </>
 

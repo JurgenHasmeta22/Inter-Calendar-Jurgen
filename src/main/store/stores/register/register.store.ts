@@ -5,11 +5,14 @@ import IUser from '../../../interfaces/IUser';
 const initialState: IUser = {
     firstName: "",
     lastName: "",
-    username: "",
-    birthdate: "",
+    userName: "",
+    bio: "",
+    address: "",
     phone: "",
     email: "",
-    password: ""
+    password: "",
+    avatar: "",
+    isDoctor: "false"
 };
 
 const registerStore = createSlice({
@@ -29,7 +32,7 @@ const registerStore = createSlice({
     },
 
     setUserNameRegister(state, action: PayloadAction<string>) {
-        state.username = action.payload
+        state.userName = action.payload
     },
 
     setPasswordRegister(state, action: PayloadAction<string>) {
@@ -44,8 +47,20 @@ const registerStore = createSlice({
         state.email = action.payload
     },
 
-    setBirthDate(state, action: PayloadAction<string>) {
-        state.birthdate = action.payload
+    setBio(state, action: PayloadAction<string>) {
+        state.bio = action.payload
+    },
+
+    setAddress(state, action: PayloadAction<string>) {
+        state.address = action.payload
+    },
+
+    setIsDoctor(state, action: PayloadAction<string>) {
+        state.isDoctor = action.payload
+    },
+
+    setAvatar(state, action: PayloadAction<string>) {
+        state.avatar = action.payload
     }
 
   }
@@ -58,8 +73,11 @@ export const {
     setFirstName, 
     setLastName, 
     setUserNameRegister, 
-    setBirthDate, 
+    setAddress,
+    setBio,
+    setIsDoctor,
     setEmailRegister, 
     setPasswordRegister, 
-    setPhoneNumber 
+    setPhoneNumber,
+    setAvatar
 } = registerStore.actions;

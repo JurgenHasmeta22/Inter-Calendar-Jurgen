@@ -5,7 +5,7 @@ import "./LoginPage.css"
 import { useDispatch, useSelector } from "react-redux"
 import {RootState} from '../../main/store/redux/rootState'
 import onLogin from "../../main/store/stores/user/login.store.on-login"
-import { setUserNameLogin, setPasswordLogin } from "../../main/store/stores/login/login.store"
+import { setPasswordLogin, setEmailLogin } from "../../main/store/stores/login/login.store"
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -35,8 +35,9 @@ const LoginPage : FC = ()=>{
 
 
     // #region "Redux state"
-    const userName = useSelector((state: RootState) => state.login.userName);
+    // const userName = useSelector((state: RootState) => state.login.userName);
     const password = useSelector((state: RootState) => state.login.password);
+    const emailLogin = useSelector((state: RootState) => state.login.emailLogin);
     // #endregion
 
 
@@ -46,7 +47,7 @@ const LoginPage : FC = ()=>{
         e.preventDefault()
 
         const data = {
-            userName,
+            emailLogin,
             password
         }
 
@@ -176,13 +177,13 @@ const LoginPage : FC = ()=>{
                         <Box >
 
                             <TextField
-                                onChange={(e) =>  dispatch(setUserNameLogin(e.target.value))}
+                                onChange={(e) =>  dispatch(setEmailLogin(e.target.value))}
                                 margin="normal"
                                 required
                                 fullWidth
                                 id="email"
-                                label="User Name"
-                                name="userName"
+                                label="Email: "
+                                name="email"
                                 autoComplete="email"
                                 autoFocus
                             />
