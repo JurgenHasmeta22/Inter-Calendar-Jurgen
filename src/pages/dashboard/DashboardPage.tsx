@@ -45,6 +45,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../main/store/redux/rootState";
 import axios from "axios";
+import useGetUser from "../../main/hooks/useGetUser";
 // #endregion
 
 
@@ -61,12 +62,14 @@ const style = {
 };
 
 
-export default function CalendarTest() {
+export default function DashboardPage() {
 
 
   // #region "Redux state and hooks"
   const appointements = useSelector((state: RootState) => state.dashboard.appointements);
   const openModal = useSelector((state: RootState) => state.dashboard.openModal);
+
+  const user = useGetUser()
 
   const theme = useTheme()
   const dispatch = useDispatch()
@@ -76,21 +79,13 @@ export default function CalendarTest() {
   // #region "fetching stuff and helpers functions"
 
   async function getAppointementsFromServer() {
-
-      let result = await (await axios.get(`/appointements`));
-
-    //   console.log(result.data)
-      dispatch(setAppointements(result.data))
-
+    let result = await (await axios.get(`/appointements`));
+    dispatch(setAppointements(result.data))
   }
 
   useEffect(()=> {
     getAppointementsFromServer()
   }, [])
-
-  //   function handleCalendarClick(e: any) {
-  //     console.log("hiihih")
-  //   }
 
   const handleOpen = () => dispatch(setOpen(true));
   const handleClose = () => dispatch(setOpen(false));
@@ -104,41 +99,56 @@ export default function CalendarTest() {
 
       <HeaderCommon />
 
-      <div className="calendar-wrapper">
+      {
 
-        <div className="calendar">
+          user?.isDoctor === "false" ? (
 
-            <FullCalendar
+            <div className="calendar-wrapper">
 
-                //@ts-ignore
-                defaultView="dayGridMonth"
+                <div className="calendar">
 
-                editable={true}
-                selectable={true}
-                selectMirror={true}
-                dayMaxEvents={true}
+                    <FullCalendar
 
-                header={{
-                    left: "prev,next",
-                    center: "title",
-                    right: "dayGridMonth,timeGridWeek,timeGridDay"
-                }}
+                        //@ts-ignore
+                        defaultView="dayGridMonth"
 
-                plugins = {[dayGridPlugin, timeGridPlugin]}
-                events = {events}
+                        editable={true}
+                        selectable={true}
+                        selectMirror={true}
+                        dayMaxEvents={true}
 
-            />
+                        header={{
+                            left: "prev,next",
+                            center: "title",
+                            right: "dayGridMonth,timeGridWeek,timeGridDay"
+                        }}
 
-            <div className="button-event-wrapper">
-              <button onClick={ function () {
-                handleOpen()
-            }}>Add Event</button>
+                        plugins = {[dayGridPlugin, timeGridPlugin]}
+                        events = {events}
+
+                    />
+
+                    <div className="button-event-wrapper">
+
+                        <button onClick={ function () {
+                            handleOpen()
+                        }}>Add Event</button>
+
+                    </div>
+
+                </div>
 
             </div>
 
-        </div>
+        ): (
 
-      </div>
+            <div className="calendar-doctor">
+                <span>Doctor here test</span>
+            </div>
+
+        )
+
+      }
 
       <FooterCommon />
 
@@ -147,6 +157,7 @@ export default function CalendarTest() {
   )
 
 }
+
 
 // #region "Stuff modal for moment nope"
 {/* <div className='modal-wrapper'> */}

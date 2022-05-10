@@ -21,6 +21,7 @@ const App = () => {
       <Routes>
 
         <Route index element={<Navigate replace to="/login" />} />
+        
         <Route path="*" element={<ErrorPage/>} />
 
         <Route path="/dashboard" element={<PrivateRoute><DashboardPage/></PrivateRoute>} />
