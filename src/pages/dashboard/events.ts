@@ -30,7 +30,7 @@ const events: any = [
     { title: "Meeting", start: getDate("YEAR-MONTH-18T14:30:00+00:00") },
     { title: "Happy Hour", start: getDate("YEAR-MONTH-18T17:30:00+00:00") },
     { title: "Dinner", start: getDate("YEAR-MONTH-18T20:00:00+00:00") }
-  ];
+];
   
 function getDate(dayString: any) {
 
@@ -40,7 +40,7 @@ const year = today.getFullYear().toString();
 let month = (today.getMonth() + 1).toString();
 
 if (month.length === 1) {
-    month = "0" + month;
+  month = "0" + month;
 }
 
 return dayString.replace("YEAR", year).replace("MONTH", month);

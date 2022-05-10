@@ -1,0 +1,7 @@
+.calendar-wrapper {
+    display: grid;
+    grid-template-rows: 1fr;
+    /* place-items: center; */
+    width: 80%;
+    padding-left: 400px;
+}

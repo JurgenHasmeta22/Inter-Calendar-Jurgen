@@ -1,6 +1,6 @@
-import ITransaction from "./ITransaction";
+import IAppointement from "./IAppointement";
 
-export default interface IProfile
+export default interface IDashboard
 {
-	transactions: ITransaction[]
+	appointements: IAppointement[]
 } 

@@ -7,11 +7,6 @@ import HeaderCommon from '../../main/components/Common/HeaderCommon/HeaderCommon
 import useGetUser from '../../main/hooks/useGetUser';
 import "./UserProfilePage.css"
 
-import {
-    setTransactions,
-    invalidateTransactions
-} from "../../main/store/stores/profile/profile.store"
-
 
 import ITransaction from '../../main/interfaces/ITransaction';
 import { useSelector, useDispatch } from 'react-redux';
@@ -28,8 +23,6 @@ export default function UserProfilePage({validateUser}:any) {
 
 
     // #region "state redux and other react hooks here"
-    const transactions: ITransaction[] = useSelector((state: RootState) => state.profile.transactions);
-
     const [tab, setTab] = useState<any>("home")
     const [transactionsNumber, setTransactionsNumber] = useState<any>(null)
 
@@ -135,21 +128,6 @@ export default function UserProfilePage({validateUser}:any) {
       
     ];
       
-    const rowsOld = [...transactions]
-
-    let newArray = []
-
-    for (const element of rowsOld) {
-
-        const newObject = {
-            ...element
-        }
-
-        newArray.push(newObject)
-
-    }
-
-    const rows = [...newArray]
     // #endregion
 
 
@@ -230,7 +208,7 @@ export default function UserProfilePage({validateUser}:any) {
                                         activeClassName={"paginationActive"}
                                     />
 
-                                    <div className='data-grid-wrapper'>
+                                    {/* <div className='data-grid-wrapper'>
 
                                         <DataGrid
                                             rows={rows}
@@ -242,7 +220,7 @@ export default function UserProfilePage({validateUser}:any) {
                                             className='data-grid'
                                         />
                                         
-                                    </div>
+                                    </div> */}
 
                                 </div>
 
