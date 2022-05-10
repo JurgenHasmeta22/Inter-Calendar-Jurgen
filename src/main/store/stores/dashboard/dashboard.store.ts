@@ -3,7 +3,8 @@ import IAppointement from '../../../interfaces/IAppointement';
 import IDashboard from "../../../interfaces/IProfile"
 
 const initialState: IDashboard = {
-    appointements: []
+    appointements: [],
+    openModal: false
 }
 
 const dashboardStore = createSlice({
@@ -20,6 +21,10 @@ const dashboardStore = createSlice({
 
     invalidateAppointements(state) {
       state.appointements = []
+    },
+
+    setOpen(state, action: PayloadAction<boolean>) {
+      state.openModal = action.payload
     }
 
   }
@@ -28,4 +33,8 @@ const dashboardStore = createSlice({
 
 export default dashboardStore;
 
-export const { setAppointements, invalidateAppointements } = dashboardStore.actions;
+export const { 
+  setAppointements, 
+  invalidateAppointements,
+  setOpen 
+} = dashboardStore.actions;

@@ -5,3 +5,27 @@
     width: 80%;
     padding-left: 400px;
 }
+
+.calendar {
+    display: grid;
+    grid-template-rows: 0.9fr 100px;
+    grid-gap: 100px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    
+}
+
+.button-event-wrapper {
+    display: grid;
+    place-items: center;
+}
+
+.button-event-wrapper button {
+    padding: 20px 20px;
+    border: none;
+    outline: none;
+    background-color: rgb(70, 146, 233);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+}

@@ -2,5 +2,6 @@ import IAppointement from "./IAppointement";
 
 export default interface IDashboard
 {
-	appointements: IAppointement[]
+	appointements: IAppointement[],
+	openModal: boolean
 } 

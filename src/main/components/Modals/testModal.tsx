@@ -1,8 +1,33 @@
+// #region "Importing stuff"
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+
+import { useRadioGroup } from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+
+import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+// import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useTheme } from '@emotion/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from "../../store/redux/rootState"
+
+import {
+    setOpen
+} from "../../store/stores/dashboard/dashboard.store"
+// #endregion
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -18,40 +43,109 @@ const style = {
 
 export default function KeepMountedModal() {
 
-  const [open, setOpen] = React.useState(false);
+    // const [open, setOpen] = React.useState(false);
+    const openModal = useSelector((state: RootState) => state.dashboard.openModal);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+    const theme = useTheme()
+    const dispatch = useDispatch()
 
-  return (
+    // const handleOpen = () => dispatch(setOpen(true));
+    const handleClose = () => dispatch(setOpen(false));
 
-    <div className='modal-wrapper'>
+    return (
 
-      <Button onClick={handleOpen}>Open modal test</Button>
+        <div className='modal-wrapper'>
 
-      <Modal
-        keepMounted
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="keep-mounted-modal-title"
-        aria-describedby="keep-mounted-modal-description"
-      >
+            {/* <Button onClick={handleOpen}>Open modal test</Button> */}
 
-        <Box sx={style}>
+            <Modal
+                keepMounted
+                open = {openModal}
+                onClose={handleClose}
+                aria-labelledby="keep-mounted-modal-title"
+                aria-describedby="keep-mounted-modal-description"
+            >
 
-			<Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-				Text in a modal
-			</Typography>
+                <ThemeProvider theme={theme}>
 
-			<Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
-				Just random modal test
-			</Typography>
+                    <Container component="main" maxWidth="xs">
 
-        </Box>
+                        <CssBaseline />
 
-      </Modal>
+                        <Box
+                            sx={{
+                                marginTop: 8,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
 
-    </div>
+                            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                                <LockOutlinedIcon />
+                            </Avatar>
+
+                            <Typography component="h1" variant="h5">
+                                Add Event
+                            </Typography>
+
+                            <Box component="form" noValidate onSubmit={function (e: any) { 
+                                
+                            }} sx={{ mt: 8, mb: 8 }}>
+
+                                <Grid container spacing={2}>
+
+                                    <Grid item xs={12} sm={6}>
+
+                                        <TextField
+                                            autoComplete="given-price"
+                                            name="price"
+                                            required
+                                            fullWidth
+                                            id="price"
+                                            label="Price of Appointement: "
+                                            autoFocus
+                                            onChange={(e: any) => {
+                                            }}
+                                        />
+
+                                    </Grid>
+
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            id="description"
+                                            label="Desc: "
+                                            name="description"
+                                            autoComplete="family-name"
+                                            onChange={(e: any) => {
+                                            }}
+                                        />
+                                    </Grid>
+
+                                </Grid>
+
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                >
+                                    Add event
+                                </Button>
+
+                            </Box>
+
+                        </Box>
+
+                    </Container>
+
+                </ThemeProvider>
+
+            </Modal>
+
+        </div>
 
   );
 
