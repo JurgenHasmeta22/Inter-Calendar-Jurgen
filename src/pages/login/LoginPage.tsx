@@ -21,6 +21,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { toast } from "react-toastify";
+import useGetUser from "../../main/hooks/useGetUser";
 // #endregion
 
 
@@ -31,6 +32,7 @@ const LoginPage : FC = ()=>{
     const navigate = useNavigate()
     const theme = createTheme()
     const dispatch = useDispatch();
+    const user = useGetUser()
     // #endregion
 
 
@@ -58,7 +60,7 @@ const LoginPage : FC = ()=>{
 
     
     // #region "Helpers and other stuff"
-    const notify = () => toast.success("Welcome")
+    const notify = () => toast.success("Welcome to the page")
     // #endregion
 
 
@@ -206,13 +208,7 @@ const LoginPage : FC = ()=>{
                             />
 
                             <Button onClick={(e) => {
-
                                 handleSubmit(e)
-
-                                if (handleSubmit) {
-                                    notify()
-                                }
-
                             }}
                                 type="submit"
                                 fullWidth

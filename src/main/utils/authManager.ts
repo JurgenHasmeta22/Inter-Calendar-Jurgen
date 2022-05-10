@@ -51,6 +51,7 @@ class AuthManager {
 
   static async loginWithCredentials(credentials: ILoginRequest): Promise<IUserInfo> {
     const response = await AuthManager.getTokenWithCredentials(credentials);
+    // console.log(response)
     return response;
   }
 

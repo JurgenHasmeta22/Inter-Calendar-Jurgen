@@ -101,7 +101,8 @@ export default function DashboardPage() {
 
       {
 
-          user?.isDoctor === "false" ? (
+            //@ts-ignore
+          user?.isDoctor === false ? (
 
             <div className="calendar-wrapper">
 
