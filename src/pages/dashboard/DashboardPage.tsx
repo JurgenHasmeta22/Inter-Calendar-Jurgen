@@ -1,5 +1,5 @@
 // #region "Importing stuff"
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./DashboardPage.css"
 
 import Modal from '@mui/material/Modal';
@@ -24,7 +24,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useTheme } from '@emotion/react';
 
-import FullCalendar from "@fullcalendar/react";
+import FullCalendar, { DateSelectArg } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
@@ -52,6 +52,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../main/store/redux/rootState";
 import axios from "axios";
 import useGetUser from "../../main/hooks/useGetUser";
+
+import interactionPlugin from "@fullcalendar/interaction";
 // #endregion
 
 
@@ -74,6 +76,8 @@ export default function DashboardPage() {
   // #region "Redux state and hooks"
   const appointements = useSelector((state: RootState) => state.dashboard.appointements);
   const eventsNew = useSelector((state: RootState) => state.dashboard.eventsNew);
+
+  const [eventNewState, setEventNewState] = useState<any>([])
 
   const openModal = useSelector((state: RootState) => state.dashboard.openModal);
 
@@ -112,10 +116,11 @@ export default function DashboardPage() {
         for (const appointement of appointements) {
 
             const event = {
-                id: appointement.id,
+                id: String(appointement.id),
                 title: appointement.title,
                 start: getDate(appointement.startDate),
-                end: getDate(appointement.endDate)
+                end: getDate(appointement.endDate),
+                allDay: false
             }
 
             // console.log(event)
@@ -123,6 +128,8 @@ export default function DashboardPage() {
             // newEvents.push(event)
 
             newEvents = [...newEvents, event]
+
+            // setEventNewState(newEvents)
 
             // console.log(newArray)
 
@@ -132,20 +139,40 @@ export default function DashboardPage() {
         
     }
 
-    function handleEventAdd(selectInfo: any) {
+    function handleEventAdd(selectInfo:  DateSelectArg) {
+
+        let title = window.prompt('Please enter a new title for your event')
+
+        // let startDate = window.prompt('Please enter start date for the event')
+        // let endDate = window.prompt('Please enter a end date for the event')
+        // let allDayDate = window.prompt('Please enter all day or not')
+
+        // const finalStartDate = getDate(startDate)
+        // const finalDate = getDate(endDate)
+        // const finalAllDay = allDayDate === "true" ? true : false
 
         let calendarApi = selectInfo.view.calendar
-        let title = window.prompt('Please enter a new title for your event')
 
         calendarApi.unselect() // clear date selection
 
         if (title) {
-            calendarApi.addEvent({ // will render immediately. will call handleEventAdd
+
+            calendarApi.addEvent({ 
+                id: "3",
                 title,
                 start: selectInfo.startStr,
                 end: selectInfo.endStr,
                 allDay: selectInfo.allDay
-            }, true) // temporary=true, will get overwritten when reducer gives new events
+            }, true)
+
+            // calendarApi.addEvent({ 
+            //     id: "3",
+            //     title,
+            //     start: finalStartDate,
+            //     end: finalEndDate,
+            //     allDay: finalAllDay
+            // }, true)
+
         }
         
     }
@@ -155,7 +182,7 @@ export default function DashboardPage() {
     }
 
     function handleEventClick(clickInfo: any) {
-        //@ts-ignore
+
         if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
           clickInfo.event.remove() // will render immediately. will call handleEventRemove
         }
@@ -202,7 +229,7 @@ export default function DashboardPage() {
                             right: "dayGridMonth, timeGridWeek, timeGridDay"
                         }}
 
-                        plugins = {[dayGridPlugin, timeGridPlugin]}
+                        plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 
                         nowIndicator={true}
                         allDayText="All Day"
@@ -212,13 +239,21 @@ export default function DashboardPage() {
 
                         editable = {true}
                         selectable = {true}
-                        selectMirror={true}
-
+                        
+                        // eventInteractive = {true}
+                        // selectMirror={true}
 
                         select = {handleEventAdd}
+
+                        // navLinkDayClick = {handleEventAdd}
+
                         eventClick={handleEventClick}
+                        
+                        //@ts-ignore
+                        // dateClick={handleEventClick}
 
                         // navLinkDayClick={handleDateClick}
+
                         // #region "Random tests"
 
                         // events={[

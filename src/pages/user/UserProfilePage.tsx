@@ -74,60 +74,103 @@ export default function UserProfilePage({validateUser}:any) {
 
     // #region "Material UI data grid"
     const columns: GridColDef[] = [
-
-        { field: 'id', headerName: 'Id', width: 90 },
       
         {
-          field: 'bankAccountId',
-          headerName: 'Bank Account Id',
-          width: 220,
+          field: 'id',
+          headerName: 'Appointement Id',
+          width: 120,
           editable: false,
         },
       
         {
-          field: 'bankName',
-          headerName: 'Bank Account Name',
-          width: 220,
+          field: 'price',
+          headerName: 'Price',
+          width: 120,
           editable: true,
         },
       
         {
-          field: 'action',
-          headerName: 'Bank Action',
+          field: 'startDate',
+          headerName: 'Start Date',
           width: 220,
           editable: false,
         },
       
         {
-          field: 'amount',
-          headerName: 'Bank Amount',
+          field: 'endDate',
+          headerName: 'End Date',
           editable: false,
           width: 220
         },
 
         {
+            field: 'title',
+            headerName: 'Title',
+            editable: false,
+            width: 220
+        },
+
+        {
             field: 'description',
-            headerName: 'Bank Description',
-            editable: false,
-            width: 220
-        },
-
-        {
-            field: 'isActive',
-            headerName: 'Bank is active',
-            editable: false,
-            width: 220
-        },
-
-        {
-            field: 'dateCreated',
-            headerName: 'Bank Date Created',
+            headerName: 'Appointement Description',
             editable: false,
             width: 400
+        },
+
+        {
+            field: 'status',
+            headerName: 'Appointement Status',
+            editable: false,
+            width: 120
+        },
+
+        {
+            field: 'doctor_id',
+            headerName: 'Doctor id',
+            editable: false,
+            width: 100
+        },
+
+        {
+            field: 'user_id',
+            headerName: 'Patient id',
+            editable: false,
+            width: 100
+        },
+        {
+            field: 'userName',
+            headerName: 'Patient Username',
+            editable: false,
+            width: 200
         }
       
     ];
-      
+
+    let rowsOld: any = []
+
+    //@ts-ignore
+    if (user?.isDoctor === false) {
+        rowsOld = [...user?.postedAppointements]
+    }
+
+    else {
+        rowsOld = [...user?.acceptedAppointemets]
+    }
+
+    let newArray = []
+
+    for (const element of rowsOld) {
+
+        const newObject = {
+            ...element,
+            userName: user?.userName
+        }
+
+        newArray.push(newObject)
+
+    }
+
+    const rows = [...newArray]
     // #endregion
 
 
@@ -173,7 +216,7 @@ export default function UserProfilePage({validateUser}:any) {
                                 <form id="filter-by-sort" className='form-transaction'>
 
                                     <label htmlFor="filter-by-type">
-                                        <h3>Rnadom Select:  </h3>
+                                        <h3>Random Select:  </h3>
                                     </label>
                             
                                     <select name="filter-by-sort" id="filter-by-sort" 
@@ -192,7 +235,90 @@ export default function UserProfilePage({validateUser}:any) {
 
                                 <div className="container-transactions">
 
+                                    {
+                                        //@ts-ignore
+                                        user?.isDoctor === false ? (
+
+                                            <ul className='transactions'>
+
+                                                {
+
+                                                    //@ts-ignore
+                                                    user?.postedAppointements.map(appointement => 
+                                                        
+                                                        <li className='user-list-appointement'>
+                                                            <span><strong>Id: </strong> {appointement.id}</span>
+                                                            <span><strong>Price: </strong> {appointement.price}</span>
+                                                            <span><strong>Start Date: </strong> {appointement.startDate}</span>
+                                                            <span><strong>End Date: </strong> {appointement.endDate}</span>
+                                                            <span><strong>Title: </strong> {appointement.title}</span>
+                                                            <span><strong>Status: </strong> {appointement.status}</span>
+                                                            <span><strong>Doctor Id: </strong> {appointement.doctor_id}</span>
+                                                            <span><strong>Patient: </strong> {user?.userName}</span>
+                                                            <span><strong>Appointement Desc: </strong> {appointement.description}</span>
+                                                        </li>
+                                                        
+                                                    )
+
+                                                }
+
+                                            </ul>
+
+                                        //@ts-ignore
+                                        ): user?.isDoctor === true ? (
+
+                                            <ul className='transactions'>
+
+                                                {
+
+                                                    //@ts-ignore
+                                                    user?.acceptedAppointemets.map(appointement => 
+                                                        
+                                                        <li className='user-list-appointement'>
+                                                            <span><strong>Id: </strong> {appointement.id}</span>
+                                                            <span><strong>Price: </strong> {appointement.price}</span>
+                                                            <span><strong>Start Date: </strong> {appointement.startDate}</span>
+                                                            <span><strong>End Date: </strong> {appointement.endDate}</span>
+                                                            <span><strong>Title: </strong> {appointement.title}</span>
+                                                            <span><strong>Status: </strong> {appointement.status}</span>
+                                                            <span><strong>Doctor Id: </strong> {appointement.doctor_id}</span>
+                                                            <span><strong>Patient Id: </strong> {appointement.user_id}</span>
+                                                            <span><strong>Doctor userName: </strong> {user?.userName}</span>
+                                                            <span><strong>Appointement Desc: </strong> {appointement.description}</span>
+                                                        </li>
+                                                        
+                                                    )
+
+                                                }
+
+                                            </ul>
+
+                                        ):null
+
+                                    }
+
                                     <ul className='transactions'>
+
+                                        {
+
+                                            //@ts-ignore
+                                            user?.postedAppointements.map(appointement => 
+                                                
+                                                <li className='user-list-appointement'>
+                                                    <span><strong>Id: </strong> {appointement.id}</span>
+                                                    <span><strong>Price: </strong> {appointement.price}</span>
+                                                    <span><strong>Start Date: </strong> {appointement.startDate}</span>
+                                                    <span><strong>End Date: </strong> {appointement.endDate}</span>
+                                                    <span><strong>Title: </strong> {appointement.title}</span>
+                                                    <span><strong>Status: </strong> {appointement.status}</span>
+                                                    <span><strong>Doctor Id: </strong> {appointement.doctor_id}</span>
+                                                    <span><strong>Patient: </strong> {user?.userName}</span>
+                                                    <span><strong>Appointement Desc: </strong> {appointement.description}</span>
+                                                </li>
+                                                
+                                            )
+
+                                        }
 
                                     </ul>
 
@@ -208,7 +334,7 @@ export default function UserProfilePage({validateUser}:any) {
                                         activeClassName={"paginationActive"}
                                     />
 
-                                    {/* <div className='data-grid-wrapper'>
+                                    <div className='data-grid-wrapper'>
 
                                         <DataGrid
                                             rows={rows}
@@ -220,7 +346,7 @@ export default function UserProfilePage({validateUser}:any) {
                                             className='data-grid'
                                         />
                                         
-                                    </div> */}
+                                    </div>
 
                                 </div>
 

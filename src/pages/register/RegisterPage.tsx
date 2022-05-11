@@ -73,7 +73,7 @@ const RegisterPage : FC = ()=> {
     
     
     // #region "Form Register event handler"
-    const registerData: IUser = {
+    const registerData: any = {
         userName,
         email,
         password,

@@ -9,7 +9,9 @@ interface IUser {
 	bio: string
 	password?: string
 	avatar: string
-	isDoctor: string;
+	isDoctor: string
+	postedAppointements: any
+	acceptedAppointemets: any
 }
 
 export default IUser;
