@@ -112,6 +112,7 @@ export default function DashboardPage() {
         for (const appointement of appointements) {
 
             const event = {
+                id: appointement.id,
                 title: appointement.title,
                 start: getDate(appointement.startDate),
                 end: getDate(appointement.endDate)
@@ -119,7 +120,9 @@ export default function DashboardPage() {
 
             // console.log(event)
 
-            newEvents.push(event)
+            // newEvents.push(event)
+
+            newEvents = [...newEvents, event]
 
             // console.log(newArray)
 
@@ -177,6 +180,14 @@ export default function DashboardPage() {
                         }}
 
                         plugins = {[dayGridPlugin, timeGridPlugin]}
+
+                        nowIndicator={true}
+                        allDayText="All Day"
+                        
+                        // allDayDefault={false}
+                        // locale='ko'
+                        timeZone='UTC'
+
                         events = {newEvents}
 
                     />
