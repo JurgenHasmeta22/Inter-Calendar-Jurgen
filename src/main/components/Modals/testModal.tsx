@@ -132,7 +132,9 @@ export default function KeepMountedModal() {
                                     variant="contained"
                                     sx={{ mt: 3, mb: 2 }}
                                 >
+
                                     Add event
+                                    
                                 </Button>
 
                             </Box>

@@ -89,7 +89,6 @@ export default function DashboardPage() {
 
 
   // #region "fetching stuff and helpers functions"
-
   async function getAppointementsFromServer() {
     let result = await (await axios.get(`/appointements`));
     dispatch(setAppointements(result.data))
@@ -101,17 +100,15 @@ export default function DashboardPage() {
 
   const handleOpen = () => dispatch(setOpen(true));
   const handleClose = () => dispatch(setOpen(false));
-
   // #endregion
 
 
-    // #region "Creating events"
-
-    // let newEvents: any = []
+  // #region "Creating events"
 
     function createEvents() {
 
         const postedAppointements: any = user.postedAppointements
+        
         const returnedArray: any = []
 
         for (const appointement of postedAppointements) {
@@ -178,10 +175,14 @@ export default function DashboardPage() {
     function handleEventClick(clickInfo: any) {
 
         if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-          clickInfo.event.remove() // will render immediately. will call handleEventRemove
+          clickInfo.event.remove()
         }
     
     }
+
+    const finalArray: any = createEvents()
+
+    // #region "Trying some weird stuff"
 
     // useCallback( () => {
     //     createEvents()
@@ -197,7 +198,8 @@ export default function DashboardPage() {
 
     // #endregion
 
-    const finalArray: any = createEvents()
+    // #endregion
+
 
   return (
 

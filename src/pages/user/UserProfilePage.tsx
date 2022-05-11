@@ -197,11 +197,13 @@ export default function UserProfilePage({validateUser}:any) {
 
                         <li className= {params.tab === "favoriteMovies" ? "clicked": "videos-tab"} onClick={() => {
                             navigate(`/profile/${user?.userName}/transactions`)
-                        }}>User Transactions</li>
+                            //@ts-ignore
+                        }}>{user.isDoctor === true ? "Doctor Appointements" : "User Appointements"}</li>
                         
                         <li className= {params.tab === "aboutUs" ? "clicked": "about-tab"} onClick={() => {
                             navigate(`/profile/${user?.userName}/about`)
-                        }}>User Information</li>
+                            //@ts-ignore
+                        }}>{user.isDoctor === true ? "Doctor Information" : "User Information"}</li>
 
                     </ul>
 
@@ -225,18 +227,20 @@ export default function UserProfilePage({validateUser}:any) {
                                                 {
 
                                                     //@ts-ignore
-                                                    user.postedAppointements.map(appointement => 
+                                                    user?.postedAppointements?.map(appointement => 
                                                         
                                                         <li className='user-list-appointement'>
-                                                            <span><strong>Id: </strong> {appointement.id}</span>
-                                                            <span><strong>Price: </strong> {appointement.price}</span>
-                                                            <span><strong>Start Date: </strong> {appointement.startDate}</span>
-                                                            <span><strong>End Date: </strong> {appointement.endDate}</span>
-                                                            <span><strong>Title: </strong> {appointement.title}</span>
-                                                            <span><strong>Status: </strong> {appointement.status}</span>
-                                                            <span><strong>Doctor Id: </strong> {appointement.doctor_id}</span>
-                                                            <span><strong>Patient: </strong> {user.userName}</span>
-                                                            <span><strong>Appointement Desc: </strong> {appointement.description}</span>
+
+                                                            <span><strong>Id: </strong> {appointement?.id}</span>
+                                                            <span><strong>Price: </strong> {appointement?.price}</span>
+                                                            <span><strong>Start Date: </strong> {appointement?.startDate}</span>
+                                                            <span><strong>End Date: </strong> {appointement?.endDate}</span>
+                                                            <span><strong>Title: </strong> {appointement?.title}</span>
+                                                            <span><strong>Status: </strong> {appointement?.status}</span>
+                                                            <span><strong>Doctor Id: </strong> {appointement?.doctor_id}</span>
+                                                            <span><strong>Patient: </strong> {user?.userName}</span>
+                                                            <span><strong>Appointement Desc: </strong> {appointement?.description}</span>
+                                                        
                                                         </li>
                                                         
                                                     )
@@ -246,26 +250,28 @@ export default function UserProfilePage({validateUser}:any) {
                                             </ul>
 
                                         //@ts-ignore
-                                        ): user.isDoctor === true ? (
+                                        ): user?.isDoctor === true ? (
 
                                             <ul className='transactions'>
 
                                                 {
 
                                                     //@ts-ignore
-                                                    user.acceptedAppointemets.map(appointement => 
+                                                    user?.acceptedAppointemets?.map(appointement => 
                                                         
                                                         <li className='user-list-appointement'>
-                                                            <span><strong>Id: </strong> {appointement.id}</span>
-                                                            <span><strong>Price: </strong> {appointement.price}</span>
-                                                            <span><strong>Start Date: </strong> {appointement.startDate}</span>
-                                                            <span><strong>End Date: </strong> {appointement.endDate}</span>
-                                                            <span><strong>Title: </strong> {appointement.title}</span>
-                                                            <span><strong>Status: </strong> {appointement.status}</span>
-                                                            <span><strong>Doctor Id: </strong> {appointement.doctor_id}</span>
-                                                            <span><strong>Patient Id: </strong> {appointement.user_id}</span>
-                                                            <span><strong>Doctor userName: </strong> {user.userName}</span>
-                                                            <span><strong>Appointement Desc: </strong> {appointement.description}</span>
+                                                            
+                                                            <span><strong>Id: </strong> {appointement?.id}</span>
+                                                            <span><strong>Price: </strong> {appointement?.price}</span>
+                                                            <span><strong>Start Date: </strong> {appointement?.startDate}</span>
+                                                            <span><strong>End Date: </strong> {appointement?.endDate}</span>
+                                                            <span><strong>Title: </strong> {appointement?.title}</span>
+                                                            <span><strong>Status: </strong> {appointement?.status}</span>
+                                                            <span><strong>Doctor Id: </strong> {appointement?.doctor_id}</span>
+                                                            <span><strong>Patient Id: </strong> {appointement?.user_id}</span>
+                                                            <span><strong>Doctor userName: </strong> {user?.userName}</span>
+                                                            <span><strong>Appointement Desc: </strong> {appointement?.description}</span>
+                                                        
                                                         </li>
                                                         
                                                     )
@@ -311,6 +317,7 @@ export default function UserProfilePage({validateUser}:any) {
                         ): params.tab === "about" ? (
 
                             <div className="container-about">
+                                
                                 <span>This is my account username: {user?.userName}</span>
                                 <span>My firstname is: {user?.firstName}</span>
                                 <span>My lastname is: {user?.lastName}</span>
@@ -320,12 +327,13 @@ export default function UserProfilePage({validateUser}:any) {
                                 <span>My address is: {user?.address}</span>
                                 <span>My avatar is: {user?.avatar}</span>
                                 <span>Am i a doctor: {String(user?.isDoctor)}</span>
+
                             </div>
 
                         ): (
 
                             <div className="container-void">
-                                <span>Click in the tabs and select random {user?.userName}</span>
+                                <span>Click in the tabs to change state {user?.userName}</span>
                             </div>
 
                         )
