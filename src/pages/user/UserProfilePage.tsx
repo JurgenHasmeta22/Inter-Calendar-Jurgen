@@ -211,31 +211,12 @@ export default function UserProfilePage({validateUser}:any) {
 
                             <>
                             
-                                <h3 className="special-video-you">Random Tab</h3>
-                                
-                                <form id="filter-by-sort" className='form-transaction'>
-
-                                    <label htmlFor="filter-by-type">
-                                        <h3>Random Select:  </h3>
-                                    </label>
-                            
-                                    <select name="filter-by-sort" id="filter-by-sort" 
-                                    onChange={function (e: any) {
-                                        
-                                    }}>
-
-
-                                    </select>
-
-                                    <label htmlFor="filter-by-type">
-                                    </label>
-
-                    
-                                </form>
+                                <h3 className="special-video-you">User Appointements</h3>
 
                                 <div className="container-transactions">
 
                                     {
+
                                         //@ts-ignore
                                         user?.isDoctor === false ? (
 
@@ -244,7 +225,7 @@ export default function UserProfilePage({validateUser}:any) {
                                                 {
 
                                                     //@ts-ignore
-                                                    user?.postedAppointements.map(appointement => 
+                                                    user.postedAppointements.map(appointement => 
                                                         
                                                         <li className='user-list-appointement'>
                                                             <span><strong>Id: </strong> {appointement.id}</span>
@@ -254,7 +235,7 @@ export default function UserProfilePage({validateUser}:any) {
                                                             <span><strong>Title: </strong> {appointement.title}</span>
                                                             <span><strong>Status: </strong> {appointement.status}</span>
                                                             <span><strong>Doctor Id: </strong> {appointement.doctor_id}</span>
-                                                            <span><strong>Patient: </strong> {user?.userName}</span>
+                                                            <span><strong>Patient: </strong> {user.userName}</span>
                                                             <span><strong>Appointement Desc: </strong> {appointement.description}</span>
                                                         </li>
                                                         
@@ -265,14 +246,14 @@ export default function UserProfilePage({validateUser}:any) {
                                             </ul>
 
                                         //@ts-ignore
-                                        ): user?.isDoctor === true ? (
+                                        ): user.isDoctor === true ? (
 
                                             <ul className='transactions'>
 
                                                 {
 
                                                     //@ts-ignore
-                                                    user?.acceptedAppointemets.map(appointement => 
+                                                    user.acceptedAppointemets.map(appointement => 
                                                         
                                                         <li className='user-list-appointement'>
                                                             <span><strong>Id: </strong> {appointement.id}</span>
@@ -283,7 +264,7 @@ export default function UserProfilePage({validateUser}:any) {
                                                             <span><strong>Status: </strong> {appointement.status}</span>
                                                             <span><strong>Doctor Id: </strong> {appointement.doctor_id}</span>
                                                             <span><strong>Patient Id: </strong> {appointement.user_id}</span>
-                                                            <span><strong>Doctor userName: </strong> {user?.userName}</span>
+                                                            <span><strong>Doctor userName: </strong> {user.userName}</span>
                                                             <span><strong>Appointement Desc: </strong> {appointement.description}</span>
                                                         </li>
                                                         
@@ -296,31 +277,6 @@ export default function UserProfilePage({validateUser}:any) {
                                         ):null
 
                                     }
-
-                                    <ul className='transactions'>
-
-                                        {
-
-                                            //@ts-ignore
-                                            user?.postedAppointements.map(appointement => 
-                                                
-                                                <li className='user-list-appointement'>
-                                                    <span><strong>Id: </strong> {appointement.id}</span>
-                                                    <span><strong>Price: </strong> {appointement.price}</span>
-                                                    <span><strong>Start Date: </strong> {appointement.startDate}</span>
-                                                    <span><strong>End Date: </strong> {appointement.endDate}</span>
-                                                    <span><strong>Title: </strong> {appointement.title}</span>
-                                                    <span><strong>Status: </strong> {appointement.status}</span>
-                                                    <span><strong>Doctor Id: </strong> {appointement.doctor_id}</span>
-                                                    <span><strong>Patient: </strong> {user?.userName}</span>
-                                                    <span><strong>Appointement Desc: </strong> {appointement.description}</span>
-                                                </li>
-                                                
-                                            )
-
-                                        }
-
-                                    </ul>
 
                                     <ReactPaginate
                                         previousLabel={"< Previous"}

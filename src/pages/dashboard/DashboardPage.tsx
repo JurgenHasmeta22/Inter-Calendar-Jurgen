@@ -107,35 +107,29 @@ export default function DashboardPage() {
 
     // #region "Creating events"
 
-    let newEvents: any = []
+    // let newEvents: any = []
 
     function createEvents() {
 
-        // console.log("hi")
+        const postedAppointements: any = user.postedAppointements
+        const returnedArray: any = []
 
-        for (const appointement of appointements) {
+        for (const appointement of postedAppointements) {
 
             const event = {
-                id: String(appointement.id),
                 title: appointement.title,
-                start: getDate(appointement.startDate),
-                end: getDate(appointement.endDate),
+                start: appointement.startDate,
+                end: appointement.endDate,
                 allDay: false
             }
 
-            // console.log(event)
-
-            // newEvents.push(event)
-
-            newEvents = [...newEvents, event]
-
-            // setEventNewState(newEvents)
-
-            // console.log(newArray)
-
-            // dispatch(setEventsNew(newArray)) se di pse error me state ktu
+            returnedArray.push(event)
 
         }
+
+        // console.log(returnedArray)
+
+        return returnedArray
         
     }
 
@@ -197,12 +191,13 @@ export default function DashboardPage() {
     //     createEvents()
     // }, [] )
 
-    createEvents()
+    // createEvents()
     
-    console.log(newEvents)
+    // console.log(newEvents)
 
     // #endregion
 
+    const finalArray: any = createEvents()
 
   return (
 
@@ -232,15 +227,33 @@ export default function DashboardPage() {
                         plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 
                         nowIndicator={true}
-                        allDayText="All Day"
-                        timeZone='UTC'
 
-                        events = {newEvents}
+                        // allDayText="All Day"
+                        // timeZone='UTC'
 
-                        editable = {true}
+                        events = {finalArray}
+
+                        // events={[
+                        //     {
+                        //       title: "event 1",
+                        //       start: "2022-05-21T11:00:00+09:00",
+                        //       end: "2022-05-21T13:00:00+09:00"
+                        //     },
+                        //     {
+                        //       title: "event 2",
+                        //       start: "2022-05-22T11:00:00+09:00",
+                        //       end: "2022-05-22T13:00:00+09:00"
+                        //     },
+                        //     {
+                        //       title: 'event 3',
+                        //       start: "2022-05-23T11:00:00+09:00",
+                        //       end: "2022-05-23T13:00:00+09:00"
+                        //     }
+                        // ]}
+
+                        // editable = {true}
                         selectable = {true}
                         
-                        // eventInteractive = {true}
                         // selectMirror={true}
 
                         select = {handleEventAdd}
