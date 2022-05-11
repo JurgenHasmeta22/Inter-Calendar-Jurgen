@@ -132,6 +132,36 @@ export default function DashboardPage() {
         
     }
 
+    function handleEventAdd(selectInfo: any) {
+
+        let calendarApi = selectInfo.view.calendar
+        let title = window.prompt('Please enter a new title for your event')
+
+        calendarApi.unselect() // clear date selection
+
+        if (title) {
+            calendarApi.addEvent({ // will render immediately. will call handleEventAdd
+                title,
+                start: selectInfo.startStr,
+                end: selectInfo.endStr,
+                allDay: selectInfo.allDay
+            }, true) // temporary=true, will get overwritten when reducer gives new events
+        }
+        
+    }
+
+    function handleDateClick(arg: any) { // bind with an arrow function
+        alert(arg.dateStr)
+    }
+
+    function handleEventClick(clickInfo: any) {
+        //@ts-ignore
+        if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+          clickInfo.event.remove() // will render immediately. will call handleEventRemove
+        }
+    
+    }
+
     // useCallback( () => {
     //     createEvents()
     // }, [] )
@@ -164,14 +194,7 @@ export default function DashboardPage() {
 
                     <FullCalendar
 
-                        // defaultView="dayGridMonth"
-
                         initialView = "dayGridMonth"
-                        
-                        // editable={true}
-                        // selectable={true}
-                        // selectMirror={true}
-                        // dayMaxEvents={true}
 
                         headerToolbar={{
                             left: "prev,next",
@@ -183,12 +206,82 @@ export default function DashboardPage() {
 
                         nowIndicator={true}
                         allDayText="All Day"
-                        
-                        // allDayDefault={false}
-                        // locale='ko'
                         timeZone='UTC'
 
                         events = {newEvents}
+
+                        editable = {true}
+                        selectable = {true}
+                        selectMirror={true}
+
+
+                        select = {handleEventAdd}
+                        eventClick={handleEventClick}
+
+                        // navLinkDayClick={handleDateClick}
+                        // #region "Random tests"
+
+                        // events={[
+                        //     {
+                        //       // not visible
+                        //       id: 1,
+                        //       title: "event 1",
+                        //       start: "2019-05-21T11:00:00+09:00",
+                        //       end: "2019-05-21T13:00:00+09:00",
+                        //       allDay: false,
+                        //     },
+                        //     {
+                        //       // not visible
+                        //       id: 2,
+                        //       title: "event 2",
+                        //       start: "2019-05-21T11:00:00+09:00",
+                        //       end: "2019-05-21T13:00:00+09:00",
+                        //     },
+                        //     {
+                        //       // visible on All Day area
+                        //       id: 3,
+                        //       title: 'event 3',
+                        //       start: "2019-05-21T11:00:00+09:00",
+                        //       end: "2019-05-21T13:00:00+09:00",
+                        //       allDay: true,
+                        //     },
+                        //     {
+                        //       // not visible
+                        //       id: 4,
+                        //       title: 'event 4',
+                        //       start: moment().toDate(),
+                        //       end: moment().add(1, "days").toDate(),
+                        //     },
+                        //     {
+                        //       // visible on All Day area
+                        //       id: 5,
+                        //       title: 'event 5',
+                        //       date: '2019-05-20',
+                        //       allDay: true,
+                        //     },
+                        //     {
+                        //       // not visible
+                        //       id: 6,
+                        //       title: 'event 6',
+                        //       date: '2019-05-20',
+                        //     },
+                        //     {
+                        //       // not visible
+                        //       id: 7,
+                        //       title: 'event 7',
+                        //       date: '2019-05-20',
+                        //       allDay: false,
+                        //     },
+                        //   ]}
+
+                        // editable={true}
+                        // selectable={true}
+                        // selectMirror={true}
+                        // dayMaxEvents={true}
+
+                        // defaultView="dayGridMonth"
+
+                        // #endregion
 
                     />
 
