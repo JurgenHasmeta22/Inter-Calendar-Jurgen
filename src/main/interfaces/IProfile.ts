@@ -1,7 +1,9 @@
 import IAppointement from "./IAppointement";
+import IEvent from "../interfaces/IEvent"
 
 export default interface IDashboard
 {
 	appointements: IAppointement[],
-	openModal: boolean
+	openModal: boolean,
+	eventsNew: IEvent[]
 } 

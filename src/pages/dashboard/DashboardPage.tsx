@@ -1,5 +1,5 @@
 // #region "Importing stuff"
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import "./DashboardPage.css"
 
 import Modal from '@mui/material/Modal';
@@ -33,13 +33,19 @@ import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 
 import events from "./events";
+
+import {
+    getDate
+} from "./events"
+
 import HeaderCommon from "../../main/components/Common/HeaderCommon/HeaderCommon";
 import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon";
 
 import {
     setAppointements,
     invalidateAppointements,
-    setOpen
+    setOpen,
+    setEventsNew
 } from "../../main/store/stores/dashboard/dashboard.store"
 
 import { useDispatch, useSelector } from "react-redux";
@@ -67,6 +73,8 @@ export default function DashboardPage() {
 
   // #region "Redux state and hooks"
   const appointements = useSelector((state: RootState) => state.dashboard.appointements);
+  const eventsNew = useSelector((state: RootState) => state.dashboard.eventsNew);
+
   const openModal = useSelector((state: RootState) => state.dashboard.openModal);
 
   const user = useGetUser()
@@ -91,6 +99,49 @@ export default function DashboardPage() {
   const handleClose = () => dispatch(setOpen(false));
 
   // #endregion
+
+
+    // #region "Creating events"
+
+    let newEvents: any = []
+
+    function createEvents() {
+
+        // console.log("hi")
+
+        for (const appointement of appointements) {
+
+            const event = {
+                title: appointement.title,
+                start: getDate(appointement.startDate),
+                end: getDate(appointement.endDate)
+            }
+
+            // console.log(event)
+
+            newEvents.push(event)
+
+            // console.log(newArray)
+
+            // dispatch(setEventsNew(newArray)) se di pse error me state ktu
+
+        }
+        
+    }
+
+    // useCallback( () => {
+    //     createEvents()
+    // }, [] )
+
+    // useEffect( () => {
+    //     createEvents()
+    // }, [] )
+
+    createEvents()
+    
+    console.log(newEvents)
+
+    // #endregion
 
 
   return (
@@ -126,7 +177,7 @@ export default function DashboardPage() {
                         }}
 
                         plugins = {[dayGridPlugin, timeGridPlugin]}
-                        events = {events}
+                        events = {newEvents}
 
                     />
 

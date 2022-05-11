@@ -53,26 +53,6 @@ export default function HeaderCommon(this: any) {
             </div>
 
             <div className="header-group-2">
-                
-                <form className="button-search" onSubmit={function (e) {
-					e.preventDefault()
-                }}>
-
-                    <input type="search" name="searchMovie"  placeholder="Search for Appointments..." aria-label="Search through site content" 
-                        
-						onChange={function (e) {
-						}}
-
-						onKeyDown={function (e: any) {
-						}}
-
-					/>
-
-                    <button type="submit">
-                        <i className="fa fa-search"></i>
-                    </button>
-
-                </form>
 
                 { user === null ? (
 

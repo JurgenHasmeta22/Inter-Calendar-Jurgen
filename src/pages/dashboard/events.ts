@@ -50,7 +50,7 @@ const events: any = [
     }
 ];
   
-function getDate(dayString: any) {
+export function getDate(dayString: any) {
 
   const today = new Date();
 

@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import IAppointement from '../../../interfaces/IAppointement';
+import IEvent from '../../../interfaces/IEvent';
 import IDashboard from "../../../interfaces/IProfile"
 
 const initialState: IDashboard = {
     appointements: [],
-    openModal: false
+    openModal: false,
+    eventsNew: []
 }
 
 const dashboardStore = createSlice({
@@ -25,6 +27,10 @@ const dashboardStore = createSlice({
 
     setOpen(state, action: PayloadAction<boolean>) {
       state.openModal = action.payload
+    },
+
+    setEventsNew(state, action: PayloadAction<IEvent[]>) {
+      state.eventsNew = action.payload
     }
 
   }
@@ -36,5 +42,6 @@ export default dashboardStore;
 export const { 
   setAppointements, 
   invalidateAppointements,
-  setOpen 
+  setOpen,
+  setEventsNew
 } = dashboardStore.actions;

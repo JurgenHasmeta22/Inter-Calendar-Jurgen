@@ -8,6 +8,6 @@ export default interface IAppointement
     doctor_id: number,
     category_id: number,
     description: string,
-    dateStart: string,
-    dateEnd: string
+    startDate: string,
+    endDate: string
 } 
