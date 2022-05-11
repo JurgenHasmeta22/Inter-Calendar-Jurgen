@@ -110,18 +110,19 @@ export default function DashboardPage() {
 
                     <FullCalendar
 
-                        //@ts-ignore
-                        defaultView="dayGridMonth"
+                        // defaultView="dayGridMonth"
 
-                        editable={true}
-                        selectable={true}
-                        selectMirror={true}
-                        dayMaxEvents={true}
+                        initialView = "dayGridMonth"
+                        
+                        // editable={true}
+                        // selectable={true}
+                        // selectMirror={true}
+                        // dayMaxEvents={true}
 
-                        header={{
+                        headerToolbar={{
                             left: "prev,next",
                             center: "title",
-                            right: "dayGridMonth,timeGridWeek,timeGridDay"
+                            right: "dayGridMonth, timeGridWeek, timeGridDay"
                         }}
 
                         plugins = {[dayGridPlugin, timeGridPlugin]}
