@@ -9,15 +9,25 @@ import IEvent from "../../../interfaces/IEvent";
 import { invalidateModal } from "../../../store/stores/dashboard/dashboard.store";
 import { RootState } from "../../../store/redux/rootState";
 import useGetUser from "../../../hooks/useGetUser";
+
+import {
+setCategoryId,
+setDescription,
+setDoctorId,
+setStartDate,
+setTitle,
+setEndDate,
+setUserId
+} from "../../../store/stores/modals/modals.store"
 // #endregion
 
 function AppointementModal() {
 
     // #region "State and hooks"
     const [error, setError] = useState("");
+    const dispatch = useDispatch()
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const user = useGetUser()
 
@@ -73,6 +83,9 @@ function AppointementModal() {
                                 className="description"
                                 name="description"
                                 required
+                                onChange={(e: any) => {
+                                    dispatch(setDescription(e.target.value))
+                                }}
                             />
 
                         </label>
@@ -86,6 +99,9 @@ function AppointementModal() {
                                 name="title"
                                 className="title"
                                 required
+                                onChange={(e: any) => {
+                                    dispatch(setTitle(e.target.value))
+                                }}
                             />
 
                         </label>
@@ -100,6 +116,9 @@ function AppointementModal() {
                                 className="doctor"
                                 disabled
                                 value={selectedDoctor?.firstName + " " + selectedDoctor?.lastName}
+                                onChange={(e: any) => {
+                                    dispatch(setDoctorId(e.target.value))
+                                }}
                             />
 
                         </label>
@@ -114,6 +133,9 @@ function AppointementModal() {
                                 className="patient"
                                 disabled
                                 value={user?.firstName + " " + user?.lastName}
+                                onChange={(e: any) => {
+                                    dispatch(setUserId(e.target.value))
+                                }}
                             />
 
                         </label>
@@ -128,6 +150,9 @@ function AppointementModal() {
                                 className="category"
                                 disabled
                                 value={"1"}
+                                onChange={(e: any) => {
+                                    dispatch(setCategoryId(e.target.value))
+                                }}
                             />
 
                         </label>
@@ -141,6 +166,9 @@ function AppointementModal() {
                                 name="startDate"
                                 className="startDate"
                                 required
+                                onChange={(e: any) => {
+                                    dispatch(setStartDate(e.target.value))
+                                }}
                             />
 
                         </label>
@@ -154,6 +182,9 @@ function AppointementModal() {
                                 name="endDate"
                                 className="endDate"
                                 required
+                                onChange={(e: any) => {
+                                    dispatch(setEndDate(e.target.value))
+                                }}
                             />
                             
                         </label>
