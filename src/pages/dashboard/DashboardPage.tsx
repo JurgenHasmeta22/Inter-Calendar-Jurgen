@@ -222,7 +222,7 @@ export default function DashboardPage() {
     const todayDate = () => {
 
         let today = new Date();
-        
+
         let dd = String(today.getDate()).padStart(2, "0");
         let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
         let yyyy = today.getFullYear();
@@ -385,13 +385,13 @@ export default function DashboardPage() {
 
                     />
 
-                    <div className="button-event-wrapper">
+                    {/* <div className="button-event-wrapper">
 
                         <button onClick={ function () {
                             // handleOpen()
                         }}>Add Event</button>
 
-                    </div>
+                    </div> */}
 
                 </div>
 

@@ -54,6 +54,24 @@ export default function HeaderCommon(this: any) {
 
             <div className="header-group-2">
 
+            {
+            
+                user.isDoctor ? (
+
+                    <li className="special-logo-thing">
+                        <span>Welcome Doctor, {user?.firstName + " " + user?.lastName}! 👨‍⚕️ </span>
+                    </li>
+
+                ) : (
+
+                    <li className="special-logo-thing">
+                        <span>Welcome Patient, {user?.firstName + " " + user?.lastName}! 👤</span>
+                    </li>
+
+                )
+
+              }
+
                 { user === null ? (
 
                       <button className="button-login-header" onClick={function () {
@@ -79,7 +97,7 @@ export default function HeaderCommon(this: any) {
 
                           <img src={"https://villagesonmacarthur.com/wp-content/uploads/2020/12/Blank-Avatar.png"} />
                           
-						  {user.userName}
+						    {user.userName}
                           
                         </li>
               
@@ -103,14 +121,9 @@ export default function HeaderCommon(this: any) {
 
                     )}
 
-                  <div className="cart-icon-header">
-
-                    <i className ="fa fa-shopping-cart" aria-hidden="true" 
-                    onClick={function () {
-                      navigate(`/${user.userName}/cart`)
-                    }}></i>
-
-                  </div>
+                    <li className="login-section__info">
+                        <h3>Hot Line +38344255255</h3>
+                    </li>
 
             </div>
 
