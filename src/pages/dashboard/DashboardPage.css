@@ -16,8 +16,30 @@
 }
 
 .header-container h3 {
-    font-size: 18px;
+    font-size: 26px;
     font-weight: 900;
+    color: #50a2fd;
+    letter-spacing: 2px;
+}
+
+.select-doctor-wrapper {
+    display: grid;
+    grid-template-columns: 500px 400px;
+    gap: 50px;
+    place-items: center;
+    place-content: center;
+    padding-top: 60px;
+}
+
+.select-doctor-wrapper span {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.select-doctor-wrapper select {
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .calendar {
@@ -28,7 +50,6 @@
     box-shadow: 0px 0px 5px 2px #849fb7;
     border-radius: 5px;
     width: 100%;
-    
 }
 
 .side-bar {

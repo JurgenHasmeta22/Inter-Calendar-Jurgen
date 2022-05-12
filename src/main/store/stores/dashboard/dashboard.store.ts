@@ -2,11 +2,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import IAppointement from '../../../interfaces/IAppointement';
 import IEvent from '../../../interfaces/IEvent';
 import IDashboard from "../../../interfaces/IProfile"
+import IUser from '../../../interfaces/IUser';
 
 const initialState: IDashboard = {
     appointements: [],
     openModal: false,
-    eventsNew: []
+    eventsNew: [],
+    doctors: [],
+    selectedDoctorName: "",
+    selectedDoctor: null
 }
 
 const dashboardStore = createSlice({
@@ -18,7 +22,7 @@ const dashboardStore = createSlice({
   reducers: {
 
     setAppointements(state, action: PayloadAction<IAppointement[]>) {
-        state.appointements = action.payload
+      state.appointements = action.payload
     },
 
     invalidateAppointements(state) {
@@ -31,6 +35,22 @@ const dashboardStore = createSlice({
 
     setEventsNew(state, action: PayloadAction<IEvent[]>) {
       state.eventsNew = action.payload
+    },
+
+    setDoctors(state, action: PayloadAction<IUser[]>) {
+      state.doctors = action.payload
+    },
+
+    invalidateDoctors(state) {
+      state.doctors = []
+    },
+
+    setSelectedDoctorName(state, action: PayloadAction<string>) {
+      state.selectedDoctorName = action.payload
+    },
+
+    setSelectedDoctor(state, action: PayloadAction<IUser>) {
+      state.selectedDoctor= action.payload
     }
 
   }
@@ -43,5 +63,9 @@ export const {
   setAppointements, 
   invalidateAppointements,
   setOpen,
-  setEventsNew
+  setEventsNew,
+  setDoctors,
+  invalidateDoctors,
+  setSelectedDoctorName,
+  setSelectedDoctor
 } = dashboardStore.actions;

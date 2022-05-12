@@ -45,7 +45,11 @@ import {
     setAppointements,
     invalidateAppointements,
     setOpen,
-    setEventsNew
+    setEventsNew,
+    setDoctors,
+    invalidateDoctors,
+    setSelectedDoctorName,
+    setSelectedDoctor
 } from "../../main/store/stores/dashboard/dashboard.store"
 
 import { useDispatch, useSelector } from "react-redux";
@@ -75,14 +79,16 @@ export default function DashboardPage() {
 
   // #region "Redux state and hooks"
   const appointements = useSelector((state: RootState) => state.dashboard.appointements);
+  const doctors = useSelector((state: RootState) => state.dashboard.doctors);
+
+  const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
+  const selectedDoctorName = useSelector((state: RootState) => state.dashboard.selectedDoctorName);
+
   const eventsNew = useSelector((state: RootState) => state.dashboard.eventsNew);
-
   const [eventNewState, setEventNewState] = useState<any>([])
-
   const openModal = useSelector((state: RootState) => state.dashboard.openModal);
 
   const user = useGetUser()
-
   const theme = useTheme()
   const dispatch = useDispatch()
   // #endregion
@@ -94,8 +100,19 @@ export default function DashboardPage() {
     dispatch(setAppointements(result.data))
   }
 
+  async function getDoctorsFromServer() {
+    let result = await (await axios.get(`/doctors`));
+    dispatch(setDoctors(result.data))
+    // dispatch(setSelectedDoctorName(result.data[0].firstName + " " + result.data[0].firstName.lastName))
+    // dispatch(setSelectedDoctor(result.data[0]))
+  }
+
   useEffect(()=> {
     getAppointementsFromServer()
+  }, [])
+
+  useEffect(()=> {
+    getDoctorsFromServer()
   }, [])
 
   const handleOpen = () => dispatch(setOpen(true));
@@ -107,8 +124,9 @@ export default function DashboardPage() {
 
     function createEvents() {
 
-        const postedAppointements: any = user.postedAppointements
-        
+        // const acceptedAppointements: any = selectedDoctor?.acceptedAppointemets
+        const postedAppointements: any = user?.postedAppointements
+
         const returnedArray: any = []
 
         for (const appointement of postedAppointements) {
@@ -217,6 +235,23 @@ export default function DashboardPage() {
     // #endregion
 
 
+    // #region "Event listeners for select"
+    function handleOnChangeSelect(e:any) {
+        dispatch(setSelectedDoctorName(e.target.value))
+    }
+
+    function handleOnChangeDoctor(e: any) {
+
+        const newDoctors = [...doctors]
+        const doctorFinal = newDoctors.find(doctor => doctor.firstName + " " + doctor.lastName === e.target.value )
+
+        dispatch(setSelectedDoctor(doctorFinal))
+        handleOnChangeSelect(e)
+
+    }
+    // #endregion
+
+
   return (
 
     <>
@@ -235,6 +270,34 @@ export default function DashboardPage() {
             )
 
           }
+
+      </div>
+
+      <div className="select-doctor-wrapper">
+        
+        <span>Choose a doctor from our clicic for an appointement: </span>
+
+        <select name="filter-by-sort" id="filter-by-sort" 
+            onChange={function (e: any) {
+                handleOnChangeDoctor(e)
+         }}>
+            
+            {
+            
+                doctors?.length === 0 ? (
+                    <option value="Default">No Doctor to choose</option>
+                ): (
+                    
+                    //@ts-ignore
+                    doctors?.map(doctor =>  
+                        <option key={doctor.id} value = {doctor.firstName + " " + doctor.lastName}> {doctor.firstName + " " + doctor.lastName} </option>
+                    )
+
+                )
+
+            }
+
+        </select>
 
       </div>
 
