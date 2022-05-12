@@ -71,7 +71,8 @@ function AppointementModal() {
 
         // console.log(result)
 
-        dispatch(setDoctors(result))
+        // dispatch(setDoctors(result))
+        // dispatch(setSelectedDoctor(result.))
         
         // handleOnChangeDoctor(e)
 
