@@ -6,7 +6,7 @@ import IUser from '../../../interfaces/IUser';
 
 const initialState: IDashboard = {
     appointements: [],
-    openModal: false,
+    modal: "",
     eventsNew: [],
     doctors: [],
     selectedDoctorName: "",
@@ -29,8 +29,12 @@ const dashboardStore = createSlice({
       state.appointements = []
     },
 
-    setOpen(state, action: PayloadAction<boolean>) {
-      state.openModal = action.payload
+    setModal(state, action: PayloadAction<string>) {
+      state.modal = action.payload
+    },
+
+    invalidateModal(state) {
+      state.modal = ""
     },
 
     setEventsNew(state, action: PayloadAction<IEvent[]>) {
@@ -62,10 +66,11 @@ export default dashboardStore;
 export const { 
   setAppointements, 
   invalidateAppointements,
-  setOpen,
+  setModal,
   setEventsNew,
   setDoctors,
   invalidateDoctors,
   setSelectedDoctorName,
-  setSelectedDoctor
+  setSelectedDoctor,
+  invalidateModal
 } = dashboardStore.actions;

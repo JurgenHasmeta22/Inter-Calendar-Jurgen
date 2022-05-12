@@ -25,7 +25,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../store/redux/rootState"
 
 import {
-    setOpen
+    setModal
 } from "../../store/stores/dashboard/dashboard.store"
 // #endregion
 
@@ -44,13 +44,13 @@ const style = {
 export default function TestModal() {
 
     // const [open, setOpen] = React.useState(false);
-    const openModal = useSelector((state: RootState) => state.dashboard.openModal);
+    const openModal = useSelector((state: RootState) => state.dashboard.modal);
 
     const theme = useTheme()
     const dispatch = useDispatch()
 
     // const handleOpen = () => dispatch(setOpen(true));
-    const handleClose = () => dispatch(setOpen(false));
+    const handleClose = () => dispatch(setModal(""));
 
     return (
 
@@ -58,7 +58,7 @@ export default function TestModal() {
 
             {/* <Button onClick={handleOpen}>Open modal test</Button> */}
 
-            <Modal
+            {/* <Modal
                 keepMounted
                 open = {openModal}
                 onClose={handleClose}
@@ -145,7 +145,7 @@ export default function TestModal() {
 
                 </ThemeProvider>
 
-            </Modal>
+            </Modal> */}
 
         </div>
 

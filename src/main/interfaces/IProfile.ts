@@ -5,7 +5,7 @@ import IUser from "./IUser";
 export default interface IDashboard
 {
 	appointements: IAppointement[]
-	openModal: boolean
+	modal: string
 	eventsNew: IEvent[]
 	doctors: IUser[]
 	selectedDoctorName: string

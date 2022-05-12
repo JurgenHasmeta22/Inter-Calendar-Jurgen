@@ -44,7 +44,7 @@ import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon
 import {
     setAppointements,
     invalidateAppointements,
-    setOpen,
+    setModal,
     setEventsNew,
     setDoctors,
     invalidateDoctors,
@@ -60,10 +60,11 @@ import useGetUser from "../../main/hooks/useGetUser";
 import interactionPlugin from "@fullcalendar/interaction";
 
 import TestModal from "../../main/components/Modals/TestModal"
-import AddEventModal from "../../main/components/Modals/AddEvent/AddEventModal"
+import AddEventModal from "../../main/components/Modals/AddEvent/AppointementModal"
 // #endregion
 
 
+// #region "Some styling for calendar"
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -75,6 +76,7 @@ const style = {
   boxShadow: 44,
   p: 8
 };
+// #endregion
 
 
 export default function DashboardPage() {
@@ -89,7 +91,7 @@ export default function DashboardPage() {
 
   const eventsNew = useSelector((state: RootState) => state.dashboard.eventsNew);
   const [eventNewState, setEventNewState] = useState<any>([])
-  const openModal = useSelector((state: RootState) => state.dashboard.openModal);
+  const modal = useSelector((state: RootState) => state.dashboard.modal);
 
   const user = useGetUser()
   const theme = useTheme()
@@ -106,8 +108,8 @@ export default function DashboardPage() {
   async function getDoctorsFromServer() {
     let result = await (await axios.get(`/doctors`));
     dispatch(setDoctors(result.data))
-    dispatch(setSelectedDoctorName(result.data[0].firstName + " " + result.data[0].lastName))
-    dispatch(setSelectedDoctor(result.data[0]))
+    // dispatch(setSelectedDoctorName(result.data[0].firstName + " " + result.data[0].lastName))
+    // dispatch(setSelectedDoctor(result.data[0]))
   }
 
   useEffect(()=> {
@@ -118,10 +120,16 @@ export default function DashboardPage() {
     getDoctorsFromServer()
   }, [])
 
-  const handleOpen = () => dispatch(setOpen(true));
-  const handleClose = () => dispatch(setOpen(false));
+  const handleOpen = () => dispatch(setModal("appoinment"));
+//   const handleClose = () => dispatch(setModal(""));
   // #endregion
 
+
+    let eventGuid = 0
+    
+    function createEventId() {
+        return String(eventGuid++)
+    }
 
   // #region "Creating events"
 
@@ -168,41 +176,30 @@ export default function DashboardPage() {
         
     }
 
-    function handleEventAdd(selectInfo:  DateSelectArg) {
+    function handleEventAdd(selectInfo:  any) {
 
-        dispatch(setOpen(true))
+        handleOpen()
 
-        // let title = window.prompt('Please enter a new title for your event')
-
-        // let startDate = window.prompt('Please enter start date for the event')
-        // let endDate = window.prompt('Please enter a end date for the event')
-        // let allDayDate = window.prompt('Please enter all day or not')
-
-        // const finalStartDate = getDate(startDate)
-        // const finalDate = getDate(endDate)
-        // const finalAllDay = allDayDate === "true" ? true : false
-
+        // let title = ('Please enter a new title for your event')
         // let calendarApi = selectInfo.view.calendar
 
         // calendarApi.unselect() // clear date selection
 
         // if (title) {
 
-            // calendarApi.addEvent({ 
-            //     id: "3",
-            //     title,
-            //     start: selectInfo.startStr,
-            //     end: selectInfo.endStr,
-            //     allDay: selectInfo.allDay
-            // }, true)
+        //     calendarApi.addEvent({
 
-            // calendarApi.addEvent({ 
-            //     id: "3",
-            //     title,
-            //     start: finalStartDate,
-            //     end: finalEndDate,
-            //     allDay: finalAllDay
-            // }, true)
+        //         id: createEventId(),
+        //         startDate: selectInfo.startDate,
+        //         endDate: selectInfo.endDate,
+        //         title: selectInfo.title,
+        //         description: selectInfo.description,
+        //         status: selectInfo.status,
+        //         user_id: selectInfo.user_id,
+        //         doctor_id: selectInfo.doctor_id,
+        //         allDay: false
+
+        //     })
 
         // }
         
@@ -275,15 +272,15 @@ export default function DashboardPage() {
 
       <HeaderCommon />
 
-        {
+        {/* {
 
             openModal === true ? (
                 //@ts-ignore
                 // <TestModal />
-                // <AddEventModal />
+                <AddEventModal />
             ): null
 
-        }
+        } */}
 
       <div className="header-container">
 
@@ -304,11 +301,13 @@ export default function DashboardPage() {
         
         <span>Choose a doctor from our clicic for an appointement: </span>
 
-        <select name="filter-by-sort" id="filter-by-sort" 
+        <select name="filter-by-sort" id="filter-by-sort" defaultValue={'DEFAULT'}
             onChange={function (e: any) {
                 handleOnChangeDoctor(e)
          }}>
             
+            <option value="DEFAULT" disabled> Select Doctor</option>
+
             {
             
                 doctors?.length === 0 ? (
@@ -361,104 +360,15 @@ export default function DashboardPage() {
                         selectable = {true}
                         eventColor="#50a2fd"
                         selectMirror={true}
+                        droppable={true}
+                        dayMaxEvents={true}
+
+                        eventDurationEditable={true}
 
                         validRange={{ start: todayDate(), end: "2023-01-01" }}
                         eventClick={handleEventClick}
                         select = {handleEventAdd}
                         events = {createEvents()}
-                        // events = {eventNewState}
-
-                        // #region "Random stuff"
-
-                        // events={[
-                        //     {
-                        //       title: "event 1",
-                        //       start: "2022-05-21T11:00:00+09:00",
-                        //       end: "2022-05-21T13:00:00+09:00"
-                        //     },
-                        //     {
-                        //       title: "event 2",
-                        //       start: "2022-05-22T11:00:00+09:00",
-                        //       end: "2022-05-22T13:00:00+09:00"
-                        //     },
-                        //     {
-                        //       title: 'event 3',
-                        //       start: "2022-05-23T11:00:00+09:00",
-                        //       end: "2022-05-23T13:00:00+09:00"
-                        //     }
-                        // ]}
-                        
-                        // navLinkDayClick = {handleEventAdd}
-                        
-                        //@ts-ignore
-                        // dateClick={handleEventClick}
-
-                        // navLinkDayClick={handleDateClick}
-
-                        // #region "Random tests"
-
-                        // events={[
-                        //     {
-                        //       // not visible
-                        //       id: 1,
-                        //       title: "event 1",
-                        //       start: "2019-05-21T11:00:00+09:00",
-                        //       end: "2019-05-21T13:00:00+09:00",
-                        //       allDay: false,
-                        //     },
-                        //     {
-                        //       // not visible
-                        //       id: 2,
-                        //       title: "event 2",
-                        //       start: "2019-05-21T11:00:00+09:00",
-                        //       end: "2019-05-21T13:00:00+09:00",
-                        //     },
-                        //     {
-                        //       // visible on All Day area
-                        //       id: 3,
-                        //       title: 'event 3',
-                        //       start: "2019-05-21T11:00:00+09:00",
-                        //       end: "2019-05-21T13:00:00+09:00",
-                        //       allDay: true,
-                        //     },
-                        //     {
-                        //       // not visible
-                        //       id: 4,
-                        //       title: 'event 4',
-                        //       start: moment().toDate(),
-                        //       end: moment().add(1, "days").toDate(),
-                        //     },
-                        //     {
-                        //       // visible on All Day area
-                        //       id: 5,
-                        //       title: 'event 5',
-                        //       date: '2019-05-20',
-                        //       allDay: true,
-                        //     },
-                        //     {
-                        //       // not visible
-                        //       id: 6,
-                        //       title: 'event 6',
-                        //       date: '2019-05-20',
-                        //     },
-                        //     {
-                        //       // not visible
-                        //       id: 7,
-                        //       title: 'event 7',
-                        //       date: '2019-05-20',
-                        //       allDay: false,
-                        //     },
-                        //   ]}
-
-                        // editable={true}
-                        // selectable={true}
-                        // selectMirror={true}
-                        // dayMaxEvents={true}
-
-                        // defaultView="dayGridMonth"
-
-                        // #endregion
-                        
                         // #endregion
 
                     />
@@ -466,7 +376,7 @@ export default function DashboardPage() {
                     <div className="button-event-wrapper">
 
                         <button onClick={ function () {
-                            handleOpen()
+                            // handleOpen()
                         }}>Add Event</button>
 
                     </div>
