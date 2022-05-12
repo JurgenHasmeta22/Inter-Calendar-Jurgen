@@ -117,7 +117,12 @@ export default function DashboardPage() {
                 title: appointement.title,
                 start: appointement.startDate,
                 end: appointement.endDate,
-                allDay: false
+                allDay: false,
+                editable: user.id === appointement.user_id,
+                color: "#378006",
+                className: `${
+                    user.id === appointement.user_id ? "my-color-events" : "others-color-events"
+                }`
             }
 
             returnedArray.push(event)
@@ -168,9 +173,9 @@ export default function DashboardPage() {
         
     }
 
-    function handleDateClick(arg: any) { // bind with an arrow function
-        alert(arg.dateStr)
-    }
+    // function handleDateClick(arg: any) { // bind with an arrow function
+    //     alert(arg.dateStr)
+    // }
 
     function handleEventClick(clickInfo: any) {
 
@@ -180,7 +185,18 @@ export default function DashboardPage() {
     
     }
 
-    const finalArray: any = createEvents()
+    const todayDate = () => {
+
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, "0");
+        let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+        let yyyy = today.getFullYear();
+    
+        const date = yyyy + "-" + mm + "-" + dd;
+
+        return date;
+
+    };
 
     // #region "Trying some weird stuff"
 
@@ -207,12 +223,33 @@ export default function DashboardPage() {
 
       <HeaderCommon />
 
+      <div className="header-container">
+
+          {
+
+            //@ts-ignore
+            user?.isDoctor === false ? (
+                <h3 className="dashboard-title">User Dashboard</h3>
+            ): (
+                <h3 className="dashboard-title">Doctor Dashboard</h3>
+            )
+
+          }
+
+      </div>
+
       {
 
             //@ts-ignore
           user?.isDoctor === false ? (
 
             <div className="calendar-wrapper">
+
+                <section className="side-bar">
+                    <h3 className="side-bar__title">Calendar</h3>
+                    <h4 className="my-color-events">My events</h4>
+                    <h4 className="others-color-events">Others Events</h4>
+                </section>
 
                 <div className="calendar">
 
@@ -229,11 +266,18 @@ export default function DashboardPage() {
                         plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 
                         nowIndicator={true}
+                        displayEventEnd={true}
+                        editable = {true}
+                        selectable = {true}
+                        eventColor="#50a2fd"
+                        selectMirror={true}
 
-                        // allDayText="All Day"
-                        // timeZone='UTC'
+                        validRange={{ start: todayDate(), end: "2023-01-01" }}
+                        eventClick={handleEventClick}
+                        select = {handleEventAdd}
+                        events = {createEvents()}
 
-                        events = {finalArray}
+                        // #region "Random stuff"
 
                         // events={[
                         //     {
@@ -252,17 +296,8 @@ export default function DashboardPage() {
                         //       end: "2022-05-23T13:00:00+09:00"
                         //     }
                         // ]}
-
-                        // editable = {true}
-                        selectable = {true}
                         
-                        // selectMirror={true}
-
-                        select = {handleEventAdd}
-
                         // navLinkDayClick = {handleEventAdd}
-
-                        eventClick={handleEventClick}
                         
                         //@ts-ignore
                         // dateClick={handleEventClick}
@@ -331,6 +366,8 @@ export default function DashboardPage() {
 
                         // defaultView="dayGridMonth"
 
+                        // #endregion
+                        
                         // #endregion
 
                     />

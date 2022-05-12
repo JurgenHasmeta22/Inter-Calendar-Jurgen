@@ -1,19 +1,72 @@
 .calendar-wrapper {
     display: grid;
-    grid-template-rows: 1fr;
+    grid-template-columns: 300px 1fr;
+    gap: 1rem;
     /* place-items: center; */
-    width: 80%;
-    padding-left: 400px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.header-container {
+    display: grid;
+    place-items: center;
+    padding-top: 100px;
+}
+
+.header-container h3 {
+    font-size: 18px;
+    font-weight: 900;
 }
 
 .calendar {
     display: grid;
     grid-template-rows: 0.9fr 100px;
     grid-gap: 100px;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding: 3rem;
+    box-shadow: 0px 0px 5px 2px #849fb7;
+    border-radius: 5px;
+    width: 100%;
     
 }
+
+.side-bar {
+    background-color: #f1f9ff;
+    box-shadow: 0px 0px 5px 2px #849fb7;
+    border-radius: 5px;
+    display: grid;
+    grid-template-rows: 50px 50px 50px;
+    gap: 0.2rem;
+    /* padding-top: 3rem; */
+    /* align-content: start; */
+  }
+
+  .side-bar__title {
+    padding: 1rem;
+    font-weight: bold;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+  }
+
+  .my-color-events {
+    background-color: #50a2fd;
+    font-weight: bold;
+    padding: 0.3rem 1rem;
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+  }
+
+  .others-color-events {
+    background-color:  #849fb7;
+    padding: 0.3rem 1rem;
+    font-weight: bold;
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+  }
 
 .button-event-wrapper {
     display: grid;
