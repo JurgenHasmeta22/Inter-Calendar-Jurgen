@@ -58,6 +58,9 @@ import axios from "axios";
 import useGetUser from "../../main/hooks/useGetUser";
 
 import interactionPlugin from "@fullcalendar/interaction";
+
+import TestModal from "../../main/components/Modals/TestModal"
+import AddEventModal from "../../main/components/Modals/AddEvent/AddEventModal"
 // #endregion
 
 
@@ -167,7 +170,9 @@ export default function DashboardPage() {
 
     function handleEventAdd(selectInfo:  DateSelectArg) {
 
-        let title = window.prompt('Please enter a new title for your event')
+        dispatch(setOpen(true))
+
+        // let title = window.prompt('Please enter a new title for your event')
 
         // let startDate = window.prompt('Please enter start date for the event')
         // let endDate = window.prompt('Please enter a end date for the event')
@@ -177,19 +182,19 @@ export default function DashboardPage() {
         // const finalDate = getDate(endDate)
         // const finalAllDay = allDayDate === "true" ? true : false
 
-        let calendarApi = selectInfo.view.calendar
+        // let calendarApi = selectInfo.view.calendar
 
-        calendarApi.unselect() // clear date selection
+        // calendarApi.unselect() // clear date selection
 
-        if (title) {
+        // if (title) {
 
-            calendarApi.addEvent({ 
-                id: "3",
-                title,
-                start: selectInfo.startStr,
-                end: selectInfo.endStr,
-                allDay: selectInfo.allDay
-            }, true)
+            // calendarApi.addEvent({ 
+            //     id: "3",
+            //     title,
+            //     start: selectInfo.startStr,
+            //     end: selectInfo.endStr,
+            //     allDay: selectInfo.allDay
+            // }, true)
 
             // calendarApi.addEvent({ 
             //     id: "3",
@@ -199,7 +204,7 @@ export default function DashboardPage() {
             //     allDay: finalAllDay
             // }, true)
 
-        }
+        // }
         
     }
 
@@ -269,6 +274,16 @@ export default function DashboardPage() {
     <>
 
       <HeaderCommon />
+
+        {
+
+            openModal === true ? (
+                //@ts-ignore
+                // <TestModal />
+                // <AddEventModal />
+            ): null
+
+        }
 
       <div className="header-container">
 

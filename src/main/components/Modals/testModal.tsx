@@ -41,7 +41,7 @@ const style = {
   p: 8
 };
 
-export default function KeepMountedModal() {
+export default function TestModal() {
 
     // const [open, setOpen] = React.useState(false);
     const openModal = useSelector((state: RootState) => state.dashboard.openModal);

@@ -8,6 +8,7 @@ import ErrorPage from "../pages/error/ErrorPage"
 import DashboardPage from "../pages/dashboard/DashboardPage"
 import UserProfilePage from "../pages/user/UserProfilePage"
 import "../app/App.css"
+import KeepMountedModal from '../main/components/Modals/TestModal';
 // #endregion
 
 const App = () => {
@@ -26,6 +27,8 @@ const App = () => {
 
         <Route path="/dashboard" element={<PrivateRoute><DashboardPage/></PrivateRoute>} />
         
+        {/* <Route path="/testModal" element={<PrivateRoute><KeepMountedModal/></PrivateRoute>} /> */}
+
         <Route path="/profile/:username" element= {<PrivateRoute><UserProfilePage /></PrivateRoute>} />
         <Route path="/profile/:username/:tab" element = { <UserProfilePage /> } />
 
