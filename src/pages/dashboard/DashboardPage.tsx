@@ -103,8 +103,8 @@ export default function DashboardPage() {
   async function getDoctorsFromServer() {
     let result = await (await axios.get(`/doctors`));
     dispatch(setDoctors(result.data))
-    // dispatch(setSelectedDoctorName(result.data[0].firstName + " " + result.data[0].firstName.lastName))
-    // dispatch(setSelectedDoctor(result.data[0]))
+    dispatch(setSelectedDoctorName(result.data[0].firstName + " " + result.data[0].lastName))
+    dispatch(setSelectedDoctor(result.data[0]))
   }
 
   useEffect(()=> {
@@ -124,10 +124,13 @@ export default function DashboardPage() {
 
     function createEvents() {
 
-        // const acceptedAppointements: any = selectedDoctor?.acceptedAppointemets
-        const postedAppointements: any = user?.postedAppointements
+        // const acceptedAppointemets: any = [...selectedDoctor?.acceptedAppointemets]
+        
+        const postedAppointements: any = [...user?.postedAppointements]
 
-        const returnedArray: any = []
+        let returnedArray: any = []
+
+        // for (const appointement of acceptedAppointemets) {
 
         for (const appointement of postedAppointements) {
 
@@ -136,14 +139,19 @@ export default function DashboardPage() {
                 start: appointement.startDate,
                 end: appointement.endDate,
                 allDay: false,
-                editable: user.id === appointement.user_id,
+                editable: user?.id === appointement.user_id,
                 color: "#378006",
                 className: `${
                     user.id === appointement.user_id ? "my-color-events" : "others-color-events"
                 }`
             }
 
-            returnedArray.push(event)
+            // returnedArray.push(event)
+            // const finalArray = [...returnedArray, event]
+
+            returnedArray = [...returnedArray, event]
+
+            // setEventNewState(finalArray)
 
         }
 
@@ -339,6 +347,7 @@ export default function DashboardPage() {
                         eventClick={handleEventClick}
                         select = {handleEventAdd}
                         events = {createEvents()}
+                        // events = {eventNewState}
 
                         // #region "Random stuff"
 
