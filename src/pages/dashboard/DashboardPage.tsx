@@ -125,13 +125,13 @@ export default function DashboardPage() {
   // #endregion
 
 
+  // #region "Creating events"
+
     let eventGuid = 0
     
     function createEventId() {
         return String(eventGuid++)
     }
-
-  // #region "Creating events"
 
     function createEvents() {
 
@@ -297,35 +297,44 @@ export default function DashboardPage() {
 
       </div>
 
-      <div className="select-doctor-wrapper">
-        
-        <span>Choose a doctor from our clicic for an appointement: </span>
+      {
+          
+          !user?.isDoctor ? (
 
-        <select name="filter-by-sort" id="filter-by-sort" defaultValue={'DEFAULT'}
-            onChange={function (e: any) {
-                handleOnChangeDoctor(e)
-         }}>
-            
-            <option value="DEFAULT" disabled> Select Doctor</option>
-
-            {
-            
-                doctors?.length === 0 ? (
-                    <option value="Default">No Doctor to choose</option>
-                ): (
-                    
-                    //@ts-ignore
-                    doctors?.map(doctor =>  
-                        <option key={doctor.id} value = {doctor.firstName + " " + doctor.lastName}> {doctor.firstName + " " + doctor.lastName} </option>
+            <div className="select-doctor-wrapper">
+    
+            <span>Choose a doctor from our clicic for an appointement: </span>
+    
+            <select name="filter-by-sort" id="filter-by-sort" defaultValue={'DEFAULT'}
+                onChange={function (e: any) {
+                    handleOnChangeDoctor(e)
+             }}>
+                
+                <option value="DEFAULT" disabled> Select Doctor</option>
+    
+                {
+                
+                    doctors?.length === 0 ? (
+                        <option value="Default">No Doctor to choose</option>
+                    ): (
+                        
+                        //@ts-ignore
+                        doctors?.map(doctor =>  
+                            <option key={doctor.id} value = {doctor.firstName + " " + doctor.lastName}> {doctor.firstName + " " + doctor.lastName} </option>
+                        )
+    
                     )
+    
+                }
+    
+            </select>
+    
+            </div>
 
-                )
+          ): null
 
-            }
+      }
 
-        </select>
-
-      </div>
 
       {
 

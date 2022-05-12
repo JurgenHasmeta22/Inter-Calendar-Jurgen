@@ -1,9 +1,9 @@
 .modal-wrapper {
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.541);
+    background-color: rgba(39, 37, 37, 0.541);
     display: grid;
-    backdrop-filter: blur(1px);
+    backdrop-filter: blur(2px);
     place-content: center;
     position: fixed;
     z-index: 20;
@@ -11,12 +11,12 @@
   
   .modal-container {
     display: grid;
-    background-color: var(--fourth-color);
+    background-color: #f1f9ff;
     place-items: center;
     border-radius: 1rem;
     position: relative;
-    padding: 1rem;
-    gap: 1rem;
+    padding: 2rem;
+    gap: 3rem;
   }
   
   .modal-header {
@@ -33,10 +33,18 @@
   
   .modal-body {
     padding: 1rem;
+    display: grid;
+    grid-template-rows: auto;
+    grid-gap: 20px;
   }
   
   .modal-header h2 {
     text-align: center;
+  }
+
+  .modal-container label {
+    font-size: 16px;
+    font-weight: 600;
   }
   
   .modal-body form {
@@ -58,14 +66,14 @@
   
   .modal-body form label input:focus {
     border: none;
-    outline: 2px solid var(--primary-color);
+    outline: 2px solid #50a2fd;
   }
   
   .modal-body form button {
     border: none;
     padding: 1rem;
     border-radius: 2rem;
-    background-color: var(--primary-color);
+    background-color: #50a2fd;
     font-weight: bold;
     cursor: pointer;
   }

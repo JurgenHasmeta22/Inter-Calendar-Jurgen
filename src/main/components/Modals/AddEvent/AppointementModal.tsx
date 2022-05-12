@@ -1,17 +1,28 @@
+// #region "Importing stuff"
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import {  } from "../../../store/stores/dashboard/dashboard.store";
 import IEvent from "../../../interfaces/IEvent";
 import { invalidateModal } from "../../../store/stores/dashboard/dashboard.store";
+import { RootState } from "../../../store/redux/rootState";
+import useGetUser from "../../../hooks/useGetUser";
+// #endregion
 
 function AppointementModal() {
 
+    // #region "State and hooks"
     const [error, setError] = useState("");
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const user = useGetUser()
+
+    const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
+    // #endregion
 
     return (
 
@@ -27,6 +38,7 @@ function AppointementModal() {
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
+
                 className="modal-container"
             >
 
@@ -36,6 +48,7 @@ function AppointementModal() {
                         fontSize="large"
                         sx={{ color: "#50a2fd" }}
                         className="close-icon"
+                        
                         onClick={() => {
                             dispatch(invalidateModal());
                         }}
@@ -53,7 +66,7 @@ function AppointementModal() {
 
                         <label>
 
-                            description
+                            Description: 
 
                             <input
                                 type="text"
@@ -66,7 +79,7 @@ function AppointementModal() {
 
                         <label>
 
-                            title:
+                            Title: 
 
                             <input
                                 type="text"
@@ -79,7 +92,49 @@ function AppointementModal() {
 
                         <label>
 
-                            start Date:
+                            Doctor choosen: 
+
+                            <input
+                                type="text"
+                                name="doctor"
+                                className="doctor"
+                                disabled
+                                value={selectedDoctor?.firstName + " " + selectedDoctor?.lastName}
+                            />
+
+                        </label>
+
+                        <label>
+
+                            Patient: 
+
+                            <input
+                                type="text"
+                                name="patient"
+                                className="patient"
+                                disabled
+                                value={user?.firstName + " " + user?.lastName}
+                            />
+
+                        </label>
+
+                        <label>
+
+                            Category Id of visit: 
+
+                            <input
+                                type="text"
+                                name="category"
+                                className="category"
+                                disabled
+                                value={"1"}
+                            />
+
+                        </label>
+
+                        <label>
+
+                            Start date: 
 
                             <input
                                 type="datetime-local"
@@ -92,7 +147,7 @@ function AppointementModal() {
 
                         <label>
 
-                            end Date:
+                            End date:
 
                             <input
                                 type="datetime-local"
@@ -105,7 +160,7 @@ function AppointementModal() {
 
                         {error !== "" ? <span className="email-error">{error}</span> : null}
 
-                        <button type="submit">book</button>
+                        <button type="submit">Book an appointement</button>
 
                     </form>
 
