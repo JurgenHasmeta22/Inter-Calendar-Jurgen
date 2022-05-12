@@ -124,15 +124,22 @@ export default function DashboardPage() {
 
     function createEvents() {
 
-        // const acceptedAppointemets: any = [...selectedDoctor?.acceptedAppointemets]
-        
-        const postedAppointements: any = [...user?.postedAppointements]
+        // @ts-ignore
+        const acceptedAppointemets = selectedDoctor?.acceptedAppointemets
+
+        // const doctorResult = doctors?.find(doctor => doctor.firstName === selectedDoctorName)
+        // const acceptedAppointemets = doctorResult.acceptedAppointemets
+
+        // const postedAppointements: any = [...user?.postedAppointements]
 
         let returnedArray: any = []
 
+        //@ts-ignore
         // for (const appointement of acceptedAppointemets) {
 
-        for (const appointement of postedAppointements) {
+        if (selectedDoctor === null) return [] //this fixed all the bugs on error boundaries etc etc
+
+        for (const appointement of acceptedAppointemets) {
 
             const event = {
                 title: appointement.title,
@@ -150,12 +157,9 @@ export default function DashboardPage() {
             // const finalArray = [...returnedArray, event]
 
             returnedArray = [...returnedArray, event]
-
             // setEventNewState(finalArray)
 
         }
-
-        // console.log(returnedArray)
 
         return returnedArray
         
