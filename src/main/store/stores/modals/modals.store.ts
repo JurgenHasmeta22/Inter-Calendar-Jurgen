@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import IModal from '../../../interfaces/IModal';
 
 const initialState: IModal = {
+    price: 0,
     title: "",
     description: "",
     doctor_id: null,
@@ -45,6 +46,10 @@ const modalsStore = createSlice({
 
     setUserId(state, action: PayloadAction<number>) {
         state.user_id = action.payload
+    },
+
+    setPrice(state, action: PayloadAction<number>) {
+        state.price = action.payload
     }
 
   }
@@ -60,5 +65,6 @@ export const {
     setCategoryId,
     setDoctorId,
     setUserId,
-    setEndDate
+    setEndDate,
+    setPrice
 } = modalsStore.actions;

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import {  } from "../../../store/stores/dashboard/dashboard.store";
 import IEvent from "../../../interfaces/IEvent";
-import { invalidateModal } from "../../../store/stores/dashboard/dashboard.store";
+import { invalidateModal, setDoctors, setSelectedDoctor } from "../../../store/stores/dashboard/dashboard.store";
 import { RootState } from "../../../store/redux/rootState";
 import useGetUser from "../../../hooks/useGetUser";
 
@@ -19,6 +19,8 @@ setTitle,
 setEndDate,
 setUserId
 } from "../../../store/stores/modals/modals.store"
+
+import axios from "axios";
 // #endregion
 
 function AppointementModal() {
@@ -32,7 +34,50 @@ function AppointementModal() {
     const user = useGetUser()
 
     const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
+    const doctors = useSelector((state: RootState) => state.dashboard.doctors);
+
+    // const price = useSelector((state: RootState) => state.modals.price);
+    const startDate = useSelector((state: RootState) => state.modals.startDate);
+    const endDate = useSelector((state: RootState) => state.modals.endDate);
+    const title = useSelector((state: RootState) => state.modals.title);
+    const description = useSelector((state: RootState) => state.modals.description);
     // #endregion
+
+    function handleOnChangeDoctor(e: any) {
+
+        const newDoctors = [...doctors]
+        const doctorFinal = newDoctors.find(doctor => doctor.firstName + " " + doctor.lastName === e.target.value )
+
+        dispatch(setSelectedDoctor(doctorFinal))
+        // handleOnChangeSelect(e)
+
+    }
+
+    async function postAppointement(e: any) {
+
+        const dataToSend = {
+            price: 350,
+            startDate: startDate,
+            endDate: endDate,
+            title: title,
+            description: description,
+            status: 1,
+            user_id: user?.id,
+            doctor_id: selectedDoctor?.id,
+            category_id: 1
+        }
+
+        let result = await (await axios.post(`appointements`, dataToSend)).data;
+
+        // console.log(result)
+
+        dispatch(setDoctors(result))
+        
+        // handleOnChangeDoctor(e)
+
+        // dispatch(setSelectedDoctor())
+
+    }
 
     return (
 
@@ -71,7 +116,10 @@ function AppointementModal() {
                 <main className="modal-body">
 
                     <form
-                    // onSubmit={handleSubmit}
+                        onSubmit={(e: any) => {
+                            e.preventDefault()
+                            postAppointement(e)
+                        }}
                     >
 
                         <label>
@@ -114,11 +162,11 @@ function AppointementModal() {
                                 type="text"
                                 name="doctor"
                                 className="doctor"
-                                disabled
+                                readOnly
                                 value={selectedDoctor?.firstName + " " + selectedDoctor?.lastName}
-                                onChange={(e: any) => {
-                                    dispatch(setDoctorId(e.target.value))
-                                }}
+                                // onLoad={(e: any) => {
+                                //     dispatch(setDoctorId(selectedDoctor?.id))
+                                // }}
                             />
 
                         </label>
@@ -131,11 +179,11 @@ function AppointementModal() {
                                 type="text"
                                 name="patient"
                                 className="patient"
-                                disabled
+                                readOnly
                                 value={user?.firstName + " " + user?.lastName}
-                                onChange={(e: any) => {
-                                    dispatch(setUserId(e.target.value))
-                                }}
+                                // onLoad={(e: any) => {
+                                //     dispatch(setUserId(user?.id))
+                                // }}
                             />
 
                         </label>
@@ -148,11 +196,11 @@ function AppointementModal() {
                                 type="text"
                                 name="category"
                                 className="category"
-                                disabled
-                                value={"1"}
-                                onChange={(e: any) => {
-                                    dispatch(setCategoryId(e.target.value))
-                                }}
+                                readOnly
+                                value = {"1"}
+                                // onLoad={(e: any) => {
+                                //     dispatch(setCategoryId(e.target.value))
+                                // }}
                             />
 
                         </label>

@@ -168,6 +168,7 @@ export default function DashboardPage() {
             // const finalArray = [...returnedArray, event]
 
             returnedArray = [...returnedArray, event]
+
             // setEventNewState(finalArray)
 
         }
