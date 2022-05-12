@@ -178,7 +178,9 @@ export default function DashboardPage() {
 
     function handleEventAdd(selectInfo:  any) {
 
-        handleOpen()
+        if (selectedDoctor) {
+            handleOpen()
+        }
 
         // let title = ('Please enter a new title for your event')
         // let calendarApi = selectInfo.view.calendar
@@ -220,6 +222,7 @@ export default function DashboardPage() {
     const todayDate = () => {
 
         let today = new Date();
+        
         let dd = String(today.getDate()).padStart(2, "0");
         let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
         let yyyy = today.getFullYear();
