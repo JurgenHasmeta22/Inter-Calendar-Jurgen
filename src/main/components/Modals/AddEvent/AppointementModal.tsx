@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import {  } from "../../../store/stores/dashboard/dashboard.store";
 import IEvent from "../../../interfaces/IEvent";
-import { invalidateModal, setDoctors, setSelectedDoctor } from "../../../store/stores/dashboard/dashboard.store";
+import { invalidateModal, setDoctors, setModal, setSelectedDoctor } from "../../../store/stores/dashboard/dashboard.store";
 import { RootState } from "../../../store/redux/rootState";
 import useGetUser from "../../../hooks/useGetUser";
 
@@ -20,7 +20,12 @@ setEndDate,
 setUserId
 } from "../../../store/stores/modals/modals.store"
 
+import {
+setUser
+} from "../../../store/stores/user/user.store"
+
 import axios from "axios";
+import { toast } from "react-toastify";
 // #endregion
 
 function AppointementModal() {
@@ -59,6 +64,8 @@ function AppointementModal() {
             price: 350,
             startDate: startDate,
             endDate: endDate,
+            // startDate: ${selectInfo.startStr}T${e.target.startTime.value}:00,
+            // endDate: ${selectInfo.startStr}T${e.target.endTime.value}:00,
             title: title,
             description: description,
             status: 1,
@@ -69,14 +76,16 @@ function AppointementModal() {
 
         let result = await (await axios.post(`appointements`, dataToSend)).data;
 
-        // console.log(result)
+        if (!result.error) {
 
-        // dispatch(setDoctors(result))
-        // dispatch(setSelectedDoctor(result.))
-        
-        // handleOnChangeDoctor(e)
+            dispatch(setSelectedDoctor(result.doctorServer))
+            dispatch(setUser(result.patientServer));
 
-        // dispatch(setSelectedDoctor())
+            dispatch(setModal(""))
+            toast.success("Succesfully Created Event");
+
+        }
+
 
     }
 
