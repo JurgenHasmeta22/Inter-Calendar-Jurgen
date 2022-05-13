@@ -1,6 +1,7 @@
 import IAppointement from "./IAppointement";
 import IEvent from "../interfaces/IEvent"
 import IUser from "./IUser";
+import { DateSelectArg } from "@fullcalendar/react";
 
 export default interface IDashboard
 {
@@ -10,4 +11,5 @@ export default interface IDashboard
 	doctors: IUser[]
 	selectedDoctorName: string
 	selectedDoctor: IUser | null
+	selectInfo: DateSelectArg | null
 } 

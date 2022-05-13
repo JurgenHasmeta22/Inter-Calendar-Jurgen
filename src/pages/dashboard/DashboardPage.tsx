@@ -49,7 +49,8 @@ import {
     setDoctors,
     invalidateDoctors,
     setSelectedDoctorName,
-    setSelectedDoctor
+    setSelectedDoctor,
+    setSelectInfo
 } from "../../main/store/stores/dashboard/dashboard.store"
 
 import { useDispatch, useSelector } from "react-redux";
@@ -85,6 +86,8 @@ export default function DashboardPage() {
   // #region "Redux state and hooks"
   const appointements = useSelector((state: RootState) => state.dashboard.appointements);
   const doctors = useSelector((state: RootState) => state.dashboard.doctors);
+
+//   const [selectInfo, setSelectInfo] = useState<DateSelectArg | null>(null);
 
   const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
   const selectedDoctorName = useSelector((state: RootState) => state.dashboard.selectedDoctorName);
@@ -157,6 +160,7 @@ export default function DashboardPage() {
                 start: appointement.startDate,
                 end: appointement.endDate,
                 allDay: false,
+                overlap: false,
                 editable: user?.id === appointement.user_id,
                 color: "#378006",
                 className: `${
@@ -180,37 +184,12 @@ export default function DashboardPage() {
     function handleEventAdd(selectInfo:  any) {
 
         if (selectedDoctor) {
+            // setSelectInfo(selectInfo);
+            dispatch(setSelectInfo(selectInfo))
             handleOpen()
         }
-
-        // let title = ('Please enter a new title for your event')
-        // let calendarApi = selectInfo.view.calendar
-
-        // calendarApi.unselect() // clear date selection
-
-        // if (title) {
-
-        //     calendarApi.addEvent({
-
-        //         id: createEventId(),
-        //         startDate: selectInfo.startDate,
-        //         endDate: selectInfo.endDate,
-        //         title: selectInfo.title,
-        //         description: selectInfo.description,
-        //         status: selectInfo.status,
-        //         user_id: selectInfo.user_id,
-        //         doctor_id: selectInfo.doctor_id,
-        //         allDay: false
-
-        //     })
-
-        // }
         
     }
-
-    // function handleDateClick(arg: any) { // bind with an arrow function
-    //     alert(arg.dateStr)
-    // }
 
     function handleEventClick(clickInfo: any) {
 
@@ -267,6 +246,11 @@ export default function DashboardPage() {
         handleOnChangeSelect(e)
 
     }
+
+    const handleDateSelect = (selectInfo: DateSelectArg) => {
+        setSelectInfo(selectInfo);
+        setModal("add-event");
+    };
     // #endregion
 
 

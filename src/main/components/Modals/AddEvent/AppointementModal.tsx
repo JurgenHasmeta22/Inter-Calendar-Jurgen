@@ -28,7 +28,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 // #endregion
 
+
 function AppointementModal() {
+
 
     // #region "State and hooks"
     const [error, setError] = useState("");
@@ -39,6 +41,8 @@ function AppointementModal() {
     const user = useGetUser()
 
     const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
+    const selectInfo = useSelector((state: RootState) => state.dashboard.selectInfo);
+
     const doctors = useSelector((state: RootState) => state.dashboard.doctors);
 
     // const price = useSelector((state: RootState) => state.modals.price);
@@ -48,6 +52,8 @@ function AppointementModal() {
     const description = useSelector((state: RootState) => state.modals.description);
     // #endregion
 
+    
+    // #region "Helpers functions and event listeners"
     function handleOnChangeDoctor(e: any) {
 
         const newDoctors = [...doctors]
@@ -62,10 +68,10 @@ function AppointementModal() {
 
         const dataToSend = {
             price: 350,
-            startDate: startDate,
-            endDate: endDate,
-            // startDate: ${selectInfo.startStr}T${e.target.startTime.value}:00,
-            // endDate: ${selectInfo.startStr}T${e.target.endTime.value}:00,
+            // startDate: startDate,
+            // endDate: endDate,
+            startDate: `${selectInfo.startStr}T${e.target.startTime.value}:00`,
+            endDate: `${selectInfo.startStr}T${e.target.endTime.value}:00`,
             title: title,
             description: description,
             status: 1,
@@ -86,8 +92,9 @@ function AppointementModal() {
 
         }
 
-
     }
+    // #endregion
+
 
     return (
 
@@ -174,9 +181,6 @@ function AppointementModal() {
                                 className="doctor"
                                 readOnly
                                 value={selectedDoctor?.firstName + " " + selectedDoctor?.lastName}
-                                // onLoad={(e: any) => {
-                                //     dispatch(setDoctorId(selectedDoctor?.id))
-                                // }}
                             />
 
                         </label>
@@ -191,9 +195,6 @@ function AppointementModal() {
                                 className="patient"
                                 readOnly
                                 value={user?.firstName + " " + user?.lastName}
-                                // onLoad={(e: any) => {
-                                //     dispatch(setUserId(user?.id))
-                                // }}
                             />
 
                         </label>
@@ -208,9 +209,6 @@ function AppointementModal() {
                                 className="category"
                                 readOnly
                                 value = {"1"}
-                                // onLoad={(e: any) => {
-                                //     dispatch(setCategoryId(e.target.value))
-                                // }}
                             />
 
                         </label>
@@ -220,13 +218,24 @@ function AppointementModal() {
                             Start date: 
 
                             <input
-                                type="datetime-local"
+                                type="date"
                                 name="startDate"
                                 className="startDate"
+                                disabled
+                                defaultValue={selectInfo.startStr}
+                            />
+
+                        </label>
+
+                        <label>
+                            
+                            Start Time:
+
+                            <input
+                                type="time"
+                                name="startTime"
+                                className="normal-input"
                                 required
-                                onChange={(e: any) => {
-                                    dispatch(setStartDate(e.target.value))
-                                }}
                             />
 
                         </label>
@@ -236,13 +245,24 @@ function AppointementModal() {
                             End date:
 
                             <input
-                                type="datetime-local"
+                                type="date"
                                 name="endDate"
                                 className="endDate"
+                                disabled
+                                defaultValue={selectInfo?.endStr}
+                            />
+                            
+                        </label>
+
+                        <label>
+
+                            End Time:
+
+                            <input
+                                type="time"
+                                name="endTime"
+                                className="normal-input"
                                 required
-                                onChange={(e: any) => {
-                                    dispatch(setEndDate(e.target.value))
-                                }}
                             />
                             
                         </label>
