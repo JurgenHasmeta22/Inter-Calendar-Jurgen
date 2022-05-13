@@ -19,7 +19,7 @@ import useGetUser from "../../../hooks/useGetUser";
 // #endregion
 
 
-function DeleteModal() {
+function DeleteModal({eventClickNew}: any) {
 
   const user = useGetUser()
 
@@ -34,7 +34,6 @@ function DeleteModal() {
     const handleDeleteEvent = async () => {
 
         const appointementId = Number(eventClick.event._def.publicId);
-        console.log(appointementId)
         
         // const dataToSend: any = {
         //   doctor_id: selectedDoctor?.id,
@@ -54,7 +53,7 @@ function DeleteModal() {
         } 
         
         else {
-            toast.error(dataFromServer.error);
+          toast.error(dataFromServer.error);
         }
 
     };

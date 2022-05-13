@@ -64,6 +64,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 import TestModal from "../../main/components/Modals/TestModal"
 import AddEventModal from "../../main/components/Modals/AddEvent/AppointementModal"
 import { toast } from "react-toastify";
+
+import UserModals from "../../main/components/Modals/UserModals"
 // #endregion
 
 
@@ -90,7 +92,7 @@ export default function DashboardPage() {
   const doctors = useSelector((state: RootState) => state.dashboard.doctors);
 
 //   const [selectInfo, setSelectInfo] = useState<DateSelectArg | null>(null);
-//   const [eventClick, setEventClick] = useState<EventClickArg | null>(null);
+  const [eventClickNew, setEventClickNew] = useState<EventClickArg | null>(null);
 
   let calendarRef = React.createRef();
 
@@ -163,6 +165,7 @@ export default function DashboardPage() {
         for (const appointement of acceptedAppointemets) {
 
             const event = {
+                id: `${appointement.id}`,
                 title: appointement.title,
                 start: appointement.startDate,
                 end: appointement.endDate,
@@ -191,7 +194,6 @@ export default function DashboardPage() {
     function handleEventAdd(selectInfo:  any) {
 
         if (selectedDoctor) {
-            // setSelectInfo(selectInfo);
             dispatch(setSelectInfo(selectInfo))
             handleOpen()
         }
@@ -201,8 +203,11 @@ export default function DashboardPage() {
     const handleEventClick = (eventClick: EventClickArg) => {
 
         if (selectedDoctor?.acceptedAppointemets.find((event: any) => event.user_id === user.id)) {
-          dispatch(setEventClick(eventClick));
-          dispatch(setModal("deleteEvent"));
+            // console.log(eventClick)
+
+        //   dispatch(setEventClick(eventClick));
+            setEventClickNew(eventClick)
+            dispatch(setModal("deleteEvent"));
         }
 
     };
@@ -286,6 +291,10 @@ export default function DashboardPage() {
     <>
 
       <HeaderCommon />
+
+      <UserModals
+        eventClickNew = {eventClickNew}
+      />
 
         {/* {
 
