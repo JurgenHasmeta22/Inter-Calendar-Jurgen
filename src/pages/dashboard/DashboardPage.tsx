@@ -201,8 +201,8 @@ export default function DashboardPage() {
     const handleEventClick = (eventClick: EventClickArg) => {
 
         if (selectedDoctor?.acceptedAppointemets.find((event: any) => event.user_id === user.id)) {
-          setEventClick(eventClick);
-          setModal("delete-event");
+          dispatch(setEventClick(eventClick));
+          dispatch(setModal("deleteEvent"));
         }
 
     };

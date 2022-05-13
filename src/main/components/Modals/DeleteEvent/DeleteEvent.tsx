@@ -13,11 +13,15 @@ import {
     setModal
 } from "../../../store/stores/dashboard/dashboard.store"
 
+import userEvent from "@testing-library/user-event";
+import useGetUser from "../../../hooks/useGetUser";
+
 // #endregion
 
 
 function DeleteModal() {
 
+  const user = useGetUser()
 
     // #region "Redux and other stats, also hooks"
     const dispatch = useDispatch();
@@ -30,6 +34,12 @@ function DeleteModal() {
     const handleDeleteEvent = async () => {
 
         const appointementId = Number(eventClick.event._def.publicId);
+        console.log(appointementId)
+        
+        // const dataToSend: any = {
+        //   doctor_id: selectedDoctor?.id,
+        //   user_id: user.id
+        // }
 
         const dataFromServer = await (await axios.delete(`appointements/${appointementId}`)).data;
 
@@ -78,7 +88,7 @@ function DeleteModal() {
             sx={{ color: "#50a2fd" }}
 
             onClick={() => {
-              setModal("");
+              dispatch(setModal(""));
             }}
           />
 
@@ -90,7 +100,7 @@ function DeleteModal() {
 
           <button
             onClick={() => {
-              setModal("");
+              dispatch(setModal(""));
             }}
 
             className="general-button cancel-btn"

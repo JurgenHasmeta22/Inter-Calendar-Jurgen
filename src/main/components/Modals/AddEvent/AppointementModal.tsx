@@ -26,6 +26,7 @@ setUser
 
 import axios from "axios";
 import { toast } from "react-toastify";
+import React from "react";
 // #endregion
 
 
@@ -50,6 +51,8 @@ function AppointementModal() {
     const endDate = useSelector((state: RootState) => state.modals.endDate);
     const title = useSelector((state: RootState) => state.modals.title);
     const description = useSelector((state: RootState) => state.modals.description);
+
+    let calendarRef = React.createRef();
     // #endregion
 
     
@@ -84,11 +87,15 @@ function AppointementModal() {
 
         if (!result.error) {
 
+            //@ts-ignore
+            // let calendarApi = calendarRef.current.getApi();
+
             dispatch(setSelectedDoctor(result.doctorServer))
             dispatch(setUser(result.patientServer));
 
             dispatch(setModal(""))
             toast.success("Succesfully Created Event");
+            // calendarApi.changeView("timeGridDay", selectInfo.startStr);
 
         }
 
