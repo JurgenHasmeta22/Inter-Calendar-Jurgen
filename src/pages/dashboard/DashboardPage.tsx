@@ -24,7 +24,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useTheme } from '@emotion/react';
 
-import FullCalendar, { DateSelectArg } from "@fullcalendar/react";
+import FullCalendar, { DateSelectArg, EventClickArg } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
@@ -50,7 +50,8 @@ import {
     invalidateDoctors,
     setSelectedDoctorName,
     setSelectedDoctor,
-    setSelectInfo
+    setSelectInfo,
+    setEventClick
 } from "../../main/store/stores/dashboard/dashboard.store"
 
 import { useDispatch, useSelector } from "react-redux";
@@ -62,6 +63,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 
 import TestModal from "../../main/components/Modals/TestModal"
 import AddEventModal from "../../main/components/Modals/AddEvent/AppointementModal"
+import { toast } from "react-toastify";
 // #endregion
 
 
@@ -88,6 +90,9 @@ export default function DashboardPage() {
   const doctors = useSelector((state: RootState) => state.dashboard.doctors);
 
 //   const [selectInfo, setSelectInfo] = useState<DateSelectArg | null>(null);
+//   const [eventClick, setEventClick] = useState<EventClickArg | null>(null);
+
+  let calendarRef = React.createRef();
 
   const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
   const selectedDoctorName = useSelector((state: RootState) => state.dashboard.selectedDoctorName);
@@ -124,7 +129,9 @@ export default function DashboardPage() {
   }, [])
 
   const handleOpen = () => dispatch(setModal("appoinment"));
-//   const handleClose = () => dispatch(setModal(""));
+
+  // const handleClose = () => dispatch(setModal(""));
+
   // #endregion
 
 
@@ -191,13 +198,14 @@ export default function DashboardPage() {
         
     }
 
-    function handleEventClick(clickInfo: any) {
+    const handleEventClick = (eventClick: EventClickArg) => {
 
-        if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-          clickInfo.event.remove()
+        if (selectedDoctor?.acceptedAppointemets.find((event: any) => event.user_id === user.id)) {
+          setEventClick(eventClick);
+          setModal("delete-event");
         }
-    
-    }
+
+    };
 
     const todayDate = () => {
 
@@ -212,6 +220,8 @@ export default function DashboardPage() {
         return date;
 
     };
+
+    const handleDateClick = (info: any) => {};
 
     // #region "Trying some weird stuff"
 
@@ -248,8 +258,25 @@ export default function DashboardPage() {
     }
 
     const handleDateSelect = (selectInfo: DateSelectArg) => {
-        setSelectInfo(selectInfo);
-        setModal("add-event");
+
+        if (!selectedDoctor) {
+            toast.warn("Please select a doctor to choose an appointement")
+        }
+
+        else {
+
+            //@ts-ignore
+            let calendarApi = calendarRef.current.getApi();
+            
+            calendarApi.changeView("timeGridDay", selectInfo.startStr);
+
+            if (selectInfo.view.type === "timeGridDay" && selectedDoctor) {
+                dispatch(setSelectInfo(selectInfo));
+                handleOpen()
+            }
+        
+        }
+
     };
     // #endregion
 
@@ -358,13 +385,17 @@ export default function DashboardPage() {
                         eventColor="#50a2fd"
                         selectMirror={true}
                         droppable={true}
+                        weekends={false}
+                        //@ts-ignore
+                        ref={calendarRef}
                         dayMaxEvents={true}
-
+                        dateClick={handleDateClick}
                         eventDurationEditable={true}
 
                         validRange={{ start: todayDate(), end: "2023-01-01" }}
                         eventClick={handleEventClick}
-                        select = {handleEventAdd}
+                        // select = {handleEventAdd}
+                        select = {handleDateSelect}
                         events = {createEvents()}
                         // #endregion
 

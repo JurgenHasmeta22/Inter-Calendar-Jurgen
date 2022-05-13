@@ -70,8 +70,8 @@ function AppointementModal() {
             price: 350,
             // startDate: startDate,
             // endDate: endDate,
-            startDate: `${selectInfo.startStr}T${e.target.startTime.value}:00`,
-            endDate: `${selectInfo.startStr}T${e.target.endTime.value}:00`,
+            startDate: changeDateFormat(selectInfo.startStr),
+            endDate: changeDateFormat(selectInfo.endStr),
             title: title,
             description: description,
             status: 1,
@@ -95,6 +95,9 @@ function AppointementModal() {
     }
     // #endregion
 
+    const changeDateFormat = (date: string) => {
+        return date.substring(0, date.length - 6);
+    };
 
     return (
 
@@ -218,24 +221,11 @@ function AppointementModal() {
                             Start date: 
 
                             <input
-                                type="date"
+                                type="datetime-local"
                                 name="startDate"
                                 className="startDate"
                                 disabled
-                                defaultValue={selectInfo.startStr}
-                            />
-
-                        </label>
-
-                        <label>
-                            
-                            Start Time:
-
-                            <input
-                                type="time"
-                                name="startTime"
-                                className="normal-input"
-                                required
+                                defaultValue={changeDateFormat(selectInfo.startStr)}
                             />
 
                         </label>
@@ -245,24 +235,11 @@ function AppointementModal() {
                             End date:
 
                             <input
-                                type="date"
+                                type="datetime-local"
                                 name="endDate"
                                 className="endDate"
                                 disabled
-                                defaultValue={selectInfo?.endStr}
-                            />
-                            
-                        </label>
-
-                        <label>
-
-                            End Time:
-
-                            <input
-                                type="time"
-                                name="endTime"
-                                className="normal-input"
-                                required
+                                defaultValue={changeDateFormat(selectInfo.endStr)}
                             />
                             
                         </label>

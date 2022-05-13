@@ -1,4 +1,4 @@
-import { DateSelectArg } from '@fullcalendar/react';
+import { DateSelectArg, EventClickArg } from '@fullcalendar/react';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import IAppointement from '../../../interfaces/IAppointement';
 import IEvent from '../../../interfaces/IEvent';
@@ -12,7 +12,8 @@ const initialState: IDashboard = {
     doctors: [],
     selectedDoctorName: "",
     selectedDoctor: null,
-    selectInfo: null
+    selectInfo: null,
+    eventClick: null
 }
 
 const dashboardStore = createSlice({
@@ -62,6 +63,11 @@ const dashboardStore = createSlice({
     setSelectInfo(state, action: PayloadAction<DateSelectArg>) {
       //@ts-ignore
       state.selectInfo = action.payload
+    },
+
+    setEventClick(state, action: PayloadAction<EventClickArg>) {
+      //@ts-ignore
+      state.eventClick = action.payload
     }
 
   }
@@ -80,5 +86,6 @@ export const {
   setSelectedDoctorName,
   setSelectedDoctor,
   invalidateModal,
-  setSelectInfo
+  setSelectInfo,
+  setEventClick
 } = dashboardStore.actions;
