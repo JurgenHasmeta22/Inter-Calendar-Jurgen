@@ -7,6 +7,7 @@
     place-content: center;
     position: fixed;
     z-index: 20;
+    /* overflow-y: visible; */
   }
   
   .modal-container {
@@ -15,8 +16,8 @@
     place-items: center;
     border-radius: 1rem;
     position: relative;
-    padding: 2rem;
-    gap: 3rem;
+    padding: 20px;
+    gap: 10px;
   }
   
   .modal-header {
@@ -32,10 +33,12 @@
   }
   
   .modal-body {
-    padding: 1rem;
+    padding: 10px;
     display: grid;
     grid-template-rows: auto;
-    grid-gap: 20px;
+    grid-gap: 10px;
+    height: auto;
+    /* overflow: scroll; */
   }
   
   .modal-header h2 {
@@ -48,7 +51,7 @@
   }
   
   .modal-body form {
-    gap: 1rem;
+    gap: 10px;
     display: grid;
   }
   

@@ -27,10 +27,11 @@ setUser
 import axios from "axios";
 import { toast } from "react-toastify";
 import React from "react";
+import { DateSelectArg } from "@fullcalendar/react";
 // #endregion
 
 
-function AppointementModal() {
+function AppointementModal({selectInfo}: any) {
 
 
     // #region "State and hooks"
@@ -42,7 +43,7 @@ function AppointementModal() {
     const user = useGetUser()
 
     const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
-    const selectInfo = useSelector((state: RootState) => state.dashboard.selectInfo);
+    // const selectInfo = useSelector((state: RootState) => state.dashboard.selectInfo);
 
     const doctors = useSelector((state: RootState) => state.dashboard.doctors);
 
@@ -63,7 +64,6 @@ function AppointementModal() {
         const doctorFinal = newDoctors.find(doctor => doctor.firstName + " " + doctor.lastName === e.target.value )
 
         dispatch(setSelectedDoctor(doctorFinal))
-        // handleOnChangeSelect(e)
 
     }
 
@@ -205,20 +205,6 @@ function AppointementModal() {
                                 className="patient"
                                 readOnly
                                 value={user?.firstName + " " + user?.lastName}
-                            />
-
-                        </label>
-
-                        <label>
-
-                            Category Id of visit: 
-
-                            <input
-                                type="text"
-                                name="category"
-                                className="category"
-                                readOnly
-                                value = {"1"}
                             />
 
                         </label>

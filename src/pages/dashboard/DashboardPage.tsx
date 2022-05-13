@@ -91,7 +91,7 @@ export default function DashboardPage() {
   const appointements = useSelector((state: RootState) => state.dashboard.appointements);
   const doctors = useSelector((state: RootState) => state.dashboard.doctors);
 
-//   const [selectInfo, setSelectInfo] = useState<DateSelectArg | null>(null);
+  const [selectInfo, setSelectInfo] = useState<DateSelectArg | null>(null);
   const [eventClickNew, setEventClickNew] = useState<EventClickArg | null>(null);
 
   let calendarRef = React.createRef();
@@ -194,7 +194,7 @@ export default function DashboardPage() {
     function handleEventAdd(selectInfo:  any) {
 
         if (selectedDoctor) {
-            dispatch(setSelectInfo(selectInfo))
+            setSelectInfo(selectInfo)
             handleOpen()
         }
         
@@ -276,7 +276,7 @@ export default function DashboardPage() {
             calendarApi.changeView("timeGridDay", selectInfo.startStr);
 
             if (selectInfo.view.type === "timeGridDay" && selectedDoctor) {
-                dispatch(setSelectInfo(selectInfo));
+                setSelectInfo(selectInfo);
                 handleOpen()
             }
         
@@ -294,6 +294,7 @@ export default function DashboardPage() {
 
       <UserModals
         eventClickNew = {eventClickNew}
+        selectInfo = {selectInfo}
       />
 
         {/* {

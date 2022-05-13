@@ -2,8 +2,9 @@
     display: grid;
     place-content: center;
     /* height: 50%; */
-    height: 100vh;
+    height: auto;
     grid-template-rows: 1fr;
+    place-items: center;
     /* gap: 1rem; */
   }
   
@@ -21,7 +22,7 @@
     /* top: 150px; */
     backdrop-filter: blur(10px);
     width: 300px;
-    height: 300px;
+    height: 200px;
     border-radius: 5px;
     place-items: center;
     place-content: center;
@@ -113,7 +114,7 @@
     display: grid;
     display: block;
     width: 300px;
-    height: 280px;
+    height: 200px;
     box-shadow: 0 0 0.75rem #0095c7da;
     border-radius: 10px;
     padding: 1rem;

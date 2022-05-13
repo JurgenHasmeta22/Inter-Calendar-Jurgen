@@ -68,90 +68,6 @@ const LoginPage : FC = ()=>{
 
         <div className="login-wrapper-upper">
 
-            {
-                // #region "Old Login"
-            }
-
-            {/* <div className="login-page-wrapper">
-
-                <div className="login-main-wrapper">
-
-                    <form
-                        id="login-form"
-
-                        onSubmit={function (e) {
-                            
-                            e.preventDefault()
-
-                            const data = {
-                                userName,
-                                password
-                            }
-
-                            dispatch(onLogin(data))
-                            // navigate("../dashboard");
-
-                        }}
-                    >
-
-                        <h1>Bank System</h1>
-
-                        <label htmlFor="">
-
-                            <input
-                                type="text"
-                                name="usernameLogin"
-                                placeholder="Enter your userName: "
-                                required
-                                
-                                onChange={function (e) {
-                                    dispatch(setUserNameLogin(e.target.value))
-                                }}
-                            />
-
-                        </label>
-
-                        <label htmlFor="">
-
-                            <input
-                                type="password"
-                                name="passwordLogin"
-                                placeholder="Enter your password"
-                                required
-                                
-                                onChange={function (e) {
-                                    dispatch(setPasswordLogin(e.target.value))
-                                }}
-                            />
-
-                        </label>
-
-                        <label htmlFor="">
-                            <button>Log In</button>
-                        </label>
-
-                        <label id="signup-link-wrapper" htmlFor="">
-
-                            Don't have an account?{" "}
-
-                            <Link id="link" to={"../register"}>
-
-                                Sign Up
-
-                            </Link>
-
-                        </label>
-
-                    </form>
-
-                </div>
-
-            </div> */}
-
-            {
-                // #endregion
-            }
-
             <ThemeProvider theme={theme}>
 
                 <Container component="main" maxWidth="xs">
@@ -160,7 +76,7 @@ const LoginPage : FC = ()=>{
 
                     <Box
                         sx={{
-                            marginTop: 30,
+                            mt: 10,
                             display: 'flex',
                             flexDirection: 'column',
                             placeItems: 'center',

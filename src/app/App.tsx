@@ -8,8 +8,6 @@ import ErrorPage from "../pages/error/ErrorPage"
 import DashboardPage from "../pages/dashboard/DashboardPage"
 import UserProfilePage from "../pages/user/UserProfilePage"
 import "../app/App.css"
-import KeepMountedModal from '../main/components/Modals/TestModal';
-import Modals from "../main/components/Modals/Modals"
 // #endregion
 
 const App = () => {
@@ -20,7 +18,7 @@ const App = () => {
 
       <AppNavigate />
       
-      <Modals />
+      {/* <Modals /> */}
 
       <Routes>
 

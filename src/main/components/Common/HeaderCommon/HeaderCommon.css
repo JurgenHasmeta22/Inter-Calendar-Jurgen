@@ -5,25 +5,26 @@ header.header {
   display: grid;
   grid-template: 
   "header-group-1 header-group-2" 100px /
-  0.8fr 0.2fr; /* this is where the bug was wich cause header problems, i had all three at 1fr 1fr 1fr but when i tried auto in the last part all went perfect when responsive*/
+  0.5fr 0.5fr; /* this is where the bug was wich cause header problems, i had all three at 1fr 1fr 1fr but when i tried auto in the last part all went perfect when responsive*/
   background-color: #012b36;
-  grid-gap: 30px;
+  grid-gap: 10px;
   place-items: center;
+  place-content: center;
 }
 
 header.header .header-group-1 {
 grid-area: header-group-1;
 display: grid;
-grid-template-columns: 400px 200px;
-grid-gap: 50px;
+grid-template-columns: 0.9fr 0.1fr;
+grid-gap: 20px;
 place-items: center;
-padding-left: 50px;
+place-content: center;
 }
 
 #total-header-span {
   color: #e68b5d;
-  font-size: 16px;
-  font-weight: 900;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .special-logo-thing {
@@ -32,15 +33,15 @@ padding-left: 50px;
 }
 
 .special-logo-thing span {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 600;
   color: #b61e1e;
 }
 
 header.header .header-group-1 a {
-font-size: 22px;
+font-size: 16px;
 letter-spacing: 1px;
-font-weight: 900;
+font-weight: 700;
 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 color: #5ad2f3;
 font-style: italic;
@@ -48,14 +49,13 @@ font-style: italic;
 
 header.header .header-group-1 ul {
 display: grid;
-grid-template-columns: 0.33fr 0.33fr 0.33fr;
-grid-gap: 25px;
+/* grid-template-columns: 1fr; */
 place-items: center;
 }
 
 .div-inside-li {
 display: grid;
-grid-template-columns: 1fr;
+/* grid-template-columns: 1fr; */
 }
 
 .div-inside-li-special {
@@ -133,12 +133,12 @@ color: #e92d2d;
 header.header .header-group-2 {
 grid-area: header-group-2;
 display: grid;
-grid-template-columns: 400px 200px 200px;
-grid-gap: 30px;
-justify-content: end;
-justify-items: end;  
-align-items: center;
-padding-left: 250px;
+grid-template-columns: 0.33fr 0.33fr 0.33fr;
+grid-gap: 20px;
+/* justify-content: end; */
+/* justify-items: end;   */
+place-items: center;
+place-content: center;
 }
 
 .cart-icon {

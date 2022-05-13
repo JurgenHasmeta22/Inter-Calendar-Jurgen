@@ -26,14 +26,16 @@ function DeleteModal({eventClickNew}: any) {
     // #region "Redux and other stats, also hooks"
     const dispatch = useDispatch();
     const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
-    const eventClick = useSelector((state: RootState) => state.dashboard.eventClick);
+    // const eventClick = useSelector((state: RootState) => state.dashboard.eventClick);
     // #endregion
 
 
     // #region "Helpers functions and event listeners"
     const handleDeleteEvent = async () => {
 
-        const appointementId = Number(eventClick.event._def.publicId);
+        const appointementId = Number(eventClickNew.event._def.publicId);
+
+        console.log(appointementId)
         
         // const dataToSend: any = {
         //   doctor_id: selectedDoctor?.id,
@@ -44,11 +46,11 @@ function DeleteModal({eventClickNew}: any) {
 
         if (!dataFromServer.error) {
 
-            dispatch(setSelectedDoctor(dataFromServer.doctorServer));
-            dispatch(setUser(dataFromServer.patientServer));
+            dispatch(setSelectedDoctor(dataFromServer.updatedDoctor));
+            dispatch(setUser(dataFromServer.updatedUser));
+            dispatch(setModal(""));
 
             toast.success(dataFromServer.msg);
-            dispatch(setModal(""));
 
         } 
         
@@ -65,7 +67,7 @@ function DeleteModal({eventClickNew}: any) {
     <div
 
       onClick={() => {
-        setModal("");
+        dispatch(setModal(""))
       }}
 
       className="modal-wrapper"

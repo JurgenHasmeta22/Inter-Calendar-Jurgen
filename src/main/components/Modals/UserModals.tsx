@@ -1,18 +1,19 @@
 // import "./style.css";
 import AppointementModal from "./AddEvent/AppointementModal"
-import DeleteEvent from "./DeleteEvent/DeleteEvent"
-import IUser from "../../interfaces/IUser";
 import { DateSelectArg, EventClickArg } from "@fullcalendar/react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/redux/rootState";
 import DeleteModal from "./DeleteEvent/DeleteEvent";
+import "../Modals/Modals.css"
 
 type Props = {
   eventClickNew: EventClickArg;
+  selectInfo: any
 };
 
 function UserModals({
-  eventClickNew
+  eventClickNew,
+  selectInfo
 }: Props) {
 
     const modal = useSelector((state: RootState) => state.dashboard.modal);
@@ -22,7 +23,9 @@ function UserModals({
     case "appoinment":
 
       return (
-        <AppointementModal />
+        <AppointementModal 
+          selectInfo = {selectInfo}
+        />
       );
 
     case "deleteEvent":
