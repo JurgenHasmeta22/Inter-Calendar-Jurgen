@@ -118,8 +118,6 @@ export default function DashboardPage() {
   async function getDoctorsFromServer() {
     let result = await (await axios.get(`/doctors`));
     dispatch(setDoctors(result.data))
-    // dispatch(setSelectedDoctorName(result.data[0].firstName + " " + result.data[0].lastName))
-    // dispatch(setSelectedDoctor(result.data[0]))
   }
 
   useEffect(()=> {
@@ -131,9 +129,6 @@ export default function DashboardPage() {
   }, [])
 
   const handleOpen = () => dispatch(setModal("appoinment"));
-
-  // const handleClose = () => dispatch(setModal(""));
-
   // #endregion
 
 
@@ -150,42 +145,52 @@ export default function DashboardPage() {
         // @ts-ignore
         const acceptedAppointemets = selectedDoctor?.acceptedAppointemets
 
-        // const doctorResult = doctors?.find(doctor => doctor.firstName === selectedDoctorName)
-        // const acceptedAppointemets = doctorResult.acceptedAppointemets
-
-        // const postedAppointements: any = [...user?.postedAppointements]
-
         let returnedArray: any = []
-
-        //@ts-ignore
-        // for (const appointement of acceptedAppointemets) {
 
         if (selectedDoctor === null) return [] //this fixed all the bugs on error boundaries etc etc
 
         for (const appointement of acceptedAppointemets) {
 
+            let color = "";
+
+            switch (appointement.status) {
+
+                case "approved":
+                    color = "#39c32f";
+                    break;
+
+                case "cancelled":
+                    color = "#d01212";
+                    break;
+
+                default:
+                    color = "#fc9605";
+
+            }
+
             const event = {
+
                 id: `${appointement.id}`,
                 title: appointement.title,
                 start: appointement.startDate,
                 end: appointement.endDate,
                 allDay: false,
+                // backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7"}`,
+                color: "#378006",
                 overlap: false,
                 editable: user?.id === appointement.user_id,
-                color: "#378006",
                 className: `${
-                    user.id === appointement.user_id ? "my-color-events" : "others-color-events"
+                    user.id !== appointement.user_id ? "others-color-events" : `${appointement.status}`
                 }`
+
             }
 
-            // returnedArray.push(event)
-            // const finalArray = [...returnedArray, event]
-
-            returnedArray = [...returnedArray, event]
-
-            // setEventNewState(finalArray)
+            // returnedArray = [...returnedArray, event]
+            returnedArray.push(event);
 
         }
+
+        // console.log(returnedArray) idk where the bugs is this works
 
         return returnedArray
         
@@ -203,9 +208,6 @@ export default function DashboardPage() {
     const handleEventClick = (eventClick: EventClickArg) => {
 
         if (selectedDoctor?.acceptedAppointemets.find((event: any) => event.user_id === user.id)) {
-            // console.log(eventClick)
-
-        //   dispatch(setEventClick(eventClick));
             setEventClickNew(eventClick)
             dispatch(setModal("deleteEvent"));
         }
@@ -227,25 +229,6 @@ export default function DashboardPage() {
     };
 
     const handleDateClick = (info: any) => {};
-
-    // #region "Trying some weird stuff"
-
-    // useCallback( () => {
-    //     createEvents()
-    // }, [] )
-
-    // useEffect( () => {
-    //     createEvents()
-    // }, [] )
-
-    // createEvents()
-    
-    // console.log(newEvents)
-
-    // #endregion
-
-    // #endregion
-
 
     // #region "Event listeners for select"
     function handleOnChangeSelect(e:any) {
@@ -296,16 +279,6 @@ export default function DashboardPage() {
         eventClickNew = {eventClickNew}
         selectInfo = {selectInfo}
       />
-
-        {/* {
-
-            openModal === true ? (
-                //@ts-ignore
-                // <TestModal />
-                <AddEventModal />
-            ): null
-
-        } */}
 
       <div className="header-container">
 
@@ -392,7 +365,6 @@ export default function DashboardPage() {
                         displayEventEnd={true}
                         editable = {true}
                         selectable = {true}
-                        eventColor="#50a2fd"
                         selectMirror={true}
                         droppable={true}
                         weekends={false}
@@ -401,23 +373,13 @@ export default function DashboardPage() {
                         dayMaxEvents={true}
                         dateClick={handleDateClick}
                         eventDurationEditable={true}
-
                         validRange={{ start: todayDate(), end: "2023-01-01" }}
                         eventClick={handleEventClick}
-                        // select = {handleEventAdd}
                         select = {handleDateSelect}
                         events = {createEvents()}
                         // #endregion
 
                     />
-
-                    {/* <div className="button-event-wrapper">
-
-                        <button onClick={ function () {
-                            // handleOpen()
-                        }}>Add Event</button>
-
-                    </div> */}
 
                 </div>
 

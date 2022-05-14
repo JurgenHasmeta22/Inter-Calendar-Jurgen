@@ -15,6 +15,18 @@
     padding-top: 100px;
 }
 
+.pending {
+    background-color: #fc9605;
+  }
+
+.cancelled {
+    background-color: #d01212;
+}
+
+.approved {
+    background-color: #39c32f;
+}
+
 .header-container h3 {
     font-size: 26px;
     font-weight: 900;
@@ -72,7 +84,7 @@
   }
 
   .my-color-events {
-    background-color: #50a2fd;
+    background-color: #50fd67;
     font-weight: bold;
     padding: 0.3rem 1rem;
     display: grid;
@@ -81,7 +93,7 @@
   }
 
   .others-color-events {
-    background-color:  #849fb7;
+    background-color:  #76acdc;
     padding: 0.3rem 1rem;
     font-weight: bold;
     display: grid;
