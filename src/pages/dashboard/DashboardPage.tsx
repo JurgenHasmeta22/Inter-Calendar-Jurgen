@@ -51,7 +51,10 @@ import {
     setSelectedDoctorName,
     setSelectedDoctor,
     setSelectInfo,
-    setEventClick
+    setEventClick,
+    setPatients,
+    setSelectedPatient,
+    setSelectedPatientName
 } from "../../main/store/stores/dashboard/dashboard.store"
 
 import { useDispatch, useSelector } from "react-redux";
@@ -90,6 +93,7 @@ export default function DashboardPage() {
   // #region "Redux state and hooks"
   const appointements = useSelector((state: RootState) => state.dashboard.appointements);
   const doctors = useSelector((state: RootState) => state.dashboard.doctors);
+  const patients = useSelector((state: RootState) => state.dashboard.patients);
 
   const [selectInfo, setSelectInfo] = useState<DateSelectArg | null>(null);
   const [eventClickNew, setEventClickNew] = useState<EventClickArg | null>(null);
@@ -98,6 +102,9 @@ export default function DashboardPage() {
 
   const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
   const selectedDoctorName = useSelector((state: RootState) => state.dashboard.selectedDoctorName);
+
+  const selectedPatient = useSelector((state: RootState) => state.dashboard.selectedPatient);
+  const selectedPatientName = useSelector((state: RootState) => state.dashboard.selectedPatientName);
 
   const eventsNew = useSelector((state: RootState) => state.dashboard.eventsNew);
   const [eventNewState, setEventNewState] = useState<any>([])
@@ -120,12 +127,21 @@ export default function DashboardPage() {
     dispatch(setDoctors(result.data))
   }
 
+  async function getPatientsFromServer() {
+    let result = await (await axios.get(`/users`));
+    dispatch(setPatients(result.data))
+  }
+
   useEffect(()=> {
     getAppointementsFromServer()
   }, [])
 
   useEffect(()=> {
     getDoctorsFromServer()
+  }, [])
+
+  useEffect(()=> {
+    getPatientsFromServer()
   }, [])
 
   const handleOpen = () => dispatch(setModal("appoinment"));
@@ -142,6 +158,12 @@ export default function DashboardPage() {
 
     function createEvents() {
 
+        if (user === null) return []
+        
+        const doctorsAppointements = user?.acceptedAppointemets
+
+        // console.log(doctorsAppointements)
+        
         // @ts-ignore
         const acceptedAppointemets = selectedDoctor?.acceptedAppointemets
 
@@ -149,45 +171,97 @@ export default function DashboardPage() {
 
         if (selectedDoctor === null) return [] //this fixed all the bugs on error boundaries etc etc
 
-        for (const appointement of acceptedAppointemets) {
+        if (!user.isDoctor) {
 
-            let color = "";
+            for (const appointement of acceptedAppointemets) {
 
-            switch (appointement.status) {
+                let color = "";
 
-                case "approved":
-                    color = "#39c32f";
-                    break;
+                switch (appointement.status) {
 
-                case "cancelled":
-                    color = "#d01212";
-                    break;
+                    case "approved":
+                        color = "#39c32f";
+                        break;
 
-                default:
-                    color = "#fc9605";
+                    case "cancelled":
+                        color = "#d01212";
+                        break;
+
+                    default:
+                        color = "#fc9605";
+
+                }
+
+                const event = {
+
+                    id: `${appointement.id}`,
+                    title: appointement.title,
+                    start: appointement.startDate,
+                    end: appointement.endDate,
+                    allDay: false,
+                    backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7"}`,
+                    // color: "#378006",
+                    overlap: false,
+                    editable: user?.id === appointement.user_id,
+                    className: `${
+                        user.id !== appointement.user_id ? "others-color-events" : `${appointement.status}`
+                    }`
+
+                }
+
+                returnedArray.push(event);
 
             }
-
-            const event = {
-
-                id: `${appointement.id}`,
-                title: appointement.title,
-                start: appointement.startDate,
-                end: appointement.endDate,
-                allDay: false,
-                backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7"}`,
-                color: "#378006",
-                overlap: false,
-                editable: user?.id === appointement.user_id,
-                className: `${
-                    user.id !== appointement.user_id ? "others-color-events" : `${appointement.status}`
-                }`
-
-            }
-
-            returnedArray.push(event);
 
         }
+
+        else {
+
+            for (const appointement of doctorsAppointements) {
+
+                let color = "";
+
+                switch (appointement.status) {
+
+                    case "approved":
+                        color = "#39c32f";
+                        break;
+
+                    case "cancelled":
+                        color = "#d01212";
+                        break;
+
+                    default:
+                        color = "#fc9605";
+
+                }
+
+                const event = {
+
+                    id: `${appointement.id}`,
+                    title: appointement.title,
+                    start: appointement.startDate,
+                    end: appointement.endDate,
+                    allDay: false,
+                    backgroundColor: `${user.id === appointement.doctor_id ? color : "#849fb7"}`,
+                    // color: "#378006",
+                    overlap: false,
+                    editable: user?.id === appointement.doctor_id,
+                    className: `${
+                        user.id !== appointement.doctor_id ? "others-color-events" : `${appointement.status}`
+                    }`
+
+                }
+
+                returnedArray.push(event);
+
+                // console.log(returnedArray)
+
+            }
+
+        }
+
+        // console.log(returnedArray)
 
         return returnedArray
         
@@ -235,6 +309,10 @@ export default function DashboardPage() {
         dispatch(setSelectedDoctorName(e.target.value))
     }
 
+    function handleOnChangeSelectPatient(e:any) {
+        dispatch(setSelectedPatientName(e.target.value))
+    }
+
     function handleOnChangeDoctor(e: any) {
 
         const newDoctors = [...doctors]
@@ -245,10 +323,24 @@ export default function DashboardPage() {
 
     }
 
+    function handleOnChangePatient(e: any) {
+
+        const newPatients = [...patients]
+        const patientFinal = newPatients.find(pattient => pattient.firstName + " " + pattient.lastName === e.target.value )
+
+        dispatch(setSelectedPatient(patientFinal))
+        handleOnChangeSelectPatient(e)
+
+    }
+
     const handleDateSelect = (selectInfo: DateSelectArg) => {
 
-        if (!selectedDoctor) {
+        if (!user.isDoctor && !selectedDoctor) {
             toast.warn("Please select a doctor to choose an appointement")
+        }
+
+        else if (user.isDoctor && !selectedPatient) {
+            toast.warn("Please select a patient to choose an appointement")
         }
 
         else {
@@ -258,9 +350,22 @@ export default function DashboardPage() {
             
             calendarApi.changeView("timeGridDay", selectInfo.startStr);
 
-            if (selectInfo.view.type === "timeGridDay" && selectedDoctor) {
-                setSelectInfo(selectInfo);
-                handleOpen()
+            if (!user.isDoctor) {
+
+                if (selectInfo.view.type === "timeGridDay" && selectedDoctor ) {
+                    setSelectInfo(selectInfo);
+                    handleOpen()
+                }
+
+            }
+
+            else {
+
+                if (selectInfo.view.type === "timeGridDay" && selectedPatient) {
+                    setSelectInfo(selectInfo);
+                    handleOpen()
+                }
+
             }
         
         }
@@ -331,7 +436,39 @@ export default function DashboardPage() {
     
             </div>
 
-          ): null
+          ): (
+
+            <div className="select-doctor-wrapper">
+    
+                <span>Choose a patient from our clicic for an appointement: </span>
+    
+                <select name="filter-by-sort" id="filter-by-sort" defaultValue={'DEFAULT'}
+                    onChange={function (e: any) {
+                        handleOnChangePatient(e)
+                }}>
+                    
+                    <option value="DEFAULT" disabled> Select Patient</option>
+        
+                    {
+                    
+                        doctors?.length === 0 ? (
+                            <option value="Default">No Patient to choose</option>
+                        ): (
+                            
+                            //@ts-ignore
+                            patients?.map(patient =>  
+                                <option key={patient.id} value = {patient.firstName + " " + patient.lastName}> {patient.firstName + " " + patient.lastName} </option>
+                            )
+        
+                        )
+        
+                    }
+        
+                </select>
+    
+            </div>
+
+        )
 
       }
 
@@ -398,7 +535,7 @@ export default function DashboardPage() {
                             <span>
 
                                 {
-                                    user.acceptedAppointemets.filter((event: any) =>
+                                    user.postedAppointements.filter((event: any) =>
                                         event.status.includes("cancelled")
                                     ).length
                                 }
@@ -450,8 +587,109 @@ export default function DashboardPage() {
 
         ): (
 
-            <div className="calendar-doctor">
-                <span>Doctor here test</span>
+            <div className="calendar-wrapper">
+
+                <section className="side-bar">
+                    
+                    <h3 className="side-bar__title">Calendar Legenda</h3>
+
+                    <ul className="event-list">
+
+                        <li>
+
+                            <h4>
+                                My events <span>Total: {user.acceptedAppointemets.length}</span>
+                            </h4>
+
+                        </li>
+
+                        <li className="event-list__item pending">
+
+                            Pending
+
+                            <span>
+
+                                {
+                                    user.acceptedAppointemets.filter((event: any) =>
+                                        event.status.includes("pending")
+                                    ).length
+                                }
+
+                            </span>
+
+                        </li>
+
+                        <li className="event-list__item approved">
+
+                            Approved
+
+                            <span>
+
+                                {
+                                    user.acceptedAppointemets.filter((event: any) =>
+                                        event.status.includes("approved")
+                                    ).length
+                                }
+
+                            </span>
+
+                        </li>
+
+                        <li className="event-list__item cancelled">
+
+                            Refused
+
+                            <span>
+
+                                {
+                                    user.acceptedAppointemets.filter((event: any) =>
+                                        event.status.includes("cancelled")
+                                    ).length
+                                }
+
+                            </span>
+
+                        </li>
+
+                    </ul>
+
+                </section>
+
+                <div className="calendar">
+
+                    <FullCalendar
+
+                        initialView = "dayGridMonth"
+
+                        headerToolbar={{
+                            left: "prev,next",
+                            center: "title",
+                            right: "dayGridMonth, timeGridWeek, timeGridDay"
+                        }}
+
+                        plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+
+                        nowIndicator={true}
+                        displayEventEnd={true}
+                        editable = {true}
+                        selectable = {true}
+                        selectMirror={true}
+                        droppable={true}
+                        weekends={false}
+                        //@ts-ignore
+                        ref={calendarRef}
+                        dayMaxEvents={true}
+                        dateClick={handleDateClick}
+                        eventDurationEditable={true}
+                        validRange={{ start: todayDate(), end: "2023-01-01" }}
+                        eventClick={handleEventClick}
+                        select = {handleDateSelect}
+                        events = {createEvents()}
+
+                    />
+
+                </div>
+
             </div>
 
         )

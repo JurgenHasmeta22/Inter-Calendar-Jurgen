@@ -10,10 +10,13 @@ const initialState: IDashboard = {
     modal: "",
     eventsNew: [],
     doctors: [],
+    patients: [],
     selectedDoctorName: "",
     selectedDoctor: null,
     selectInfo: null,
-    eventClick: null
+    eventClick: null,
+    selectedPatient: null,
+    selectedPatientName: ""
 }
 
 const dashboardStore = createSlice({
@@ -68,6 +71,18 @@ const dashboardStore = createSlice({
     setEventClick(state, action: PayloadAction<EventClickArg>) {
       //@ts-ignore
       state.eventClick = action.payload
+    },
+
+    setSelectedPatientName(state, action: PayloadAction<string>) {
+      state.selectedPatientName= action.payload
+    },
+
+    setSelectedPatient(state, action: PayloadAction<IUser>) {
+      state.selectedPatient = action.payload
+    },
+
+    setPatients(state, action: PayloadAction<IUser[]>) {
+      state.patients = action.payload
     }
 
   }
@@ -87,5 +102,8 @@ export const {
   setSelectedDoctor,
   invalidateModal,
   setSelectInfo,
-  setEventClick
+  setEventClick,
+  setSelectedPatient,
+  setSelectedPatientName,
+  setPatients
 } = dashboardStore.actions;

@@ -9,8 +9,11 @@ export default interface IDashboard
 	modal: string
 	eventsNew: IEvent[]
 	doctors: IUser[]
+	patients: IUser[]
 	selectedDoctorName: string
 	selectedDoctor: IUser | null
 	selectInfo: DateSelectArg | null
 	eventClick: EventClickArg | null
+	selectedPatient: IUser | null
+    selectedPatientName: string
 }
