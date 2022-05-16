@@ -1,6 +1,6 @@
 .calendar-wrapper {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 350px 1fr;
     gap: 1rem;
     /* place-items: center; */
     padding-top: 100px;
@@ -90,6 +90,24 @@
     display: grid;
     place-items: center;
     font-size: 16px;
+  }
+
+  .event-list {
+    list-style-type: none;
+    padding-top: 50px;
+    display: grid;
+    grid-template-rows: 50px 50px 50px 50px ;
+    grid-gap: 10px;
+  }
+  .event-list span {
+    text-align: end;
+    float: right;
+  }
+  .event-list__item {
+    padding: 0.7rem 0.5rem;
+    color: #232526;
+    font-weight: 600;
+    /* padding-top: 10px; */
   }
 
   .others-color-events {

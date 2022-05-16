@@ -193,14 +193,14 @@ export default function DashboardPage() {
         
     }
 
-    function handleEventAdd(selectInfo:  any) {
+    // function handleEventAdd(selectInfo:  any) {
 
-        if (selectedDoctor) {
-            setSelectInfo(selectInfo)
-            handleOpen()
-        }
+    //     if (selectedDoctor) {
+    //         setSelectInfo(selectInfo)
+    //         handleOpen()
+    //     }
         
-    }
+    // }
 
     const handleEventClick = (eventClick: EventClickArg) => {
 
@@ -344,9 +344,71 @@ export default function DashboardPage() {
             <div className="calendar-wrapper">
 
                 <section className="side-bar">
-                    <h3 className="side-bar__title">Calendar</h3>
+                    
+                    <h3 className="side-bar__title">Calendar Legenda</h3>
                     <h4 className="my-color-events">My events</h4>
                     <h4 className="others-color-events">Others Events</h4>
+
+                    <ul className="event-list">
+
+                        <li>
+
+                            <h4>
+                                My events <span>Total: {user.postedAppointements.length}</span>
+                            </h4>
+
+                        </li>
+
+                        <li className="event-list__item pending">
+
+                            Pending
+
+                            <span>
+
+                                {
+                                    user.postedAppointements.filter((event: any) =>
+                                        event.status.includes("pending")
+                                    ).length
+                                }
+
+                            </span>
+
+                        </li>
+
+                        <li className="event-list__item approved">
+
+                            Approved
+
+                            <span>
+
+                                {
+                                    user.postedAppointements.filter((event: any) =>
+                                        event.status.includes("approved")
+                                    ).length
+                                }
+
+                            </span>
+
+                        </li>
+
+                        <li className="event-list__item cancelled">
+
+                            Refused
+
+                            <span>
+
+                                {
+                                    user.acceptedAppointemets.filter((event: any) =>
+                                        event.status.includes("cancelled")
+                                    ).length
+                                }
+
+                            </span>
+
+                        </li>
+
+                    </ul>
+
                 </section>
 
                 <div className="calendar">
