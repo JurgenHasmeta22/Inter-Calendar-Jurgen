@@ -363,31 +363,31 @@ export default function DashboardPage() {
 
             <div className="select-doctor-wrapper">
     
-            <span>Choose a doctor from our clicic for an appointement: </span>
-    
-            <select name="filter-by-sort" id="filter-by-sort" defaultValue={'DEFAULT'}
-                onChange={function (e: any) {
-                    handleOnChangeDoctor(e)
-             }}>
-                
-                <option value="DEFAULT" disabled> Select Doctor</option>
-    
-                {
-                
-                    doctors?.length === 0 ? (
-                        <option value="Default">No Doctor to choose</option>
-                    ): (
-                        
-                        //@ts-ignore
-                        doctors?.map(doctor =>  
-                            <option key={doctor.id} value = {doctor.firstName + " " + doctor.lastName}> {doctor.firstName + " " + doctor.lastName} </option>
+                <span>Choose a doctor from our clicic for an appointement: </span>
+        
+                <select name="filter-by-sort" id="filter-by-sort" defaultValue={'DEFAULT'}
+                    onChange={function (e: any) {
+                        handleOnChangeDoctor(e)
+                }}>
+                    
+                    <option value="DEFAULT" disabled> Select Doctor</option>
+        
+                    {
+                    
+                        doctors?.length === 0 ? (
+                            <option value="Default">No Doctor to choose</option>
+                        ): (
+                            
+                            //@ts-ignore
+                            doctors?.map(doctor =>  
+                                <option key={doctor.id} value = {doctor.firstName + " " + doctor.lastName}> {doctor.firstName + " " + doctor.lastName} </option>
+                            )
+        
                         )
-    
-                    )
-    
-                }
-    
-            </select>
+        
+                    }
+        
+                </select>
     
             </div>
 
@@ -605,6 +605,14 @@ export default function DashboardPage() {
                             </span>
 
                         </li>
+
+                        <button className="notifications" onClick={function (e) {
+                            dispatch(setModal("notification"))
+                        }}>
+                            
+                            See Notifications
+
+                        </button>
 
                     </ul>
 

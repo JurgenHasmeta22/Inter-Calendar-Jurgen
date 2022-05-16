@@ -3,6 +3,7 @@ import { RootState } from "../../store/redux/rootState";
 import "./Modals.css";
 import AppointementModal from "../Modals/AddEvent/AppointementModal"
 import DeleteEvent from "../Modals/DeleteEvent/DeleteEvent"
+import NotificationEvent from "./NotificationEvent/NotificationEvent";
 
 function Modals() {
 
@@ -11,10 +12,13 @@ function Modals() {
   switch (modal) {
 
     case "appoinment":
-      return <AppointementModal />;
+      return <AppointementModal />
 
     case "deleteEvent":
       return <DeleteEvent />
+
+    case "notification":
+      return <NotificationEvent />
     
     default:
       return null;
