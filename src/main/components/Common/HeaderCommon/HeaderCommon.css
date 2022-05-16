@@ -8,17 +8,20 @@ header.header {
   0.5fr 0.5fr; /* this is where the bug was wich cause header problems, i had all three at 1fr 1fr 1fr but when i tried auto in the last part all went perfect when responsive*/
   background-color: #012b36;
   grid-gap: 10px;
-  place-items: center;
-  place-content: center;
+  align-items: center;
+  align-content: center;
 }
 
 header.header .header-group-1 {
 grid-area: header-group-1;
 display: grid;
-grid-template-columns: 0.9fr 0.1fr;
-grid-gap: 20px;
-place-items: center;
-place-content: center;
+grid-template-columns: 0.5fr 0.5fr;
+grid-gap: 10px;
+align-items: center;
+justify-items: start;
+padding-left: 50px;
+/* place-items: center;
+place-content: center; */
 }
 
 #total-header-span {
@@ -50,7 +53,7 @@ font-style: italic;
 header.header .header-group-1 ul {
 display: grid;
 /* grid-template-columns: 1fr; */
-place-items: center;
+/* place-items: center; */
 }
 
 .div-inside-li {
@@ -137,8 +140,8 @@ grid-template-columns: 0.33fr 0.33fr 0.33fr;
 grid-gap: 20px;
 /* justify-content: end; */
 /* justify-items: end;   */
-place-items: center;
-place-content: center;
+align-items: center;
+padding-right: 50px;
 }
 
 .cart-icon {

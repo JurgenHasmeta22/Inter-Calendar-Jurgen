@@ -175,7 +175,7 @@ export default function DashboardPage() {
                 start: appointement.startDate,
                 end: appointement.endDate,
                 allDay: false,
-                // backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7"}`,
+                backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7"}`,
                 color: "#378006",
                 overlap: false,
                 editable: user?.id === appointement.user_id,
@@ -185,12 +185,9 @@ export default function DashboardPage() {
 
             }
 
-            // returnedArray = [...returnedArray, event]
             returnedArray.push(event);
 
         }
-
-        // console.log(returnedArray) idk where the bugs is this works
 
         return returnedArray
         
@@ -230,7 +227,10 @@ export default function DashboardPage() {
 
     const handleDateClick = (info: any) => {};
 
-    // #region "Event listeners for select"
+    // #endregion
+
+
+  // #region "Event listeners for select"
     function handleOnChangeSelect(e:any) {
         dispatch(setSelectedDoctorName(e.target.value))
     }
@@ -268,6 +268,8 @@ export default function DashboardPage() {
     };
     // #endregion
 
+
+  // #region "Returning HTML JSX"
 
   return (
 
@@ -377,7 +379,6 @@ export default function DashboardPage() {
                         eventClick={handleEventClick}
                         select = {handleDateSelect}
                         events = {createEvents()}
-                        // #endregion
 
                     />
 
@@ -401,100 +402,7 @@ export default function DashboardPage() {
 
   )
 
+  // #endregion
+
+
 }
-
-
-// #region "Stuff modal for moment nope"
-{/* <div className='modal-wrapper'> */}
-
-{/* <Button onClick={handleOpen}>Open modal test</Button> */}
-
-{/* <Modal
-    keepMounted
-    open = {openModal}
-    onClose={handleClose}
-    aria-labelledby="keep-mounted-modal-title"
-    aria-describedby="keep-mounted-modal-description"
->
-
-    <ThemeProvider theme={theme}>
-
-        <Container component="main" maxWidth="xs">
-
-            <CssBaseline />
-
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
-                </Avatar>
-
-                <Typography component="h1" variant="h5">
-                    Add Event
-                </Typography>
-
-                <Box component="form" noValidate onSubmit={function (e: any) { 
-                    
-                }} sx={{ mt: 8, mb: 8 }}>
-
-                    <Grid container spacing={2}>
-
-                        <Grid item xs={12} sm={6}>
-
-                            <TextField
-                                autoComplete="given-price"
-                                name="price"
-                                required
-                                fullWidth
-                                id="price"
-                                label="Price of Appointement: "
-                                autoFocus
-                                onChange={(e: any) => {
-                                }}
-                            />
-
-                        </Grid>
-
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="description"
-                                label="Desc: "
-                                name="description"
-                                autoComplete="family-name"
-                                onChange={(e: any) => {
-                                }}
-                            />
-                        </Grid>
-
-                    </Grid>
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        Add event
-                    </Button>
-
-                </Box>
-
-            </Box>
-
-        </Container>
-
-    </ThemeProvider>
-
-</Modal>
-
-</div> */}
-// #endregion
