@@ -15,7 +15,6 @@ import {
 
 import userEvent from "@testing-library/user-event";
 import useGetUser from "../../../hooks/useGetUser";
-
 // #endregion
 
 
@@ -36,11 +35,6 @@ function DeleteModal({eventClickNew}: any) {
         const appointementId = Number(eventClickNew.event._def.publicId);
 
         console.log(appointementId)
-        
-        // const dataToSend: any = {
-        //   doctor_id: selectedDoctor?.id,
-        //   user_id: user.id
-        // }
 
         const dataFromServer = await (await axios.delete(`appointements/${appointementId}`)).data;
 
@@ -59,6 +53,10 @@ function DeleteModal({eventClickNew}: any) {
         }
 
     };
+
+    const handleChangeEvent = async () => {
+      dispatch(setModal("edit"))
+    }
     // #endregion
 
 
@@ -120,6 +118,15 @@ function DeleteModal({eventClickNew}: any) {
 
           </button>
 
+          <button
+            onClick={handleChangeEvent}
+            className="general-button change-btn"
+          >
+
+            Change Status
+
+          </button>
+
         </main>
 
       </div>
@@ -131,3 +138,6 @@ function DeleteModal({eventClickNew}: any) {
 }
 
 export default DeleteModal;
+
+//idea how to change status better, first we get the appointementId from the eventClickNew state, then use it to fetch that specific appointement and store it in state, then use that to find the status
+// and to change it after with put etc

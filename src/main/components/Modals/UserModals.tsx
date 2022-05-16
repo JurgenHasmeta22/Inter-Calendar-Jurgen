@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/redux/rootState";
 import DeleteModal from "./DeleteEvent/DeleteEvent";
 import "../Modals/Modals.css"
-
+import EditEvent from "../../components/Modals/EditEvent/EditEvent"
 import NotificationEvent from "../Modals/NotificationEvent/NotificationEvent"
 
 type Props = {
@@ -41,8 +41,15 @@ function UserModals({
 
       case "notification":
 
-      return (
-        <NotificationEvent />
+        return (
+          <NotificationEvent />
+
+      );
+
+      case "edit":
+
+        return (
+          <EditEvent />
 
       );
 
