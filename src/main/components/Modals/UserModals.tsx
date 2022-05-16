@@ -6,6 +6,8 @@ import { RootState } from "../../store/redux/rootState";
 import DeleteModal from "./DeleteEvent/DeleteEvent";
 import "../Modals/Modals.css"
 
+import NotificationEvent from "../Modals/NotificationEvent/NotificationEvent"
+
 type Props = {
   eventClickNew: EventClickArg;
   selectInfo: any
@@ -34,6 +36,13 @@ function UserModals({
         <DeleteModal
           eventClickNew = {eventClickNew}
         />
+
+      );
+
+      case "notification":
+
+      return (
+        <NotificationEvent />
 
       );
 

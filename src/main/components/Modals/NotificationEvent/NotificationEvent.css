@@ -1,0 +1,30 @@
+table, th, td {
+    border: 1px solid;
+  }
+  
+  td {
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    padding: 10px 10px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .special-td {
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr;
+    place-items: center;
+    place-content: center;
+    grid-gap: 10px;
+  }
+
+  .special-td button {
+    border: none;
+    outline: none;
+    background-color: rgb(216, 130, 130);
+    cursor: pointer;
+  }

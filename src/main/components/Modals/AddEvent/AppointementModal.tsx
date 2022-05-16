@@ -79,7 +79,7 @@ function AppointementModal({selectInfo}: any) {
             endDate: changeDateFormat(selectInfo.endStr),
             title: title,
             description: description,
-            status: "pending",
+            status: user?.isDoctor ? "approved": "pending",
             user_id: user?.id,
             doctor_id: selectedDoctor?.id,
             category_id: 1

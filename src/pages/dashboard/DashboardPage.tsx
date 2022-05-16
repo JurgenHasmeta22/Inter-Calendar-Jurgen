@@ -524,6 +524,7 @@ export default function DashboardPage() {
                         selectMirror={true}
                         droppable={true}
                         weekends={false}
+                        selectOverlap={false}
                         //@ts-ignore
                         ref={calendarRef}
                         dayMaxEvents={true}
@@ -553,7 +554,7 @@ export default function DashboardPage() {
                         <li>
 
                             <h4>
-                                Doctor events <span>Total: {user.acceptedAppointemets.length}</span>
+                                Doctor events <span>Total: {selectedDoctor?.acceptedAppointemets.length}</span>
                             </h4>
 
                         </li>
@@ -565,7 +566,7 @@ export default function DashboardPage() {
                             <span>
 
                                 {
-                                    user.acceptedAppointemets.filter((event: any) =>
+                                    selectedDoctor?.acceptedAppointemets.filter((event: any) =>
                                         event.status.includes("pending")
                                     ).length
                                 }
@@ -581,7 +582,7 @@ export default function DashboardPage() {
                             <span>
 
                                 {
-                                    user.acceptedAppointemets.filter((event: any) =>
+                                    selectedDoctor?.acceptedAppointemets.filter((event: any) =>
                                         event.status.includes("approved")
                                     ).length
                                 }
@@ -612,6 +613,18 @@ export default function DashboardPage() {
                             
                             See Notifications
 
+                            <span>
+
+                                {
+
+                                    selectedDoctor?.acceptedAppointemets.filter((event: any) =>
+                                        event.status.includes("pending")
+                                    ).length
+                                    
+                                }
+
+                            </span>
+
                         </button>
 
                     </ul>
@@ -639,6 +652,7 @@ export default function DashboardPage() {
                         selectMirror={true}
                         droppable={true}
                         weekends={false}
+                        selectOverlap={false}
                         //@ts-ignore
                         ref={calendarRef}
                         dayMaxEvents={true}
