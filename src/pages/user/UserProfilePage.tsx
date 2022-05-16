@@ -213,7 +213,14 @@ export default function UserProfilePage({validateUser}:any) {
 
                             <>
                             
-                                <h3 className="special-video-you">User Appointements</h3>
+                                { 
+                                
+                                    !user.isDoctor ? (
+                                        <h3 className="special-video-you">User Appointements</h3>
+                                    ): (
+                                        <h3 className="special-video-you">Doctors Appointements</h3>
+                                    )
+                                }
 
                                 <div className="container-transactions">
 

@@ -43,6 +43,8 @@ function AppointementModal({selectInfo}: any) {
     const user = useGetUser()
 
     const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
+    const selectedPatient = useSelector((state: RootState) => state.dashboard.selectedPatient);
+
     // const selectInfo = useSelector((state: RootState) => state.dashboard.selectInfo);
 
     const doctors = useSelector((state: RootState) => state.dashboard.doctors);
@@ -101,6 +103,7 @@ function AppointementModal({selectInfo}: any) {
 
     }
     // #endregion
+
 
     const changeDateFormat = (date: string) => {
         return date.substring(0, date.length - 6);
@@ -204,7 +207,7 @@ function AppointementModal({selectInfo}: any) {
                                 name="patient"
                                 className="patient"
                                 readOnly
-                                value={user?.firstName + " " + user?.lastName}
+                                value={selectedPatient?.firstName + " " + selectedPatient?.lastName}
                             />
 
                         </label>

@@ -123,8 +123,21 @@ export default function DashboardPage() {
   }
 
   async function getDoctorsFromServer() {
+
     let result = await (await axios.get(`/doctors`));
     dispatch(setDoctors(result.data))
+
+    for (const doctor of result.data) {
+
+
+        if ( ( doctor.id === user.id ) && user.isDoctor) {
+            dispatch(setSelectedDoctor(doctor))
+        }
+
+    }
+
+    // dispatch(setSelectedDoctorName(result.data[0].))
+
   }
 
   async function getPatientsFromServer() {
@@ -157,12 +170,6 @@ export default function DashboardPage() {
     }
 
     function createEvents() {
-
-        if (user === null) return []
-        
-        const doctorsAppointements = user?.acceptedAppointemets
-
-        // console.log(doctorsAppointements)
         
         // @ts-ignore
         const acceptedAppointemets = selectedDoctor?.acceptedAppointemets
@@ -171,97 +178,45 @@ export default function DashboardPage() {
 
         if (selectedDoctor === null) return [] //this fixed all the bugs on error boundaries etc etc
 
-        if (!user.isDoctor) {
+        for (const appointement of acceptedAppointemets) {
 
-            for (const appointement of acceptedAppointemets) {
+            let color = "";
 
-                let color = "";
+            switch (appointement.status) {
 
-                switch (appointement.status) {
+                case "approved":
+                    color = "#39c32f";
+                    break;
 
-                    case "approved":
-                        color = "#39c32f";
-                        break;
+                case "cancelled":
+                    color = "#d01212";
+                    break;
 
-                    case "cancelled":
-                        color = "#d01212";
-                        break;
-
-                    default:
-                        color = "#fc9605";
-
-                }
-
-                const event = {
-
-                    id: `${appointement.id}`,
-                    title: appointement.title,
-                    start: appointement.startDate,
-                    end: appointement.endDate,
-                    allDay: false,
-                    backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7"}`,
-                    // color: "#378006",
-                    overlap: false,
-                    editable: user?.id === appointement.user_id,
-                    className: `${
-                        user.id !== appointement.user_id ? "others-color-events" : `${appointement.status}`
-                    }`
-
-                }
-
-                returnedArray.push(event);
+                default:
+                    color = "#fc9605";
 
             }
 
-        }
+            const event = {
 
-        else {
-
-            for (const appointement of doctorsAppointements) {
-
-                let color = "";
-
-                switch (appointement.status) {
-
-                    case "approved":
-                        color = "#39c32f";
-                        break;
-
-                    case "cancelled":
-                        color = "#d01212";
-                        break;
-
-                    default:
-                        color = "#fc9605";
-
-                }
-
-                const event = {
-
-                    id: `${appointement.id}`,
-                    title: appointement.title,
-                    start: appointement.startDate,
-                    end: appointement.endDate,
-                    allDay: false,
-                    backgroundColor: `${user.id === appointement.doctor_id ? color : "#849fb7"}`,
-                    // color: "#378006",
-                    overlap: false,
-                    editable: user?.id === appointement.doctor_id,
-                    className: `${
-                        user.id !== appointement.doctor_id ? "others-color-events" : `${appointement.status}`
-                    }`
-
-                }
-
-                returnedArray.push(event);
-
-                // console.log(returnedArray)
+                id: `${appointement.id}`,
+                title: appointement.title,
+                start: appointement.startDate,
+                end: appointement.endDate,
+                allDay: false,
+                backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7" || user.id === appointement.doctor_id ? color : "#849fb7"}`,
+                // color: "#378006",
+                overlap: false,
+                editable: user?.id === appointement.user_id || user?.id === appointement.doctor_id,
+                className: `${
+                    ( user.id !== appointement.doctor_id ) && ( user.id !== appointement.user_id) ? "others-color-events" : `${appointement.status}`
+                }`
 
             }
 
-        }
+            returnedArray.push(event);
 
-        // console.log(returnedArray)
+        }
 
         return returnedArray
         
@@ -278,7 +233,7 @@ export default function DashboardPage() {
 
     const handleEventClick = (eventClick: EventClickArg) => {
 
-        if (selectedDoctor?.acceptedAppointemets.find((event: any) => event.user_id === user.id)) {
+        if (selectedDoctor?.acceptedAppointemets.find((event: any) => event.user_id || event.doctor_id === user.id)) {
             setEventClickNew(eventClick)
             dispatch(setModal("deleteEvent"));
         }
@@ -491,7 +446,7 @@ export default function DashboardPage() {
                         <li>
 
                             <h4>
-                                My events <span>Total: {user.postedAppointements.length}</span>
+                                Patient user events <span>Total: {user.postedAppointements.length}</span>
                             </h4>
 
                         </li>
@@ -598,7 +553,7 @@ export default function DashboardPage() {
                         <li>
 
                             <h4>
-                                My events <span>Total: {user.acceptedAppointemets.length}</span>
+                                Doctor events <span>Total: {user.acceptedAppointemets.length}</span>
                             </h4>
 
                         </li>
