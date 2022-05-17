@@ -231,10 +231,23 @@ export default function DashboardPage() {
 
         }
 
-        else {
+        else if(user.isDoctor && !selectedFreeTime) {
 
             if (
                 user.acceptedAppointemets.find(
+                  (event: any) => event.id === Number(eventClick.event._def.publicId)
+                )
+              ) {
+                setEventClickNew(eventClick)
+                dispatch(setModal("deleteEvent"));
+            }
+
+        }
+
+        else if(user.isDoctor && selectedFreeTime) {
+
+            if (
+                user.freeAppointements.find(
                   (event: any) => event.id === Number(eventClick.event._def.publicId)
                 )
               ) {
@@ -289,8 +302,14 @@ export default function DashboardPage() {
         const newPatients = [...patients]
         const patientFinal = newPatients.find(pattient => pattient.firstName + " " + pattient.lastName === e.target.value )
 
-        dispatch(setSelectedPatient(patientFinal))
-        handleOnChangeSelectPatient(e)
+        if (e.target.value === "DEFAULT") {
+            dispatch(setSelectedPatient(null))
+        }
+
+        else {
+            dispatch(setSelectedPatient(patientFinal))
+            handleOnChangeSelectPatient(e)
+        }
 
     }
 
@@ -428,7 +447,7 @@ export default function DashboardPage() {
                         handleOnChangePatient(e)
                 }}>
                     
-                    <option value="DEFAULT" disabled> Select Patient</option>
+                    <option value="DEFAULT"> Select Patient</option>
         
                     {
                     
