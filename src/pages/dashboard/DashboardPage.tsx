@@ -141,8 +141,15 @@ export default function DashboardPage() {
   }
 
   async function getPatientsFromServer() {
+
     let result = await (await axios.get(`/users`));
+
     dispatch(setPatients(result.data))
+
+    if (!user?.isDoctor) {
+        dispatch(setSelectedPatient(user))
+    }
+
   }
 
   useEffect(()=> {
@@ -233,11 +240,37 @@ export default function DashboardPage() {
 
     const handleEventClick = (eventClick: EventClickArg) => {
 
-        if (selectedDoctor?.acceptedAppointemets.find((event: any) => event.user_id || event.doctor_id === user.id)) {
-            setEventClickNew(eventClick)
-            dispatch(setModal("deleteEvent"));
+        // if (selectedDoctor?.acceptedAppointemets.find((event: any) => event.user_id === user.id || event.doctor_id === user.id)) {
+        //     setEventClickNew(eventClick)
+        //     dispatch(setModal("deleteEvent"));
+        // }
+
+        if (!user.isDoctor) {
+
+            if (
+                user.postedAppointements.find(
+                  (event: any) => event.id === Number(eventClick.event._def.publicId)
+                )
+              ) {
+                setEventClickNew(eventClick)
+                dispatch(setModal("deleteEvent"));
+            }
+
         }
 
+        else {
+
+            if (
+                user.acceptedAppointemets.find(
+                  (event: any) => event.id === Number(eventClick.event._def.publicId)
+                )
+              ) {
+                setEventClickNew(eventClick)
+                dispatch(setModal("deleteEvent"));
+            }
+
+        }
+         
     };
 
     const todayDate = () => {
@@ -517,20 +550,59 @@ export default function DashboardPage() {
 
                         plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 
-                        nowIndicator={true}
+                        // nowIndicator={true}
                         displayEventEnd={true}
                         editable = {true}
                         selectable = {true}
                         selectMirror={true}
-                        droppable={true}
+                        // droppable={true}
                         weekends={false}
-                        selectOverlap={false}
+                        height="auto"
+                        eventTimeFormat={{
+                            hour: "2-digit", //2-digit, numeric
+                            minute: "2-digit", //2-digit, numeric
+                            hour12: false, //true, false
+                        }}
+                        // selectOverlap={false}
+                        slotMinTime={"08:00:00"}
+                        slotMaxTime={"16:00:00"}
+                        allDaySlot={false}
+
                         //@ts-ignore
                         ref={calendarRef}
                         dayMaxEvents={true}
                         dateClick={handleDateClick}
                         eventDurationEditable={true}
                         validRange={{ start: todayDate(), end: "2023-01-01" }}
+
+                        selectOverlap={() => {
+
+                            //@ts-ignore
+                            let calendarApi = calendarRef.current.getApi();
+                            
+                            if (calendarApi.view.type === "timeGridDay") {
+                              return false;
+                            }
+
+                            return true;
+
+                        }}
+
+                        selectAllow={(selectInfo) => {
+
+                            let startDate = selectInfo.start;
+                            let endDate = selectInfo.end;
+
+                            endDate.setSeconds(endDate.getSeconds() - 1); // allow full day selection
+                            
+                            if (startDate.getDate() === endDate.getDate()) {
+                                return true;
+                            }
+
+                            return false;
+
+                        }}
+
                         eventClick={handleEventClick}
                         select = {handleDateSelect}
                         events = {createEvents()}
@@ -650,15 +722,53 @@ export default function DashboardPage() {
                         editable = {true}
                         selectable = {true}
                         selectMirror={true}
-                        droppable={true}
+                        // droppable={true}
                         weekends={false}
-                        selectOverlap={false}
+                        // selectOverlap={false}
                         //@ts-ignore
                         ref={calendarRef}
                         dayMaxEvents={true}
                         dateClick={handleDateClick}
                         eventDurationEditable={true}
                         validRange={{ start: todayDate(), end: "2023-01-01" }}
+                        eventTimeFormat={{
+                            hour: "2-digit", //2-digit, numeric
+                            minute: "2-digit", //2-digit, numeric
+                            hour12: false, //true, false
+                        }}
+                        slotMinTime={"08:00:00"}
+                        slotMaxTime={"16:00:00"}
+                        allDaySlot={false}
+                        height="auto"
+
+                        selectOverlap={() => {
+
+                            //@ts-ignore
+                            let calendarApi = calendarRef.current.getApi();
+                            
+                            if (calendarApi.view.type === "timeGridDay") {
+                              return false;
+                            }
+
+                            return true;
+
+                        }}
+
+                        selectAllow={(selectInfo) => {
+
+                            let startDate = selectInfo.start;
+                            let endDate = selectInfo.end;
+
+                            endDate.setSeconds(endDate.getSeconds() - 1); // allow full day selection
+                            
+                            if (startDate.getDate() === endDate.getDate()) {
+                                return true;
+                            }
+
+                            return false;
+
+                        }}
+
                         eventClick={handleEventClick}
                         select = {handleDateSelect}
                         events = {createEvents()}
