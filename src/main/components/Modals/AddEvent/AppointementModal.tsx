@@ -80,7 +80,7 @@ function AppointementModal({selectInfo}: any) {
             title: title,
             description: description,
             status: user?.isDoctor ? "approved": "pending",
-            user_id: user?.id,
+            user_id: selectedPatient?.id,
             doctor_id: selectedDoctor?.id,
             category_id: 1
         }
@@ -102,12 +102,12 @@ function AppointementModal({selectInfo}: any) {
         }
 
     }
-    // #endregion
-
 
     const changeDateFormat = (date: string) => {
         return date.substring(0, date.length - 6);
     };
+    // #endregion
+
 
     return (
 

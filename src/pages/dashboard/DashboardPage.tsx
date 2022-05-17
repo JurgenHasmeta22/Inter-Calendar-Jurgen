@@ -69,6 +69,8 @@ import AddEventModal from "../../main/components/Modals/AddEvent/AppointementMod
 import { toast } from "react-toastify";
 
 import UserModals from "../../main/components/Modals/UserModals"
+
+import listPlugin from '@fullcalendar/list';
 // #endregion
 
 
@@ -125,18 +127,18 @@ export default function DashboardPage() {
   async function getDoctorsFromServer() {
 
     let result = await (await axios.get(`/doctors`));
+
+    dispatch(setSelectedDoctor(null))
     dispatch(setDoctors(result.data))
 
     for (const doctor of result.data) {
 
 
-        if ( ( doctor.id === user.id ) && user.isDoctor) {
+        if ( ( doctor.id === user?.id ) && user?.isDoctor) {
             dispatch(setSelectedDoctor(doctor))
         }
 
     }
-
-    // dispatch(setSelectedDoctorName(result.data[0].))
 
   }
 
@@ -144,6 +146,7 @@ export default function DashboardPage() {
 
     let result = await (await axios.get(`/users`));
 
+    dispatch(setSelectedPatient(null))
     dispatch(setPatients(result.data))
 
     if (!user?.isDoctor) {
@@ -229,21 +232,7 @@ export default function DashboardPage() {
         
     }
 
-    // function handleEventAdd(selectInfo:  any) {
-
-    //     if (selectedDoctor) {
-    //         setSelectInfo(selectInfo)
-    //         handleOpen()
-    //     }
-        
-    // }
-
     const handleEventClick = (eventClick: EventClickArg) => {
-
-        // if (selectedDoctor?.acceptedAppointemets.find((event: any) => event.user_id === user.id || event.doctor_id === user.id)) {
-        //     setEventClickNew(eventClick)
-        //     dispatch(setModal("deleteEvent"));
-        // }
 
         if (!user.isDoctor) {
 
@@ -323,11 +312,11 @@ export default function DashboardPage() {
 
     const handleDateSelect = (selectInfo: DateSelectArg) => {
 
-        if (!user.isDoctor && !selectedDoctor) {
+        if (!user?.isDoctor && !selectedDoctor) {
             toast.warn("Please select a doctor to choose an appointement")
         }
 
-        else if (user.isDoctor && !selectedPatient) {
+        else if (user?.isDoctor && !selectedPatient) {
             toast.warn("Please select a patient to choose an appointement")
         }
 
@@ -542,13 +531,20 @@ export default function DashboardPage() {
 
                         initialView = "dayGridMonth"
 
+                        // views: {{
+                        //     listDay: 'list day' ,
+                        //     listWeek: 'list week' ,
+                        //     listMonth: 'list month'
+                        // }},
+
                         headerToolbar={{
                             left: "prev,next",
                             center: "title",
+                            // right: "dayGridMonth, timeGridWeek, timeGridDay, listMonth, listWeek, listDay"
                             right: "dayGridMonth, timeGridWeek, timeGridDay"
                         }}
 
-                        plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                        plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
 
                         // nowIndicator={true}
                         displayEventEnd={true}

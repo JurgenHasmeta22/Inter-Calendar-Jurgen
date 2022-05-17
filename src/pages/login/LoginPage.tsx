@@ -139,10 +139,6 @@ const LoginPage : FC = ()=>{
                             <Grid container>
 
                                 <Grid item>
-                                    
-                                    {/* <Link to="/register" variant="body2" onClick={() => { navigate("/register") }}>
-                                        {"Don't have an account? Sign Up"}
-                                    </Link> */}
 
                                     <Link to="/register">
                                         {"Don't have an account? Sign Up"}
