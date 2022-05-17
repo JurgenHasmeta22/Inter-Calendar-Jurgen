@@ -198,12 +198,11 @@ export default function DashboardPage() {
                 start: appointement.startDate,
                 end: appointement.endDate,
                 allDay: false,
-                backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7" || user.id === appointement.doctor_id ? color : "#849fb7"}`,
-                // color: "#378006",
+                backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7" || user.id === appointement.doctor_id ? color : "#849fb7" || user.id === appointement.doctor_post_id ? color : "#849fb7"}`,
                 overlap: false,
                 editable: user?.id === appointement.user_id || user?.id === appointement.doctor_id,
                 className: `${
-                    ( user.id !== appointement.doctor_id ) && ( user.id !== appointement.user_id) ? "others-color-events" : `${appointement.status}`
+                    ( user.id !== appointement.doctor_id ) && ( user.id !== appointement.user_id) && ( user.id !== appointement.doctor_post_id) ? "others-color-events" : `${appointement.status}`
                 }`
 
             }
@@ -231,7 +230,7 @@ export default function DashboardPage() {
 
         }
 
-        else if(user.isDoctor && !selectedFreeTime) {
+        else if(user.isDoctor && !selectedFreeTime && selectedPatient) {
 
             if (
                 user.acceptedAppointemets.find(
@@ -240,6 +239,36 @@ export default function DashboardPage() {
               ) {
                 setEventClickNew(eventClick)
                 dispatch(setModal("deleteEvent"));
+            }
+
+        }
+
+        else if(user.isDoctor && !selectedFreeTime && !selectedPatient) {
+
+            if (user.freeAppointements.length !== 0) {
+
+                if (
+                    user.freeAppointements.find(
+                      (event: any) => event.id === Number(eventClick.event._def.publicId)
+                    )
+                  ) {
+                    setEventClickNew(eventClick)
+                    dispatch(setModal("deleteEvent"));
+                }
+
+            }
+
+            else {
+
+                if (
+                    user.acceptedAppointemets.find(
+                      (event: any) => event.id === Number(eventClick.event._def.publicId)
+                    )
+                  ) {
+                    setEventClickNew(eventClick)
+                    dispatch(setModal("deleteEvent"));
+                }
+
             }
 
         }
