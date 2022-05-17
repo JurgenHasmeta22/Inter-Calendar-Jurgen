@@ -541,7 +541,7 @@ export default function DashboardPage() {
                             left: "prev,next",
                             center: "title",
                             // right: "dayGridMonth, timeGridWeek, timeGridDay, listMonth, listWeek, listDay"
-                            right: "dayGridMonth, timeGridWeek, timeGridDay"
+                            right: "dayGridMonth, timeGridWeek, timeGridDay, listMonth"
                         }}
 
                         plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
@@ -551,15 +551,20 @@ export default function DashboardPage() {
                         editable = {true}
                         selectable = {true}
                         selectMirror={true}
+
                         // droppable={true}
+
                         weekends={false}
                         height="auto"
+                        
                         eventTimeFormat={{
                             hour: "2-digit", //2-digit, numeric
                             minute: "2-digit", //2-digit, numeric
                             hour12: false, //true, false
                         }}
+
                         // selectOverlap={false}
+                        
                         slotMinTime={"08:00:00"}
                         slotMaxTime={"16:00:00"}
                         allDaySlot={false}
@@ -650,9 +655,11 @@ export default function DashboardPage() {
                             <span>
 
                                 {
+
                                     selectedDoctor?.acceptedAppointemets.filter((event: any) =>
                                         event.status.includes("approved")
                                     ).length
+
                                 }
 
                             </span>
@@ -666,9 +673,11 @@ export default function DashboardPage() {
                             <span>
 
                                 {
+
                                     user.acceptedAppointemets.filter((event: any) =>
                                         event.status.includes("cancelled")
                                     ).length
+
                                 }
 
                             </span>
@@ -708,30 +717,36 @@ export default function DashboardPage() {
                         headerToolbar={{
                             left: "prev,next",
                             center: "title",
-                            right: "dayGridMonth, timeGridWeek, timeGridDay"
+                            right: "dayGridMonth, timeGridWeek, timeGridDay, listMonth"
                         }}
 
-                        plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                        plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
 
                         nowIndicator={true}
                         displayEventEnd={true}
                         editable = {true}
                         selectable = {true}
                         selectMirror={true}
+
                         // droppable={true}
+
                         weekends={false}
+
                         // selectOverlap={false}
+
                         //@ts-ignore
                         ref={calendarRef}
                         dayMaxEvents={true}
                         dateClick={handleDateClick}
                         eventDurationEditable={true}
                         validRange={{ start: todayDate(), end: "2023-01-01" }}
+                        
                         eventTimeFormat={{
                             hour: "2-digit", //2-digit, numeric
                             minute: "2-digit", //2-digit, numeric
                             hour12: false, //true, false
                         }}
+
                         slotMinTime={"08:00:00"}
                         slotMaxTime={"16:00:00"}
                         allDaySlot={false}

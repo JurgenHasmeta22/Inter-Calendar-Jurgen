@@ -197,7 +197,7 @@ export default function NotificationEvent() {
                         }}
                     />
 
-                    <h2>Book Now</h2>
+                    <h2>Pending Appointements</h2>
 
                 </header>
 
@@ -215,7 +215,11 @@ export default function NotificationEvent() {
 
                 </div> */}
 
-                <table className='table-data'>
+                {
+
+                    rows.length !== 0 ? (
+
+                        <table className='table-data'>
                 
                     <thead>
 
@@ -280,7 +284,11 @@ export default function NotificationEvent() {
 
                     </tbody>
 
-                </table>
+                        </table>
+
+                    ): null
+
+                }
 
             </div>
 
