@@ -12,6 +12,7 @@ interface IUser {
 	isDoctor: string
 	postedAppointements: any
 	acceptedAppointemets: any
+	freeAppointements: any
 }
 
 export default IUser;

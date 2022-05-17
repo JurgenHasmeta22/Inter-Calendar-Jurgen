@@ -16,7 +16,8 @@ const initialState: IDashboard = {
     selectInfo: null,
     eventClick: null,
     selectedPatient: null,
-    selectedPatientName: ""
+    selectedPatientName: "",
+    selectedFreeTime: false
 }
 
 const dashboardStore = createSlice({
@@ -83,6 +84,10 @@ const dashboardStore = createSlice({
 
     setPatients(state, action: PayloadAction<IUser[]>) {
       state.patients = action.payload
+    },
+
+    setSelectedFreeTime(state, action: PayloadAction<boolean>) {
+      state.selectedFreeTime = action.payload
     }
 
   }
@@ -105,5 +110,6 @@ export const {
   setEventClick,
   setSelectedPatient,
   setSelectedPatientName,
-  setPatients
+  setPatients,
+  setSelectedFreeTime
 } = dashboardStore.actions;

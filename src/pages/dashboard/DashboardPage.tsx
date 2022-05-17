@@ -2,26 +2,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./DashboardPage.css"
 
-import Modal from '@mui/material/Modal';
-
-import { useRadioGroup } from '@mui/material/RadioGroup';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-// import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useTheme } from '@emotion/react';
 
 import FullCalendar, { DateSelectArg, EventClickArg } from "@fullcalendar/react";
@@ -32,29 +12,19 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 
-import events from "./events";
-
-import {
-    getDate
-} from "./events"
-
 import HeaderCommon from "../../main/components/Common/HeaderCommon/HeaderCommon";
 import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon";
 
 import {
     setAppointements,
-    invalidateAppointements,
     setModal,
-    setEventsNew,
     setDoctors,
-    invalidateDoctors,
     setSelectedDoctorName,
     setSelectedDoctor,
-    setSelectInfo,
-    setEventClick,
     setPatients,
     setSelectedPatient,
-    setSelectedPatientName
+    setSelectedPatientName,
+    setSelectedFreeTime
 } from "../../main/store/stores/dashboard/dashboard.store"
 
 import { useDispatch, useSelector } from "react-redux";
@@ -64,8 +34,6 @@ import useGetUser from "../../main/hooks/useGetUser";
 
 import interactionPlugin from "@fullcalendar/interaction";
 
-import TestModal from "../../main/components/Modals/TestModal"
-import AddEventModal from "../../main/components/Modals/AddEvent/AppointementModal"
 import { toast } from "react-toastify";
 
 import UserModals from "../../main/components/Modals/UserModals"
@@ -75,17 +43,19 @@ import listPlugin from '@fullcalendar/list';
 
 
 // #region "Some styling for calendar"
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 600,
-  bgcolor: 'background.paper',
-  border: '4px solid #000',
-  boxShadow: 44,
-  p: 8
-};
+
+// const style = {
+//   position: 'absolute' as 'absolute',
+//   top: '50%',
+//   left: '50%',
+//   transform: 'translate(-50%, -50%)',
+//   width: 600,
+//   bgcolor: 'background.paper',
+//   border: '4px solid #000',
+//   boxShadow: 44,
+//   p: 8
+// };
+
 // #endregion
 
 
@@ -93,6 +63,7 @@ export default function DashboardPage() {
 
 
   // #region "Redux state and hooks"
+
   const appointements = useSelector((state: RootState) => state.dashboard.appointements);
   const doctors = useSelector((state: RootState) => state.dashboard.doctors);
   const patients = useSelector((state: RootState) => state.dashboard.patients);
@@ -112,13 +83,17 @@ export default function DashboardPage() {
   const [eventNewState, setEventNewState] = useState<any>([])
   const modal = useSelector((state: RootState) => state.dashboard.modal);
 
+  const selectedFreeTime = useSelector((state: RootState) => state.dashboard.selectedFreeTime);
+
   const user = useGetUser()
   const theme = useTheme()
   const dispatch = useDispatch()
+
   // #endregion
 
 
   // #region "fetching stuff and helpers functions"
+  
   async function getAppointementsFromServer() {
     let result = await (await axios.get(`/appointements`));
     dispatch(setAppointements(result.data))
@@ -168,6 +143,7 @@ export default function DashboardPage() {
   }, [])
 
   const handleOpen = () => dispatch(setModal("appoinment"));
+
   // #endregion
 
 
@@ -181,14 +157,22 @@ export default function DashboardPage() {
 
     function createEvents() {
         
+        if (selectedDoctor === null) return [] //this fixed all the bugs on error boundaries etc etc
+
         // @ts-ignore
         const acceptedAppointemets = selectedDoctor?.acceptedAppointemets
+        const freeApointements = selectedDoctor?.freeAppointements
+
+        console.log(freeApointements)
+        console.log(acceptedAppointemets)
+
+        const finalAcceptedAppointements = acceptedAppointemets.concat(freeApointements);
 
         let returnedArray: any = []
 
-        if (selectedDoctor === null) return [] //this fixed all the bugs on error boundaries etc etc
+        for (const appointement of finalAcceptedAppointements) {
 
-        for (const appointement of acceptedAppointemets) {
+        // for (const appointement of acceptedAppointemets) {
 
             let color = "";
 
@@ -316,7 +300,7 @@ export default function DashboardPage() {
             toast.warn("Please select a doctor to choose an appointement")
         }
 
-        else if (user?.isDoctor && !selectedPatient) {
+        else if (user?.isDoctor && !selectedPatient && !selectedFreeTime) {
             toast.warn("Please select a patient to choose an appointement")
         }
 
@@ -338,7 +322,12 @@ export default function DashboardPage() {
 
             else {
 
-                if (selectInfo.view.type === "timeGridDay" && selectedPatient) {
+                if (selectInfo.view.type === "timeGridDay" && selectedPatient && !selectedFreeTime) {
+                    setSelectInfo(selectInfo);
+                    handleOpen()
+                }
+
+                else if (selectInfo.view.type === "timeGridDay" && !selectedPatient && selectedFreeTime) {
                     setSelectInfo(selectInfo);
                     handleOpen()
                 }
@@ -348,6 +337,18 @@ export default function DashboardPage() {
         }
 
     };
+
+    function handleOnChangeFreeAppointement(e: any) {
+
+        if (e.target.value === "false") {
+            dispatch(setSelectedFreeTime(false))
+        }
+
+        else if (e.target.value === "true") {
+            dispatch(setSelectedFreeTime(true))
+        }
+
+    }
     // #endregion
 
 
@@ -383,6 +384,7 @@ export default function DashboardPage() {
           
           !user?.isDoctor ? (
 
+            // #region "User Select"
             <div className="select-doctor-wrapper">
     
                 <span>Choose a doctor from our clicic for an appointement: </span>
@@ -412,9 +414,11 @@ export default function DashboardPage() {
                 </select>
     
             </div>
+            // #endregion
 
           ): (
 
+            // #region "Doctor Select"
             <div className="select-doctor-wrapper">
     
                 <span>Choose a patient from our clicic for an appointement: </span>
@@ -442,8 +446,21 @@ export default function DashboardPage() {
                     }
         
                 </select>
+
+                <span>Appointement Free: </span>
+    
+                <select name="filter-by-sort" id="filter-by-sort" defaultValue={'false'}
+                    onChange={function (e: any) {
+                        handleOnChangeFreeAppointement(e)
+                }}>
+                    
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+
+                </select>
     
             </div>
+            // #endregion
 
         )
 
@@ -455,6 +472,7 @@ export default function DashboardPage() {
             //@ts-ignore
           user?.isDoctor === false ? (
 
+            // #region "User Dashboard Calendar"
             <div className="calendar-wrapper">
 
                 <section className="side-bar">
@@ -564,7 +582,7 @@ export default function DashboardPage() {
                         }}
 
                         // selectOverlap={false}
-                        
+
                         slotMinTime={"08:00:00"}
                         slotMaxTime={"16:00:00"}
                         allDaySlot={false}
@@ -613,9 +631,11 @@ export default function DashboardPage() {
                 </div>
 
             </div>
+            // #endregion
 
         ): (
 
+            // #region "Doctor Dashboard Calendar"
             <div className="calendar-wrapper">
 
                 <section className="side-bar">
@@ -679,6 +699,22 @@ export default function DashboardPage() {
                                     ).length
 
                                 }
+
+                            </span>
+
+                        </li>
+
+                        <li className="event-list__item free-event">
+
+                            Doctor Free Events
+
+                            <span>
+
+                                {/* {
+                                    user.postedAppointements.filter((event: any) =>
+                                        event.status.includes("cancelled")
+                                    ).length
+                                } */}
 
                             </span>
 
@@ -789,6 +825,7 @@ export default function DashboardPage() {
                 </div>
 
             </div>
+            // #endregion
 
         )
 

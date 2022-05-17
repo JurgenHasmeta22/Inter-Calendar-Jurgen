@@ -16,10 +16,10 @@
     place-items: center;
     border-radius: 1rem;
     position: relative;
-    padding: 20px;
-    gap: 10px;
-    height: 600px;
-    width: 1000px;
+    padding: 50px;
+    gap: 50px;
+    height: auto;
+    width: auto;
   }
   
   .modal-header {

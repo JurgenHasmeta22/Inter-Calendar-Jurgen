@@ -45,6 +45,8 @@ function AppointementModal({selectInfo}: any) {
     const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
     const selectedPatient = useSelector((state: RootState) => state.dashboard.selectedPatient);
 
+    const selectedFreeTime = useSelector((state: RootState) => state.dashboard.selectedFreeTime);
+
     // const selectInfo = useSelector((state: RootState) => state.dashboard.selectInfo);
 
     const doctors = useSelector((state: RootState) => state.dashboard.doctors);
@@ -54,6 +56,8 @@ function AppointementModal({selectInfo}: any) {
     const endDate = useSelector((state: RootState) => state.modals.endDate);
     const title = useSelector((state: RootState) => state.modals.title);
     const description = useSelector((state: RootState) => state.modals.description);
+
+    
 
     let calendarRef = React.createRef();
     // #endregion
@@ -71,18 +75,40 @@ function AppointementModal({selectInfo}: any) {
 
     async function postAppointement(e: any) {
 
-        const dataToSend = {
-            price: 350,
-            // startDate: startDate,
-            // endDate: endDate,
-            startDate: changeDateFormat(selectInfo.startStr),
-            endDate: changeDateFormat(selectInfo.endStr),
-            title: title,
-            description: description,
-            status: user?.isDoctor ? "approved": "pending",
-            user_id: selectedPatient?.id,
-            doctor_id: selectedDoctor?.id,
-            category_id: 1
+        let dataToSend
+
+        if (selectedFreeTime === false) {
+
+            dataToSend = {
+                price: 350,
+                startDate: changeDateFormat(selectInfo.startStr),
+                endDate: changeDateFormat(selectInfo.endStr),
+                title: title,
+                description: description,
+                status: user?.isDoctor ? "approved": "pending",
+                user_id: selectedPatient?.id,
+                doctor_id: selectedDoctor?.id,
+                category_id: 1,
+                doctor_post_id: null
+            }
+
+        }
+
+        else if(selectedFreeTime === true &&  user.isDoctor) {
+
+            dataToSend = {
+                price: 350,
+                startDate: changeDateFormat(selectInfo.startStr),
+                endDate: changeDateFormat(selectInfo.endStr),
+                title: title,
+                description: description,
+                status: user?.isDoctor ? "approved": "pending",
+                user_id: null,
+                doctor_id: null,
+                category_id: 1,
+                doctor_post_id: selectedDoctor?.id
+            }
+
         }
 
         let result = await (await axios.post(`appointements`, dataToSend)).data;
@@ -207,7 +233,7 @@ function AppointementModal({selectInfo}: any) {
                                 name="patient"
                                 className="patient"
                                 readOnly
-                                value={selectedPatient?.firstName + " " + selectedPatient?.lastName}
+                                value={selectedPatient ? selectedPatient?.firstName + " " + selectedPatient?.lastName : "Free"}
                             />
 
                         </label>

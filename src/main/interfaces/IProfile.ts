@@ -16,4 +16,5 @@ export default interface IDashboard
 	eventClick: EventClickArg | null
 	selectedPatient: IUser | null
     selectedPatientName: string
+	selectedFreeTime: boolean
 }
