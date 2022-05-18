@@ -6,7 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import useGetUser from "../../../hooks/useGetUser"
 import { setModal } from "../../../store/stores/dashboard/dashboard.store"
 
-export default function EditEvent() {
+export default function EditEvent({eventClickNew}: any) {
 
     const dispatch = useDispatch()
     const user = useGetUser()

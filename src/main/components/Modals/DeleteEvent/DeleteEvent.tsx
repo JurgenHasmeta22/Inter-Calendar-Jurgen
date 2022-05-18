@@ -25,7 +25,6 @@ function DeleteModal({eventClickNew}: any) {
     // #region "Redux and other stats, also hooks"
     const dispatch = useDispatch();
     const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
-    // const eventClick = useSelector((state: RootState) => state.dashboard.eventClick);
     // #endregion
 
 

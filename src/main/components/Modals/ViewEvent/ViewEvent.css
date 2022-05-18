@@ -1,0 +1,6 @@
+.appointement-info {
+    display: grid;
+    grid-auto-flow: row;
+    grid-gap: 20px;
+    padding-top: 50px;
+}

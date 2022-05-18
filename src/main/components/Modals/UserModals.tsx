@@ -55,7 +55,9 @@ function UserModals({
 
         return (
 
-          <EditEvent />
+          <EditEvent 
+            eventClickNew = {eventClickNew}
+          />
 
       );
 
@@ -63,7 +65,9 @@ function UserModals({
 
         return (
 
-          <ViewEvent />
+          <ViewEvent 
+            eventClickNew = {eventClickNew}
+          />
 
       );
 
