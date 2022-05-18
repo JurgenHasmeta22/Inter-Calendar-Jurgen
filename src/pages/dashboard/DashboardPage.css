@@ -20,11 +20,20 @@
   }
 
   .free-event {
-    background-color: #76acdc;
+    background-color: #8f73b1;
+    /* cursor: pointer; */
   }
 
 .cancelled {
     background-color: #d01212;
+}
+
+.free-time {
+  background-color: #8f73b1;
+}
+
+.fc-event{
+  cursor: pointer;
 }
 
 .notifications {

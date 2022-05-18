@@ -7,6 +7,7 @@ import DeleteModal from "./DeleteEvent/DeleteEvent";
 import "../Modals/Modals.css"
 import EditEvent from "../../components/Modals/EditEvent/EditEvent"
 import NotificationEvent from "../Modals/NotificationEvent/NotificationEvent"
+import ViewEvent from "../Modals/ViewEvent/ViewEvent"
 
 type Props = {
   eventClickNew: EventClickArg;
@@ -25,14 +26,17 @@ function UserModals({
     case "appoinment":
 
       return (
+
         <AppointementModal 
           selectInfo = {selectInfo}
         />
+        
       );
 
     case "deleteEvent":
 
       return (
+
         <DeleteModal
           eventClickNew = {eventClickNew}
         />
@@ -42,6 +46,7 @@ function UserModals({
       case "notification":
 
         return (
+
           <NotificationEvent />
 
       );
@@ -49,7 +54,16 @@ function UserModals({
       case "edit":
 
         return (
+
           <EditEvent />
+
+      );
+
+      case "viewAppo":
+
+        return (
+
+          <ViewEvent />
 
       );
 

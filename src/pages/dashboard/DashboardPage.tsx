@@ -163,16 +163,16 @@ export default function DashboardPage() {
         const acceptedAppointemets = selectedDoctor?.acceptedAppointemets
         const freeApointements = selectedDoctor?.freeAppointements
 
-        console.log(freeApointements)
-        console.log(acceptedAppointemets)
+        // console.log(freeApointements)
+        // console.log(acceptedAppointemets)
 
-        const finalAcceptedAppointements = acceptedAppointemets.concat(freeApointements);
+        // const finalAcceptedAppointements = acceptedAppointemets.concat(freeApointements);
 
         let returnedArray: any = []
 
-        for (const appointement of finalAcceptedAppointements) {
+        // for (const appointement of finalAcceptedAppointements) {
 
-        // for (const appointement of acceptedAppointemets) {
+        for (const appointement of acceptedAppointemets) {
 
             let color = "";
 
@@ -198,16 +198,36 @@ export default function DashboardPage() {
                 start: appointement.startDate,
                 end: appointement.endDate,
                 allDay: false,
-                backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7" || user.id === appointement.doctor_id ? color : "#849fb7" || user.id === appointement.doctor_post_id ? color : "#849fb7"}`,
+                // backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7" || user.id === appointement.doctor_id ? color : "#849fb7" || user.id === appointement.doctor_post_id ? color : "#849fb7"}`,
+                backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7" || user.id === appointement.doctor_id ? color : "#849fb7"}`,
                 overlap: false,
                 editable: user?.id === appointement.user_id || user?.id === appointement.doctor_id,
                 className: `${
-                    ( user.id !== appointement.doctor_id ) && ( user.id !== appointement.user_id) && ( user.id !== appointement.doctor_post_id) ? "others-color-events" : `${appointement.status}`
+                    // ( user.id !== appointement.doctor_id ) && ( user.id !== appointement.user_id) && ( user.id !== appointement.doctor_post_id) ? "others-color-events" : `${appointement.status}`
+                    ( user.id !== appointement.doctor_id ) && ( user.id !== appointement.user_id) ? "others-color-events" : `${appointement.status}`
                 }`
 
             }
 
             returnedArray.push(event);
+
+        }
+
+        for (const appointement of freeApointements) {
+
+            const object = {
+              title: appointement.title,
+              id: `${appointement.id}`,
+              start: appointement.startDate,
+              end: appointement.endDate,
+              allDay: false,
+              editable: false,
+              overlap: false,
+              backgroundColor: "#8f73b1",
+              className: "free-time"
+            };
+
+            returnedArray.push(object);
 
         }
 
@@ -245,12 +265,14 @@ export default function DashboardPage() {
 
         else if(user.isDoctor && !selectedFreeTime && !selectedPatient) {
 
-            if (user.freeAppointements.length !== 0) {
+            if (user.freeAppointements.length !== 0 || user.freeAppointements.length !== 0) {
 
                 if (
                     user.freeAppointements.find(
                       (event: any) => event.id === Number(eventClick.event._def.publicId)
-                    )
+                    ) || user.acceptedAppointemets.find(
+                        (event: any) => event.id === Number(eventClick.event._def.publicId)
+                      )
                   ) {
                     setEventClickNew(eventClick)
                     dispatch(setModal("deleteEvent"));
@@ -526,7 +548,6 @@ export default function DashboardPage() {
                 <section className="side-bar">
                     
                     <h3 className="side-bar__title">Calendar Legenda</h3>
-                    <h4 className="my-color-events">My events</h4>
                     <h4 className="others-color-events">Others Events</h4>
 
                     <ul className="event-list">
@@ -587,6 +608,20 @@ export default function DashboardPage() {
 
                         </li>
 
+                        <li className="event-list__item free-event">
+
+                            Doctor Free Events
+
+                            <span>
+
+                                {
+                                    selectedDoctor?.freeAppointements.length
+                                }
+
+                            </span>
+
+                        </li>
+
                     </ul>
 
                 </section>
@@ -597,28 +632,19 @@ export default function DashboardPage() {
 
                         initialView = "dayGridMonth"
 
-                        // views: {{
-                        //     listDay: 'list day' ,
-                        //     listWeek: 'list week' ,
-                        //     listMonth: 'list month'
-                        // }},
-
                         headerToolbar={{
                             left: "prev,next",
                             center: "title",
-                            // right: "dayGridMonth, timeGridWeek, timeGridDay, listMonth, listWeek, listDay"
                             right: "dayGridMonth, timeGridWeek, timeGridDay, listMonth"
                         }}
 
                         plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
 
-                        // nowIndicator={true}
+                        nowIndicator={true}
                         displayEventEnd={true}
                         editable = {true}
                         selectable = {true}
                         selectMirror={true}
-
-                        // droppable={true}
 
                         weekends={false}
                         height="auto"
@@ -629,8 +655,6 @@ export default function DashboardPage() {
                             hour12: false, //true, false
                         }}
 
-                        // selectOverlap={false}
-
                         slotMinTime={"08:00:00"}
                         slotMaxTime={"16:00:00"}
                         allDaySlot={false}
@@ -640,6 +664,7 @@ export default function DashboardPage() {
                         dayMaxEvents={true}
                         dateClick={handleDateClick}
                         eventDurationEditable={true}
+                        weekNumbers = {true}
                         validRange={{ start: todayDate(), end: "2023-01-01" }}
 
                         selectOverlap={() => {
@@ -695,7 +720,7 @@ export default function DashboardPage() {
                         <li>
 
                             <h4>
-                                Doctor events <span>Total: {selectedDoctor?.acceptedAppointemets.length}</span>
+                                Doctor events <span>Total: {createEvents().length}</span>
                             </h4>
 
                         </li>
@@ -758,11 +783,9 @@ export default function DashboardPage() {
 
                             <span>
 
-                                {/* {
-                                    user.postedAppointements.filter((event: any) =>
-                                        event.status.includes("cancelled")
-                                    ).length
-                                } */}
+                                {
+                                    user.freeAppointements.length
+                                }
 
                             </span>
 
@@ -835,6 +858,9 @@ export default function DashboardPage() {
                         slotMaxTime={"16:00:00"}
                         allDaySlot={false}
                         height="auto"
+
+                        weekNumbers = {true}
+                        
 
                         selectOverlap={() => {
 

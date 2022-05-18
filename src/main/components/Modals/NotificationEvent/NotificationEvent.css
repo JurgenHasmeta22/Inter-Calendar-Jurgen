@@ -1,14 +1,18 @@
 table, th, td {
-    border: 1px solid;
+    border: 0.5px solid;
   }
   
   td {
     font-size: 14px;
     color: rgb(0, 0, 0);
-    font-weight: 600;
-    padding: 10px 10px;
+    font-weight: 500;
+    padding: 10px 40px;
   }
   
+  thead th {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
   table {
     width: 100%;
     border-collapse: collapse;
@@ -27,4 +31,6 @@ table, th, td {
     outline: none;
     background-color: rgb(216, 130, 130);
     cursor: pointer;
+    padding: 10px 10px;
+    font-weight: 600;
   }

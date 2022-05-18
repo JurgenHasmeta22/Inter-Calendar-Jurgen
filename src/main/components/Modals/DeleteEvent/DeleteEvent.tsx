@@ -57,6 +57,10 @@ function DeleteModal({eventClickNew}: any) {
     const handleChangeEvent = async () => {
       dispatch(setModal("edit"))
     }
+
+    const handleViewEvent = async () => {
+      dispatch(setModal("viewAppo"))
+    }
     // #endregion
 
 
@@ -124,6 +128,15 @@ function DeleteModal({eventClickNew}: any) {
           >
 
             Change Status
+
+          </button>
+
+          <button
+            onClick={handleViewEvent}
+            className="general-button change-btn"
+          >
+
+            View Appointement Details
 
           </button>
 
