@@ -1,4 +1,4 @@
-
+// #region "Importing stuff"
 import { useDispatch } from "react-redux"
 import "../EditEvent/EditEvent.css"
 import CloseIcon from "@mui/icons-material/Close";
@@ -11,19 +11,28 @@ import { useEffect, useState } from "react";
 import moment from "moment";
 import { toast } from "react-toastify";
 import { setUser } from "../../../store/stores/user/user.store";
+import { setTitle } from "../../../store/stores/modals/modals.store";
+// #endregion
 
 
 export default function EditEvent({eventClickNew, selectInfo}: any) {
 
+
+    // #region "React state, and hooks"
     const dispatch = useDispatch()
     const user = useGetUser()
 
     const [appointementSpecific, setAppointementSpecific] = useState<IAppointement | null>(null)
+
     const [titleEdit, setTitleEdit] = useState<string>(null)
+    const [descEdit, setDescEdit] = useState<string>(null)
     const [startDateEdit, setStartDateEdit] = useState<string>(null)
     const [endDateEdit, setEndDateEdit] = useState<string>(null)
     const [statusEdit, setStatusEdit] = useState<boolean>(null)
+    // #endregion
 
+
+    // #region "Helpers functions and fetching stuff from server"
     async function getAppointementFromServer() {
 
         const id = Number(eventClickNew.event._def.publicId)
@@ -33,6 +42,8 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
         setAppointementSpecific(result.data)
         setStartDateEdit(result.data.startDate)
         setStatusEdit(result.data.status)
+        setDescEdit(result.data.description)
+        setTitleEdit(result.data.title)
 
     }
 
@@ -64,18 +75,13 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
 
     let today = Date()
 
-    // console.log(today.toLocaleUpperCase())
-
     function handleEndDateChange(e: any) {
         
         const hour = e.target.value
         const startDateInitial = startDateEdit.substring(0, 11)
-        
-        // console.log(startDateInitial)
-        
+                
         const finalDateToSend = `${startDateInitial}${hour}:00`
         setEndDateEdit(finalDateToSend)
-        // console.log(finalDateToSend)
 
     }
 
@@ -86,7 +92,7 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
             startDate: startDateEdit,
             endDate: endDateEdit,
             title: titleEdit,
-            description: appointementSpecific?.description,
+            description: descEdit,
             status: statusEdit,
             user_id: appointementSpecific?.user_id,
             doctor_id: appointementSpecific?.doctor_id,
@@ -109,7 +115,9 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
         }
 
     }
+    // #endregion
 
+    
     return ( 
 
         <>
@@ -169,6 +177,22 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
 
                             <label>
 
+                                Description: 
+
+                                <input
+                                    type="text"
+                                    name="title"
+                                    className="title"
+                                    required
+                                    onChange={(e: any) => {
+                                        setDescEdit(e.target.value)
+                                    }}
+                                />
+
+                            </label>
+
+                            <label>
+
                                 Start date: 
 
                                 <input
@@ -176,7 +200,6 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
                                     name="startDateEdit"
                                     className="startDateEdit"
                                     defaultValue={appointementSpecific?.startDate} 
-                                    // min= {today.toLocaleString()} 
                                     min= "2022-05-18T12:00"
                                     max="2023-06-01T00:00"   
                                     onChange={(e: any) => {
@@ -194,8 +217,6 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
                                     type="time"
                                     name="endDateEdit"
                                     className="endDateEdit"
-                                    // disabled
-                                    // defaultValue={startDateEdit}
                                     onChange={(e: any) => {
                                         handleEndDateChange(e)
                                     }} 
