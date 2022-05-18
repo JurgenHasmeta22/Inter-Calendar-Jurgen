@@ -57,6 +57,7 @@ function UserModals({
 
           <EditEvent 
             eventClickNew = {eventClickNew}
+            selectInfo = {selectInfo}
           />
 
       );

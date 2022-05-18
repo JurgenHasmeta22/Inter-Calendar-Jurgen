@@ -41,13 +41,21 @@ export default function EditEvent({eventClickNew}: any) {
 
         for (const patient of patients) {
 
-            if(patient.id === appointementSpecific.user_id) {
+            if (appointementSpecific?.user_id === null) {
+                patientUserName = "null"
+            }
+
+            else if(patient.id === appointementSpecific?.user_id) {
                 patientUserName = patient.userName
             }
 
         }
 
-        setPatientUserName(patientUserName)
+        // setPatientUserName(patientUserName) dont do it with state updating etc beacause its easier this way
+
+        console.log(patientUserName)
+        
+        return patientUserName
 
     }
 
@@ -96,7 +104,7 @@ export default function EditEvent({eventClickNew}: any) {
                             <span><strong>Doctor Id: </strong>{ appointementSpecific?.doctor_id !== null ? appointementSpecific?.doctor_id: "null"}</span>
                             <span><strong>Doctor userName: </strong> {user?.isDoctor ? user?.userName: selectedDoctor?.userName } </span>
                             <span><strong>Patient Id: </strong>{ appointementSpecific?.user_id !== null ? appointementSpecific?.user_id: "null"}</span>
-                            {/* <span><strong>Patient userName: </strong> {appointementSpecific.id} </span> */}
+                            <span><strong>Patient userName: </strong> {getPatientUserName()} </span>
                             <span><strong>Appointement Desc: </strong> {appointementSpecific?.description} </span>
 
                         </div>

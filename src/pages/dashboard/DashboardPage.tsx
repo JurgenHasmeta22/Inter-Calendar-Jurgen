@@ -245,6 +245,7 @@ export default function DashboardPage() {
                 )
               ) {
                 setEventClickNew(eventClick)
+                // setSelectInfo(selectInfo)
                 dispatch(setModal("deleteEvent"));
             }
 
@@ -258,6 +259,7 @@ export default function DashboardPage() {
                 )
               ) {
                 setEventClickNew(eventClick)
+                // setSelectInfo(selectInfo)
                 dispatch(setModal("deleteEvent"));
             }
 
@@ -275,6 +277,7 @@ export default function DashboardPage() {
                       )
                   ) {
                     setEventClickNew(eventClick)
+                    // setSelectInfo(selectInfo)
                     dispatch(setModal("deleteEvent"));
                 }
 

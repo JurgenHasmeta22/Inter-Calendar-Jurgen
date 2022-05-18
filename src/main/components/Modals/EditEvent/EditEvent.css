@@ -1,0 +1,16 @@
+.form-edit-event {
+    display: grid;
+    grid-auto-flow: row;
+    grid-gap: 20px;
+    padding-top: 30px;
+}
+
+.editing-status {
+    font-size: 16px;
+    font-weight: 800;
+    padding-top: 50px;
+}
+
+.status-span-edit {
+    padding-top: 20px;
+}
