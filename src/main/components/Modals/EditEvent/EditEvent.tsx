@@ -81,13 +81,20 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
     async function handleSaveChanges() {
 
         const dataToSend = {
-            title: titleEdit,
+            price: 350,
             startDate: startDateEdit,
             endDate: endDateEdit,
-            status: statusEdit
+            title: titleEdit,
+            description: appointementSpecific?.description,
+            status: statusEdit,
+            user_id: appointementSpecific?.user_id,
+            doctor_id: appointementSpecific?.doctor_id,
+            //@ts-ignore
+            doctor_post_id: null,
+            category_id: 1
         }
 
-        let result = await (await axios.put(`appointements/${appointementSpecific?.id}`, dataToSend)).data;
+        let result = await (await axios.patch(`appointements/${appointementSpecific?.id}`, dataToSend)).data;
 
         if (!result.error) {
 
