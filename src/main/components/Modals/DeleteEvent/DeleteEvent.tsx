@@ -21,10 +21,10 @@ import useGetUser from "../../../hooks/useGetUser";
 
 function DeleteModal({eventClickNew}: any) {
 
-  const user = useGetUser()
 
     // #region "Redux and other stats, also hooks"
     const dispatch = useDispatch();
+    const user = useGetUser()
     const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
     // #endregion
 
