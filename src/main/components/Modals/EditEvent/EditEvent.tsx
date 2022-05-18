@@ -4,11 +4,13 @@ import "../EditEvent/EditEvent.css"
 import CloseIcon from "@mui/icons-material/Close";
 
 import useGetUser from "../../../hooks/useGetUser"
-import { setModal } from "../../../store/stores/dashboard/dashboard.store"
+import { setModal, setSelectedDoctor } from "../../../store/stores/dashboard/dashboard.store"
 import IAppointement from "../../../interfaces/IAppointement";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import moment from "moment";
+import { toast } from "react-toastify";
+import { setUser } from "../../../store/stores/user/user.store";
 
 
 export default function EditEvent({eventClickNew, selectInfo}: any) {
@@ -27,7 +29,9 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
         const id = Number(eventClickNew.event._def.publicId)
 
         let result = await (await axios.get(`/appointements/${id}`));
+
         setAppointementSpecific(result.data)
+        setStartDateEdit(result.data.startDate)
 
     }
 
@@ -61,7 +65,43 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
 
     // console.log(today.toLocaleUpperCase())
 
-    return (
+    function handleEndDateChange(e: any) {
+        
+        const hour = e.target.value
+        const startDateInitial = startDateEdit.substring(0, 11)
+        
+        // console.log(startDateInitial)
+        
+        const finalDateToSend = `${startDateInitial}${hour}:00`
+        setEndDateEdit(finalDateToSend)
+        // console.log(finalDateToSend)
+
+    }
+
+    async function handleSaveChanges() {
+
+        const dataToSend = {
+            title: titleEdit,
+            startDate: startDateEdit,
+            endDate: endDateEdit,
+            status: statusEdit
+        }
+
+        let result = await (await axios.put(`appointements/${appointementSpecific?.id}`, dataToSend)).data;
+
+        if (!result.error) {
+
+            dispatch(setSelectedDoctor(result.doctorServer))
+            dispatch(setUser(result.patientServer));
+
+            dispatch(setModal(""))
+            toast.success("Succesfully Updated Event");
+
+        }
+
+    }
+
+    return ( 
 
         <>
         
@@ -99,6 +139,7 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
 
                         <form className="form-edit-event" onSubmit={function (e) {
                             e.preventDefault()
+                            handleSaveChanges()
                         }}>
 
                             <label>
@@ -139,17 +180,15 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
                             <label>
 
                                 End date:
-
+                                
                                 <input
-                                    type="datetime-local"
+                                    type="time"
                                     name="endDateEdit"
                                     className="endDateEdit"
                                     // disabled
-                                    defaultValue={startDateEdit}
-                                    min= "2022-05-18T12:00"
-                                    max="2022-05-018T16:00"
+                                    // defaultValue={startDateEdit}
                                     onChange={(e: any) => {
-                                        setEndDateEdit(e.target.value)
+                                        handleEndDateChange(e)
                                     }} 
                                 />
                                 
@@ -172,6 +211,8 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
                                 </select>
                                 
                             </label>
+
+                            <button type="submit">Save Changes</button>
 
                         </form>
 

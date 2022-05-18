@@ -121,23 +121,35 @@ function DeleteModal({eventClickNew}: any) {
 
           </button>
 
-          <button
-            onClick={handleChangeEvent}
-            className="general-button change-btn"
-          >
+          {
 
-            Change Status
+            user?.isDoctor ? (
 
-          </button>
+              <>
 
-          <button
-            onClick={handleViewEvent}
-            className="general-button change-btn"
-          >
+                <button
+                  onClick={handleChangeEvent}
+                  className="general-button change-btn"
+                >
 
-            View Appointement Details
+                  Change Status
 
-          </button>
+                </button>
+
+                <button
+                  onClick={handleViewEvent}
+                  className="general-button change-btn"
+                >
+
+                  View Appointement Details
+
+                </button>
+
+              </>
+
+            ): null
+
+          }
 
         </main>
 

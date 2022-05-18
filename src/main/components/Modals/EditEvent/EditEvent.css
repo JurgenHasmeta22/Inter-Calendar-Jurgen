@@ -5,6 +5,25 @@
     padding-top: 30px;
 }
 
+.form-edit-event button {
+    padding: 10px 10px;
+    border: none;
+    outline: none;
+    background-color: rgb(232, 111, 111);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.form-edit-event input {
+    padding: 5px 10px;
+    margin-left: 15px;
+}
+
+.form-edit-event select {
+    margin-left: 15px;
+    padding: 10px 10px;
+}
 .editing-status {
     font-size: 16px;
     font-weight: 800;
