@@ -8,6 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import {
     invalidateModal,
+    setDoctors,
     setModal,
     setSelectedDoctor
 } from "../.././../store/stores/dashboard/dashboard.store"
@@ -138,6 +139,7 @@ export default function NotificationEvent() {
 
             dispatch(setSelectedDoctor(result.doctorServer))
             dispatch(setUser(result.patientServer));
+            dispatch(setDoctors(result.doctorsServer))
 
             dispatch(setModal(""))
             toast.success("Succesfully Updated Event");
@@ -159,6 +161,7 @@ export default function NotificationEvent() {
 
             dispatch(setSelectedDoctor(result.doctorServer))
             dispatch(setUser(result.patientServer));
+            dispatch(setDoctors(result.doctorsServer))
 
             dispatch(setModal(""))
             toast.success("Succesfully Updated Event");

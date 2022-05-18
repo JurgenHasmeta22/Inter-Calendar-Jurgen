@@ -10,7 +10,8 @@ import {RootState} from "../../../store/redux/rootState"
 
 import {
     setSelectedDoctor,
-    setModal
+    setModal,
+    setDoctors
 } from "../../../store/stores/dashboard/dashboard.store"
 
 import userEvent from "@testing-library/user-event";
@@ -41,6 +42,8 @@ function DeleteModal({eventClickNew}: any) {
 
             dispatch(setSelectedDoctor(dataFromServer.updatedDoctor));
             dispatch(setUser(dataFromServer.updatedUser));
+            dispatch(setDoctors(dataFromServer.updatedDoctors));
+            
             dispatch(setModal(""));
 
             toast.success(dataFromServer.msg);

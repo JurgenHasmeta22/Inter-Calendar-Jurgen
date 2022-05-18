@@ -4,7 +4,7 @@ import "../EditEvent/EditEvent.css"
 import CloseIcon from "@mui/icons-material/Close";
 
 import useGetUser from "../../../hooks/useGetUser"
-import { setModal, setSelectedDoctor } from "../../../store/stores/dashboard/dashboard.store"
+import { setDoctors, setModal, setSelectedDoctor } from "../../../store/stores/dashboard/dashboard.store"
 import IAppointement from "../../../interfaces/IAppointement";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -101,6 +101,7 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
 
             dispatch(setSelectedDoctor(result.doctorServer))
             dispatch(setUser(result.patientServer));
+            dispatch(setDoctors(result.doctorsServer))
 
             dispatch(setModal(""))
             toast.success("Succesfully Updated Event");

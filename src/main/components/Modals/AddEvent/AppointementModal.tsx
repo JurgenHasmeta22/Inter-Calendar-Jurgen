@@ -115,15 +115,12 @@ function AppointementModal({selectInfo}: any) {
 
         if (!result.error) {
 
-            //@ts-ignore
-            // let calendarApi = calendarRef.current.getApi();
-
             dispatch(setSelectedDoctor(result.doctorServer))
             dispatch(setUser(result.patientServer));
+            dispatch(setDoctors(result.doctorsServer))
 
             dispatch(setModal(""))
             toast.success("Succesfully Created Event");
-            // calendarApi.changeView("timeGridDay", selectInfo.startStr);
 
         }
 
