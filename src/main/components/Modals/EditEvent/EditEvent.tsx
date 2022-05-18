@@ -32,6 +32,7 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
 
         setAppointementSpecific(result.data)
         setStartDateEdit(result.data.startDate)
+        setStatusEdit(result.data.status)
 
     }
 
@@ -201,23 +202,31 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
                                 
                             </label>
 
-                            <label>
+                            {
 
-                                Status:
-
-                                <select name="filter-by-sort" id="filter-by-sort" defaultValue={'false'}
-                                onChange={function (e: any) {
-                                    handleStatusEditChange(e)
-                                }}>
+                                user?.isDoctor ? (
                                     
+                                    <label>
 
-                                    { appointementSpecific?.status !== "approved" ? <option value="approved">Approved</option> : null }
-                                    { appointementSpecific?.status !== "pending" ? <option value="pending">Pending</option> : null }
-                                    { appointementSpecific?.status !== "cancelled" ? <option value="cancelled">Cancelled</option> : null }
+                                        Status:
 
-                                </select>
+                                        <select name="filter-by-sort" id="filter-by-sort" defaultValue={'false'}
+                                        onChange={function (e: any) {
+                                            handleStatusEditChange(e)
+                                        }}>
+                                            
+
+                                            { appointementSpecific?.status !== "approved" ? <option value="approved">Approved</option> : null }
+                                            { appointementSpecific?.status !== "pending" ? <option value="pending">Pending</option> : null }
+                                            { appointementSpecific?.status !== "cancelled" ? <option value="cancelled">Cancelled</option> : null }
+
+                                        </select>
                                 
-                            </label>
+                                    </label>
+
+                                ): null
+
+                            }
 
                             <button type="submit">Save Changes</button>
 

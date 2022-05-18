@@ -121,35 +121,23 @@ function DeleteModal({eventClickNew}: any) {
 
           </button>
 
-          {
+          <button
+            onClick={handleViewEvent}
+            className="general-button change-btn"
+          >
 
-            user?.isDoctor ? (
+            View Appointement Details
 
-              <>
+          </button>
 
-                <button
-                  onClick={handleChangeEvent}
-                  className="general-button change-btn"
-                >
+          <button
+            onClick={handleChangeEvent}
+            className="general-button change-btn"
+          >
 
-                  Change Status
+            Change Status
 
-                </button>
-
-                <button
-                  onClick={handleViewEvent}
-                  className="general-button change-btn"
-                >
-
-                  View Appointement Details
-
-                </button>
-
-              </>
-
-            ): null
-
-          }
+          </button>
 
         </main>
 
@@ -162,6 +150,3 @@ function DeleteModal({eventClickNew}: any) {
 }
 
 export default DeleteModal;
-
-//idea how to change status better, first we get the appointementId from the eventClickNew state, then use it to fetch that specific appointement and store it in state, then use that to find the status
-// and to change it after with put etc
