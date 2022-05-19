@@ -41,6 +41,8 @@ import UserModals from "../../main/components/Modals/UserModals"
 import listPlugin from '@fullcalendar/list';
 import IAppointement from "../../main/interfaces/IAppointement";
 import { setUser } from "../../main/store/stores/user/user.store";
+
+import { motion } from "framer-motion"
 // #endregion
 
 
@@ -241,8 +243,10 @@ useEffect(()=> {
                   (event: any) => event.id === Number(eventClick.event._def.publicId)
                 )
               ) {
+
                 setEventClickNew(eventClick)
                 dispatch(setModal("deleteEvent"));
+
             }
 
         }
@@ -254,8 +258,10 @@ useEffect(()=> {
                   (event: any) => event.id === Number(eventClick.event._def.publicId)
                 )
               ) {
+
                 setEventClickNew(eventClick)
                 dispatch(setModal("deleteEvent"));
+
             }
 
         }
@@ -271,8 +277,10 @@ useEffect(()=> {
                         (event: any) => event.id === Number(eventClick.event._def.publicId)
                       )
                   ) {
+
                     setEventClickNew(eventClick)
                     dispatch(setModal("deleteEvent"));
+
                 }
 
             }
@@ -284,8 +292,10 @@ useEffect(()=> {
                       (event: any) => event.id === Number(eventClick.event._def.publicId)
                     )
                   ) {
+
                     setEventClickNew(eventClick)
                     dispatch(setModal("deleteEvent"));
+
                 }
 
             }
@@ -299,8 +309,10 @@ useEffect(()=> {
                   (event: any) => event.id === Number(eventClick.event._def.publicId)
                 )
               ) {
+
                 setEventClickNew(eventClick)
                 dispatch(setModal("deleteEvent"));
+                
             }
 
         }
