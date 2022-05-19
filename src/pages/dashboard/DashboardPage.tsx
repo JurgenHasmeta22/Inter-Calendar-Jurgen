@@ -381,8 +381,29 @@ useEffect(()=> {
             if (!user.isDoctor) {
 
                 if (selectInfo.view.type === "timeGridDay" && selectedDoctor ) {
-                    setSelectInfo(selectInfo);
-                    handleOpen()
+
+                    // find if the user patient has any appointements in this date so we cant allow 2 dates in the same day
+                    const startDateCheck = changeDateFormat(selectInfo.startStr)
+
+                    // @ts-ignore
+                    const userAppointement = user?.postedAppointements.find(appointement => appointement.startDate.substring(0, 10) === startDateCheck.substring(0, 10))
+                    
+                    const startHour  = Number(selectInfo.startStr.substring(11, 13))
+                    const endHour = Number(selectInfo.endStr.substring(11, 13))
+
+                    const checkHour = endHour - startHour
+
+                    // console.log(startHour, endHour, checkHour)
+
+                    if (checkHour <= 1 && !userAppointement ) {
+                        setSelectInfo(selectInfo);
+                        handleOpen()
+                    }
+                    
+                    else {
+                        toast.error("You cant have more time than 1 hour and you cant have 2 appointements in a day")
+                    }
+
                 }
 
             }

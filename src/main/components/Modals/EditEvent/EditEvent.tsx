@@ -77,12 +77,13 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
 
     function handleEndDateChange(e: any) {
         
-        console.log(e.target.value)
+        // console.log(e.target.value)
         
         const hour = e.target.value
+
         const startDateInitial = startDateEdit.substring(0, 11)
-                
         const finalDateToSend = `${startDateInitial}${hour}:00`
+        
         setEndDateEdit(finalDateToSend)
 
     }
@@ -105,7 +106,11 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
 
         let result = await (await axios.patch(`appointements/${appointementSpecific?.id}`, dataToSend)).data;
 
-        if (!result.error) {
+        if (result === undefined || result === null) {
+            toast.warn("Error");
+        }
+
+        if (!result?.error) {
 
             dispatch(setSelectedDoctor(result.doctorServer))
             dispatch(setUser(result.patientServer));
@@ -114,6 +119,10 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
             dispatch(setModal(""))
             toast.success("Succesfully Updated Event");
 
+        }
+
+        else {
+            toast.warn("Error");
         }
 
     }
