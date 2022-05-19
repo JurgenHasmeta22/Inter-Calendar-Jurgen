@@ -53,7 +53,7 @@ export default function EditEvent({eventClickNew}: any) {
 
         // setPatientUserName(patientUserName) dont do it with state updating etc beacause its easier this way
 
-        console.log(patientUserName)
+        // console.log(patientUserName)
         
         return patientUserName
 

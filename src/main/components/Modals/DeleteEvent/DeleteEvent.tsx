@@ -34,7 +34,7 @@ function DeleteModal({eventClickNew}: any) {
 
         const appointementId = Number(eventClickNew.event._def.publicId);
 
-        console.log(appointementId)
+        // console.log(appointementId)
 
         const dataFromServer = await (await axios.delete(`appointements/${appointementId}`)).data;
 
