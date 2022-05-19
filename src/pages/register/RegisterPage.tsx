@@ -113,110 +113,6 @@ const RegisterPage : FC = ()=> {
 
         <>
 
-            {
-                // #region "Old Login"
-            }
-
-            {/* <div className="signup-page-wrapper">
-
-                <div className="main-wrapper">
-
-                    <form id="signup-form" onSubmit={function (e) {
-                        e.preventDefault()
-                        dispatch(onRegister(registerData))
-                        // handleRegisterUser(e)
-                        // navigate("../dashboard");
-                    }}>
-                        
-                        <h1>Bank System</h1>
-
-                        <label id="firstname" htmlFor="">
-
-                            <input type="text" name = "firstName" placeholder="Enter your firstname" required onChange={function (e) {
-                                dispatch(setFirstName(e.target.value))
-                            }}/>
-
-                        </label>
-
-                        <label id="lastname" htmlFor="">
-
-                            <input type="text" name = "lastName" placeholder="Enter your lastname" required onChange={function (e) {
-                                dispatch(setLastName(e.target.value))
-                            }}/>
-
-                        </label>
-
-                        <label id="username" htmlFor="">
-
-                            <input type="text" name = "username" placeholder="Enter your username" required onChange={function (e) {
-                                dispatch(setUserNameRegister(e.target.value))
-                            }}/>
-
-                        </label>
-
-                        <label htmlFor="">
-
-                            <input type="text" name = "email" id="email" placeholder="Enter your email" onChange={function (e) {
-                                dispatch(setEmailRegister(e.target.value))
-                            }}/>
-
-                        </label>
-
-                        <label id="username" htmlFor="">
-
-                            <input type="phone" name = "phone" placeholder="Enter your phone number" required onChange={function (e) {
-                                dispatch(setPhoneNumber(e.target.value))
-                            }}/>
-
-                        </label>
-
-                        <label id="username" htmlFor="">
-
-                            <input type="date" name = "birthdate" placeholder="Enter your birthday" required onChange={function (e) {
-                                dispatch(setBirthDate(e.target.value))
-                            }}/>
-
-                        </label>
-
-                        <label htmlFor="">
-                            
-                            <input
-                                type="password"
-                                name = "password"
-                                id="password"
-                                placeholder="Enter your password"
-                                required
-                                onChange={function (e) {
-                                    dispatch(setPasswordRegister(e.target.value))
-                                }}
-                            />
-
-                        </label>
-
-                        <label htmlFor="">
-                            <button>Sign Up</button>
-                        </label>
-
-                        <label id="login-link-wrapper" htmlFor="">
-
-                            You have an account?
-
-                            <Link id="link" to={"../login"}>
-                                Log In
-                            </Link>
-                            
-                        </label>
-
-                    </form>
-
-                </div>
-
-            </div> */}
-
-            {
-                // #endregion
-            }
-
             <ThemeProvider theme={theme}>
 
                 <Container component="main" maxWidth="xs">
@@ -266,6 +162,7 @@ const RegisterPage : FC = ()=> {
                                 </Grid>
 
                                 <Grid item xs={12} sm={6}>
+
                                     <TextField
                                         required
                                         fullWidth
@@ -277,9 +174,11 @@ const RegisterPage : FC = ()=> {
                                             dispatch(setLastName(e.target.value))
                                         }}
                                     />
+
                                 </Grid>
 
                                 <Grid item xs={12}>
+
                                     <TextField
                                         required
                                         fullWidth
@@ -291,9 +190,11 @@ const RegisterPage : FC = ()=> {
                                             dispatch(setEmailRegister(e.target.value))
                                         }}
                                     />
+                                    
                                 </Grid>
 
                                 <Grid item xs={12}>
+
                                     <TextField
                                         required
                                         fullWidth
@@ -305,9 +206,11 @@ const RegisterPage : FC = ()=> {
                                             dispatch(setBio(e.target.value))
                                         }}
                                     />
+
                                 </Grid>
 
                                 <Grid item xs={12}>
+
                                     <TextField
                                         required
                                         fullWidth
@@ -319,9 +222,11 @@ const RegisterPage : FC = ()=> {
                                             dispatch(setPhoneNumber(e.target.value))
                                         }}
                                     />
+
                                 </Grid>
 
                                 <Grid item xs={12}>
+
                                     <TextField
                                         required
                                         fullWidth
@@ -333,9 +238,11 @@ const RegisterPage : FC = ()=> {
                                             dispatch(setUserNameRegister(e.target.value))
                                         }}
                                     />
+
                                 </Grid>
 
                                 <Grid item xs={12}>
+
                                     <TextField
                                         required
                                         fullWidth
@@ -348,9 +255,11 @@ const RegisterPage : FC = ()=> {
                                             dispatch(setAddress(e.target.value))
                                         }}
                                     />
+
                                 </Grid>
 
                                 <Grid item xs={12}>
+
                                     <TextField
                                         required
                                         fullWidth
@@ -363,6 +272,7 @@ const RegisterPage : FC = ()=> {
                                             dispatch(setAvatar(e.target.value))
                                         }}
                                     />
+
                                 </Grid>
 
                                 <Grid item xs={12}>
@@ -382,17 +292,11 @@ const RegisterPage : FC = ()=> {
                                                 onChange={(e: any) => {
                                                     dispatch(setIsDoctor((e.target.value)))
                                                 }}
-
-                                                // sx={{
-                                                //     marginTop: 8,
-                                                //     display: 'flex',
-                                                //     flexDirection: 'column',
-                                                //     alignItems: 'center',
-                                                // }}
-
                                             >
+
                                                 <FormControlLabel value="false" control={<Radio />} label="false" />
                                                 <FormControlLabel value="true" control={<Radio />} label="true" />
+                                            
                                             </RadioGroup>
 
                                         </Grid>
@@ -402,6 +306,7 @@ const RegisterPage : FC = ()=> {
                                 </Grid>
 
                                 <Grid item xs={12}>
+
                                     <TextField
                                         required
                                         fullWidth
@@ -414,6 +319,7 @@ const RegisterPage : FC = ()=> {
                                             dispatch(setPasswordRegister(e.target.value))
                                         }}
                                     />
+
                                 </Grid>
 
                             </Grid>
@@ -432,10 +338,6 @@ const RegisterPage : FC = ()=> {
                                 <Grid item onClick={() => {
                                     navigate("/dashboard")
                                 }}>
-
-                                    {/* <Link href="/login" variant="body2">
-                                        Already have an account? Sign in
-                                    </Link> */}
 
                                     <Link to="/login">
                                         Already have an account? Sign in

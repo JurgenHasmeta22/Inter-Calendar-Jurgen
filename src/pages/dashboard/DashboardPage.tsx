@@ -39,23 +39,8 @@ import { toast } from "react-toastify";
 import UserModals from "../../main/components/Modals/UserModals"
 
 import listPlugin from '@fullcalendar/list';
-// #endregion
-
-
-// #region "Some styling for calendar"
-
-// const style = {
-//   position: 'absolute' as 'absolute',
-//   top: '50%',
-//   left: '50%',
-//   transform: 'translate(-50%, -50%)',
-//   width: 600,
-//   bgcolor: 'background.paper',
-//   border: '4px solid #000',
-//   boxShadow: 44,
-//   p: 8
-// };
-
+import IAppointement from "../../main/interfaces/IAppointement";
+import { setUser } from "../../main/store/stores/user/user.store";
 // #endregion
 
 
@@ -70,6 +55,8 @@ export default function DashboardPage() {
 
   const [selectInfo, setSelectInfo] = useState<DateSelectArg | null>(null);
   const [eventClickNew, setEventClickNew] = useState<EventClickArg | null>(null);
+
+  const [appointementIndivid, setAppointementIndivid] = useState<IAppointement | null>(null);
 
   let calendarRef = React.createRef();
 
@@ -130,6 +117,20 @@ export default function DashboardPage() {
 
   }
 
+  async function getAppointementFromServer() {
+
+    const id = Number(eventClickNew.event._def.publicId)
+
+    let result = await (await axios.get(`/appointements/${id}`));
+
+    setAppointementIndivid(result.data)
+
+}
+
+useEffect(()=> {
+    getAppointementFromServer()
+}, [])
+
   useEffect(()=> {
     getAppointementsFromServer()
   }, [])
@@ -163,14 +164,7 @@ export default function DashboardPage() {
         const acceptedAppointemets = selectedDoctor?.acceptedAppointemets
         const freeApointements = selectedDoctor?.freeAppointements
 
-        // console.log(freeApointements)
-        // console.log(acceptedAppointemets)
-
-        // const finalAcceptedAppointements = acceptedAppointemets.concat(freeApointements);
-
         let returnedArray: any = []
-
-        // for (const appointement of finalAcceptedAppointements) {
 
         for (const appointement of acceptedAppointemets) {
 
@@ -197,13 +191,12 @@ export default function DashboardPage() {
                 title: appointement.title,
                 start: appointement.startDate,
                 end: appointement.endDate,
+                editable: false, //this blocks the editable of the event even its yours
                 allDay: false,
-                // backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7" || user.id === appointement.doctor_id ? color : "#849fb7" || user.id === appointement.doctor_post_id ? color : "#849fb7"}`,
                 backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7" || user.id === appointement.doctor_id ? color : "#849fb7"}`,
                 overlap: false,
-                editable: user?.id === appointement.user_id || user?.id === appointement.doctor_id,
+                // editable: user?.id === appointement.user_id || user?.id === appointement.doctor_id,
                 className: `${
-                    // ( user.id !== appointement.doctor_id ) && ( user.id !== appointement.user_id) && ( user.id !== appointement.doctor_post_id) ? "others-color-events" : `${appointement.status}`
                     ( user.id !== appointement.doctor_id ) && ( user.id !== appointement.user_id) ? "others-color-events" : `${appointement.status}`
                 }`
 
@@ -245,7 +238,6 @@ export default function DashboardPage() {
                 )
               ) {
                 setEventClickNew(eventClick)
-                // setSelectInfo(selectInfo)
                 dispatch(setModal("deleteEvent"));
             }
 
@@ -259,7 +251,6 @@ export default function DashboardPage() {
                 )
               ) {
                 setEventClickNew(eventClick)
-                // setSelectInfo(selectInfo)
                 dispatch(setModal("deleteEvent"));
             }
 
@@ -277,7 +268,6 @@ export default function DashboardPage() {
                       )
                   ) {
                     setEventClickNew(eventClick)
-                    // setSelectInfo(selectInfo)
                     dispatch(setModal("deleteEvent"));
                 }
 
@@ -421,6 +411,41 @@ export default function DashboardPage() {
             dispatch(setSelectedFreeTime(true))
         }
 
+    }
+
+    async function handleEventDrop() {
+
+        // const dataToSend = {
+        //     price: appointementIndivid?.price,
+        //     startDate: startDateEdit,
+        //     endDate: endDateEdit,
+        //     title: titleEdit,
+        //     description: descEdit,
+        //     status: statusEdit,
+        //     user_id: appointementSpecific?.user_id,
+        //     doctor_id: appointementSpecific?.doctor_id,
+        //     //@ts-ignore
+        //     doctor_post_id: null,
+        //     category_id: 1
+        // }
+
+        // let result = await (await axios.patch(`appointements/${appointementIndivid?.id}`, dataToSend)).data;
+
+        // if (!result.error) {
+
+        //     dispatch(setSelectedDoctor(result.doctorServer))
+        //     dispatch(setUser(result.patientServer));
+        //     dispatch(setDoctors(result.doctorsServer))
+
+        //     dispatch(setModal(""))
+        //     toast.success("Succesfully Updated Event");
+
+        // }
+
+    }
+
+    function handleEventStart(eventClick: EventClickArg) {
+        setEventClickNew(eventClick)
     }
     // #endregion
 
@@ -698,6 +723,9 @@ export default function DashboardPage() {
 
                         }}
 
+                        // eventDragStop = {handleEventDrop}
+                        // eventDragStart = {handleEventStart}
+
                         eventClick={handleEventClick}
                         select = {handleDateSelect}
                         events = {createEvents()}
@@ -838,11 +866,7 @@ export default function DashboardPage() {
                         selectable = {true}
                         selectMirror={true}
 
-                        // droppable={true}
-
                         weekends={false}
-
-                        // selectOverlap={false}
 
                         //@ts-ignore
                         ref={calendarRef}
