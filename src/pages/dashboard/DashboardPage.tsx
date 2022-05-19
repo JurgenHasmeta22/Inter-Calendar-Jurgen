@@ -119,7 +119,7 @@ export default function DashboardPage() {
 
   async function getAppointementFromServer() {
 
-    const id = Number(eventClickNew.event._def.publicId)
+    const id = Number(eventClickNew?.event._def.publicId)
 
     let result = await (await axios.get(`/appointements/${id}`));
 
@@ -128,7 +128,11 @@ export default function DashboardPage() {
 }
 
 useEffect(()=> {
-    getAppointementFromServer()
+
+    if (eventClickNew) {
+        getAppointementFromServer()
+    }
+
 }, [])
 
   useEffect(()=> {
@@ -413,43 +417,56 @@ useEffect(()=> {
 
     }
 
-    async function handleEventDrop() {
+    const changeDateFormat = (date: string) => {
+        return date.substring(0, date.length - 6);
+    };
 
-        // const dataToSend = {
-        //     price: appointementIndivid?.price,
-        //     startDate: startDateEdit,
-        //     endDate: endDateEdit,
-        //     title: titleEdit,
-        //     description: descEdit,
-        //     status: statusEdit,
-        //     user_id: appointementSpecific?.user_id,
-        //     doctor_id: appointementSpecific?.doctor_id,
-        //     //@ts-ignore
-        //     doctor_post_id: null,
-        //     category_id: 1
-        // }
+    // #region "Drag and Drop events"
 
-        // let result = await (await axios.patch(`appointements/${appointementIndivid?.id}`, dataToSend)).data;
+    async function handleEventDrop(selectInfo: DateSelectArg) {
 
-        // if (!result.error) {
+        console.log("hi")
 
-        //     dispatch(setSelectedDoctor(result.doctorServer))
-        //     dispatch(setUser(result.patientServer));
-        //     dispatch(setDoctors(result.doctorsServer))
+        setSelectInfo(selectInfo);
 
-        //     dispatch(setModal(""))
-        //     toast.success("Succesfully Updated Event");
+        const dataToSend = {
+            price: appointementIndivid?.price,
+            startDate: changeDateFormat(selectInfo.startStr),
+            endDate: changeDateFormat(selectInfo.endStr),
+            title: appointementIndivid?.title,
+            description: appointementIndivid?.description,
+            status: appointementIndivid?.status,
+            user_id: appointementIndivid?.user_id,
+            doctor_id: appointementIndivid?.doctor_id,
+            //@ts-ignore
+            doctor_post_id: null,
+            category_id: 1
+        }
 
-        // }
+        let result = await (await axios.patch(`appointements/${appointementIndivid?.id}`, dataToSend)).data;
+
+        if (!result.error) {
+
+            dispatch(setSelectedDoctor(result.doctorServer))
+            dispatch(setUser(result.patientServer));
+            dispatch(setDoctors(result.doctorsServer))
+
+            dispatch(setModal(""))
+            toast.success("Succesfully Updated Event");
+
+        }
 
     }
 
     function handleEventStart(eventClick: EventClickArg) {
         setEventClickNew(eventClick)
     }
+
+    // #endregion
+    
     // #endregion
 
-
+    
   // #region "Returning HTML JSX"
 
   return (
@@ -595,9 +612,11 @@ useEffect(()=> {
                             <span>
 
                                 {
+
                                     user.postedAppointements.filter((event: any) =>
                                         event.status.includes("pending")
                                     ).length
+
                                 }
 
                             </span>
@@ -611,9 +630,11 @@ useEffect(()=> {
                             <span>
 
                                 {
+
                                     user.postedAppointements.filter((event: any) =>
                                         event.status.includes("approved")
                                     ).length
+
                                 }
 
                             </span>
@@ -627,9 +648,11 @@ useEffect(()=> {
                             <span>
 
                                 {
+
                                     user.postedAppointements.filter((event: any) =>
                                         event.status.includes("cancelled")
                                     ).length
+                                    
                                 }
 
                             </span>
@@ -907,7 +930,8 @@ useEffect(()=> {
                             let startDate = selectInfo.start;
                             let endDate = selectInfo.end;
 
-                            endDate.setSeconds(endDate.getSeconds() - 1); // allow full day selection
+                            // endDate.setSeconds(endDate.getSeconds() - 1); // allow full day selection
+                            endDate.setHours(endDate.getHours() - 1); // allow full day selection
                             
                             if (startDate.getDate() === endDate.getDate()) {
                                 return true;
@@ -916,6 +940,9 @@ useEffect(()=> {
                             return false;
 
                         }}
+
+                        // eventDragStop = {handleEventDrop}
+                        // eventDragStart = {handleEventStart}
 
                         eventClick={handleEventClick}
                         select = {handleDateSelect}

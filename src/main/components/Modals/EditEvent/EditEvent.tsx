@@ -77,6 +77,8 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
 
     function handleEndDateChange(e: any) {
         
+        console.log(e.target.value)
+        
         const hour = e.target.value
         const startDateInitial = startDateEdit.substring(0, 11)
                 
