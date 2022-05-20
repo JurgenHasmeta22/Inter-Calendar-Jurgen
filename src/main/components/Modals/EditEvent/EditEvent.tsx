@@ -106,12 +106,14 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
 
         let result = await axios.patch(`appointements/${appointementSpecific?.id}`, dataToSend);
 
-        if (result.status === 400 || result.data.error) {
-            toast.error(result.data.error);
+        if (result === undefined) {
+            // toast.error(result?.data?.error);
+            // alert(result?.data?.error)
             toast.error("Attempt not successfully, either you entered incorrect data or you tried to have same time booking or tried to book twice in the same day ");
+            dispatch(setModal(""))
         }
 
-        else {
+        else if (!result?.data?.error) {
 
             dispatch(setSelectedDoctor(result.data.doctorServer))
             dispatch(setUser(result.data.patientServer));
@@ -121,6 +123,30 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
             toast.success("Succesfully Updated Event");
 
         }
+
+        // #region "Trying alternative ways"
+
+        // let result = await (await axios.patch(`appointements/${appointementSpecific?.id}`, dataToSend)).data;
+
+        // if (result?.error) {
+        //     toast.error(result?.error);
+        //     // alert(result?.data?.error)
+        //     // toast.error("Attempt not successfully, either you entered incorrect data or you tried to have same time booking or tried to book twice in the same day ");
+        //     dispatch(setModal(""))
+        // }
+
+        // else {
+
+        //     dispatch(setSelectedDoctor(result.data.doctorServer))
+        //     dispatch(setUser(result.data.patientServer));
+        //     dispatch(setDoctors(result.data.doctorsServer))
+
+        //     dispatch(setModal(""))
+        //     toast.success("Succesfully Updated Event");
+
+        // }
+
+        // #endregion
 
     }
     // #endregion
