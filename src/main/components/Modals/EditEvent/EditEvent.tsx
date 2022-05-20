@@ -104,24 +104,30 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
             category_id: 1
         }
 
-        let result = await axios.patch(`appointements/${appointementSpecific?.id}`, dataToSend);
+        try {
 
-        if (result === undefined) {
-            // toast.error(result?.data?.error);
-            // alert(result?.data?.error)
-            toast.error("Attempt not successfully, either you entered incorrect data or you tried to have same time booking or tried to book twice in the same day ");
-            dispatch(setModal(""))
+            let result = await axios.patch(`appointements/${appointementSpecific?.id}`, dataToSend);
+
+            if (result === undefined) {
+                toast.error("Attempt not successfully, either you entered incorrect data or you tried to have same time booking or tried to book twice in the same day ");
+                dispatch(setModal(""))
+            }
+
+            else if (!result?.data?.error) {
+
+                dispatch(setSelectedDoctor(result.data.doctorServer))
+                dispatch(setUser(result.data.patientServer));
+                dispatch(setDoctors(result.data.doctorsServer))
+
+                dispatch(setModal(""))
+                toast.success("Succesfully Updated Event");
+
+            }
+
         }
 
-        else if (!result?.data?.error) {
-
-            dispatch(setSelectedDoctor(result.data.doctorServer))
-            dispatch(setUser(result.data.patientServer));
-            dispatch(setDoctors(result.data.doctorsServer))
-
-            dispatch(setModal(""))
-            toast.success("Succesfully Updated Event");
-
+        catch(error) {
+            toast.error(error)
         }
 
         // #region "Trying alternative ways"
