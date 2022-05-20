@@ -146,6 +146,11 @@ export default function NotificationEvent() {
 
         }
 
+        else if (result === undefined) {
+            toast.error("Error fetching the selected appointement from the server");
+            dispatch(setModal(""))
+        }
+
     }
 
     async function handleButtonCancel(e: any, postStatus: any, doctorId: any, appointementId: any) {

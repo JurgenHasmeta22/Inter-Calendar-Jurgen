@@ -20,6 +20,10 @@
     margin-left: 15px;
 }
 
+.Toastify__toast-body {
+    white-space: pre-line;
+}
+
 .form-edit-event select {
     margin-left: 15px;
     padding: 10px 10px;

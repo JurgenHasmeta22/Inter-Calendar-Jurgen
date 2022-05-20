@@ -77,14 +77,25 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
 
     function handleEndDateChange(e: any) {
         
-        // console.log(e.target.value)
+        console.log(e.target.value)
         
         const hour = e.target.value
+        const numberHour = Number(hour.substring(0,2))
 
-        const startDateInitial = startDateEdit.substring(0, 11)
-        const finalDateToSend = `${startDateInitial}${hour}:00`
-        
-        setEndDateEdit(finalDateToSend)
+        console.log(hour, numberHour)
+
+        if(numberHour >= 16 || numberHour <= 8) {
+            toast.error("Cant enter more than allowed time please choose between 08-16 hours")
+        }
+
+        else {
+
+            const startDateInitial = startDateEdit.substring(0, 11)
+            const finalDateToSend = `${startDateInitial}${hour}:00`
+            
+            setEndDateEdit(finalDateToSend)
+
+        }
 
     }
 
@@ -109,7 +120,7 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
             let result = await axios.patch(`appointements/${appointementSpecific?.id}`, dataToSend);
 
             if (result === undefined) {
-                toast.error("Attempt not successfully, either you entered incorrect data or you tried to have same time booking or tried to book twice in the same day ");
+                toast.error("Attempt not successfully below are some reasons, \n 1) You entered incorrect data. \n 2) You tried to have same time booking. \n 3) You tried to book twice in the same day");
                 dispatch(setModal(""))
             }
 
@@ -155,6 +166,23 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
         // #endregion
 
     }
+
+    function handleSetStartDateEdit(start: string) {
+
+        const finalStart = Number(start.substring(11, 13))
+
+        console.log(finalStart)
+
+        if(finalStart >= 16 || finalStart <= 8) {
+            toast.error("Cant enter more than allowed time please choose between 08-16 hours")
+        }
+
+        else {
+            setStartDateEdit(start)
+        }
+
+    }
+
     // #endregion
 
     
@@ -239,11 +267,13 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
                                     type="datetime-local"
                                     name="startDateEdit"
                                     className="startDateEdit"
-                                    defaultValue={appointementSpecific?.startDate} 
-                                    min= "2022-05-18T12:00"
-                                    max="2023-06-01T00:00"   
+                                    defaultValue={appointementSpecific?.startDate}
+                                    value={startDateEdit}
+                                    min= "2022-05-20T08:00"
+                                    max="2023-06-01T16:00"   
                                     onChange={(e: any) => {
-                                        setStartDateEdit(e.target.value)
+                                        // setStartDateEdit(e.target.value)
+                                        handleSetStartDateEdit(e.target.value)
                                     }}                           
                                 />
 
@@ -257,6 +287,7 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
                                     type="time"
                                     name="endDateEdit"
                                     className="endDateEdit"
+                                    // value={endDateEdit.substring(0,3)}
                                     onChange={(e: any) => {
                                         handleEndDateChange(e)
                                     }} 

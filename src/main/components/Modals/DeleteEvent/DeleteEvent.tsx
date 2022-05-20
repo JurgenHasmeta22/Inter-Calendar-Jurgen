@@ -50,8 +50,9 @@ function DeleteModal({eventClickNew}: any) {
 
         } 
         
-        else {
-          toast.error(dataFromServer.error);
+        else if(dataFromServer === undefined) {
+          toast.error("There is an error in the response from the server reasons as below can be, \n 1)You tried to send incorrent data \n 2)You tried to delete something wich doesnt exist or forced to delete something not yours");
+          dispatch(setModal(""))
         }
 
     };
