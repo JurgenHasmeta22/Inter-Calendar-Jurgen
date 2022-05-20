@@ -249,8 +249,8 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
 
                                 <input
                                     type="text"
-                                    name="title"
-                                    className="title"
+                                    name="description"
+                                    className="description"
                                     required
                                     onChange={(e: any) => {
                                         setDescEdit(e.target.value)
@@ -307,7 +307,6 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
                                         onChange={function (e: any) {
                                             handleStatusEditChange(e)
                                         }}>
-                                            
 
                                             { appointementSpecific?.status !== "approved" ? <option value="approved">Approved</option> : null }
                                             { appointementSpecific?.status !== "pending" ? <option value="pending">Pending</option> : null }
