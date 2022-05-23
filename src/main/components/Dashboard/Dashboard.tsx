@@ -1,5 +1,4 @@
 // #region "Importing stuff"
-
 import { useDispatch, useSelector } from "react-redux";
 import "../Dashboard/Dashboard.css"
 import { RootState } from "../../store/redux/rootState"
@@ -15,7 +14,6 @@ import "@fullcalendar/timegrid/main.css";
 import { setModal } from "../../store/stores/dashboard/dashboard.store";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from '@fullcalendar/list';
-
 // #endregion
 
 
@@ -175,25 +173,34 @@ export default function Dashboard({
 
                         </li>
 
-                        <li className="event-list__item free-event">
+                        {
 
-                            Doctor Free Events
+                            user?.isDoctor ? (
+                                
+                                <li className="event-list__item free-event">
 
-                            <span>
+                                    Doctor Free Events
 
-                                {
+                                    <span>
 
-                                    !user?.isDoctor ? (
-                                        selectedDoctor?.freeAppointements.length
-                                    ): (
-                                        user?.freeAppointements.length
-                                    )
+                                        {
 
-                                }
+                                            !user?.isDoctor ? (
+                                                selectedDoctor?.freeAppointements.length
+                                            ): (
+                                                user?.freeAppointements.length
+                                            )
 
-                            </span>
+                                        }
 
-                        </li>
+                                    </span>
+
+                                </li>
+
+                            ): null
+
+                        }
+                        
 
                     </ul>
 

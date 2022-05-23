@@ -477,7 +477,7 @@ useEffect(()=> {
         return date.substring(0, date.length - 6);
     };
 
-    // #region "Drag and Drop events"
+    // #region "Drag and Drop events optional feature not implemented"
 
     // async function handleEventDrop(selectInfo: DateSelectArg) {
 
