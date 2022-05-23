@@ -201,6 +201,34 @@ export default function Dashboard({
 
                         }
                         
+                        {
+
+                            user.isDoctor ? (
+
+                                <button className="notifications" onClick={function (e) {
+                                    dispatch(setModal("notification"))
+                                }}>
+                                    
+                                    See Notifications
+        
+                                    <span>
+        
+                                        {
+        
+                                            selectedDoctor?.acceptedAppointemets.filter((event: any) =>
+                                                event.status.includes("pending")
+                                            ).length
+                                            
+                                        }
+        
+                                    </span>
+        
+                                </button>
+
+                            ): null
+
+                        }
+                        
 
                     </ul>
 
