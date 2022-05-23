@@ -36,7 +36,7 @@ export default function HeaderCommon(this: any) {
 
                 <Link to="/dashboard" onClick={() => {
 					
-				}}>Hospital Appointment System</Link>
+				}}>Hospital Management System</Link>
                 
                 <ul className="list-nav">
 
@@ -122,7 +122,7 @@ export default function HeaderCommon(this: any) {
                     )}
 
                     <li className="login-section__info">
-                        <h3>Hot Line +38344255255</h3>
+                        <h3>Call for support +38344255255</h3>
                     </li>
 
             </div>
