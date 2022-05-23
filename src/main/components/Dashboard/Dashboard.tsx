@@ -21,8 +21,8 @@ import listPlugin from '@fullcalendar/list';
 
 export default function Dashboard({
     handleDateClick,
-    handleEventDrop,
-    handleEventStart,
+    // handleEventDrop,
+    // handleEventStart,
     handleEventClick,
     handleDateSelect,
     todayDate,
@@ -233,9 +233,9 @@ export default function Dashboard({
                         allDaySlot={false}
 
                         //@ts-ignore
-                        ref={calendarRef}
+                        ref = {calendarRef}
                         dayMaxEvents={true}
-                        dateClick={handleDateClick}
+                        dateClick = {handleDateClick}
                         eventDurationEditable={true}
                         weekNumbers = {true}
                         validRange={{ start: todayDate(), end: "2023-01-01" }}
@@ -268,8 +268,8 @@ export default function Dashboard({
 
                         }}
 
-                        eventDragStop = {handleEventDrop}
-                        eventDragStart = {handleEventStart}
+                        // eventDragStop = {handleEventDrop}
+                        // eventDragStart = {handleEventStart}
 
                         eventClick={handleEventClick}
                         select = {handleDateSelect}

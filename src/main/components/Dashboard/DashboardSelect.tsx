@@ -1,6 +1,8 @@
+// #region "Importing stuff"
 import { useSelector } from "react-redux";
 import useGetUser from "../../hooks/useGetUser"
 import { RootState } from "../../store/redux/rootState";
+// #endregion
 
 export default function DashboardSelect({
     handleOnChangeDoctor,
@@ -8,10 +10,12 @@ export default function DashboardSelect({
     handleOnChangeFreeAppointement
 }: any) {
 
+    // #region "React hooks and redux state"
     const user = useGetUser()
-    
+
     const doctors = useSelector((state: RootState) => state.dashboard.doctors);
     const patients = useSelector((state: RootState) => state.dashboard.patients);
+    // #endregion
     
     return (
 

@@ -479,44 +479,44 @@ useEffect(()=> {
 
     // #region "Drag and Drop events"
 
-    async function handleEventDrop(selectInfo: DateSelectArg) {
+    // async function handleEventDrop(selectInfo: DateSelectArg) {
 
-        console.log("hi")
+    //     console.log("hi")
 
-        setSelectInfo(selectInfo);
+    //     setSelectInfo(selectInfo);
 
-        const dataToSend = {
-            price: appointementIndivid?.price,
-            startDate: changeDateFormat(selectInfo.startStr),
-            endDate: changeDateFormat(selectInfo.endStr),
-            title: appointementIndivid?.title,
-            description: appointementIndivid?.description,
-            status: appointementIndivid?.status,
-            user_id: appointementIndivid?.user_id,
-            doctor_id: appointementIndivid?.doctor_id,
-            //@ts-ignore
-            doctor_post_id: null,
-            category_id: 1
-        }
+    //     const dataToSend = {
+    //         price: appointementIndivid?.price,
+    //         startDate: changeDateFormat(selectInfo.startStr),
+    //         endDate: changeDateFormat(selectInfo.endStr),
+    //         title: appointementIndivid?.title,
+    //         description: appointementIndivid?.description,
+    //         status: appointementIndivid?.status,
+    //         user_id: appointementIndivid?.user_id,
+    //         doctor_id: appointementIndivid?.doctor_id,
+    //         //@ts-ignore
+    //         doctor_post_id: null,
+    //         category_id: 1
+    //     }
 
-        let result = await (await axios.patch(`appointements/${appointementIndivid?.id}`, dataToSend)).data;
+    //     let result = await (await axios.patch(`appointements/${appointementIndivid?.id}`, dataToSend)).data;
 
-        if (!result.error) {
+    //     if (!result.error) {
 
-            dispatch(setSelectedDoctor(result.doctorServer))
-            dispatch(setUser(result.patientServer));
-            dispatch(setDoctors(result.doctorsServer))
+    //         dispatch(setSelectedDoctor(result.doctorServer))
+    //         dispatch(setUser(result.patientServer));
+    //         dispatch(setDoctors(result.doctorsServer))
 
-            dispatch(setModal(""))
-            toast.success("Succesfully Updated Event");
+    //         dispatch(setModal(""))
+    //         toast.success("Succesfully Updated Event");
 
-        }
+    //     }
 
-    }
+    // }
 
-    function handleEventStart(eventClick: EventClickArg) {
-        setEventClickNew(eventClick)
-    }
+    // function handleEventStart(eventClick: EventClickArg) {
+    //     setEventClickNew(eventClick)
+    // }
 
     // #endregion
     
@@ -548,8 +548,8 @@ useEffect(()=> {
         handleDateClick = {handleDateClick}
         handleDateSelect = {handleDateSelect}
         handleEventClick = {handleEventClick}
-        handleEventStart = {handleEventStart}
-        handleEventDrop = {handleEventDrop}
+        // handleEventStart = {handleEventStart}
+        // handleEventDrop = {handleEventDrop}
         todayDate = {todayDate}
         createEvents = {createEvents}
         calendarRef = {calendarRef}
