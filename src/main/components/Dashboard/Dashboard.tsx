@@ -16,8 +16,12 @@ import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from '@fullcalendar/list';
 
 import { motion } from "framer-motion";
+import { Tooltip } from "bootstrap";
+
+import "../Dashboard/Dashboard.css"
 // #endregion
 
+// let tooltipInstance:any = null;
 
 export default function Dashboard({
     handleDateClick,
@@ -29,7 +33,8 @@ export default function Dashboard({
     createEvents,
     eventClickNew,
     selectInfo,
-    calendarRef
+    calendarRef,
+    tooltipInstance
 }: any) {
 
 
@@ -40,6 +45,37 @@ export default function Dashboard({
 
     const user = useGetUser()
     const dispatch = useDispatch()
+    // #endregion
+
+
+    // #region "Tooltip events functions"
+    const handleMouseEnter = (info: any) => {
+
+        if (info.event.extendedProps.description) {
+
+          tooltipInstance = new Tooltip(info.el, {
+            title: info.event.extendedProps.description,
+            html: true,
+            placement: "top",
+            trigger: "hover",
+            container: "body",
+            customClass: "tooltip-hover"
+          });
+    
+          tooltipInstance.show();
+
+        }
+
+    };
+
+    const handleMouseLeave = (info: any) => {
+
+        if (tooltipInstance) {
+          tooltipInstance.dispose();
+          tooltipInstance = null;
+        }
+
+    };
     // #endregion
 
 
@@ -321,6 +357,10 @@ export default function Dashboard({
 
                                     // eventDragStop = {handleEventDrop}
                                     // eventDragStart = {handleEventStart}
+
+                                    // eventMouseEnter={handleMouseEnter}
+                                    // eduart.lushka22
+                                    // eventMouseLeave={handleMouseLeave}
 
                                     eventClick={handleEventClick}
                                     select = {handleDateSelect}

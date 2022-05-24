@@ -47,8 +47,10 @@ import DashboardHeader from "../../main/components/Dashboard/DashboardHeader"
 import DashboardSelect from "../../main/components/Dashboard/DashboardSelect"
 
 import { motion } from "framer-motion";
+import { Tooltip } from "bootstrap";
 // #endregion
 
+let tooltipInstance:any = null;
 
 export default function DashboardPage() {
 
@@ -239,6 +241,9 @@ export default function DashboardPage() {
                 backgroundColor: `${user.id === appointement.user_id ? color : "#849fb7" || user.id === appointement.doctor_id ? color : "#849fb7"}`,
                 overlap: false,
                 // editable: user?.id === appointement.user_id || user?.id === appointement.doctor_id,
+                extendedProps: {
+                    description: appointement.description
+                },
                 className: `${
                     ( user.id !== appointement.doctor_id ) && ( user.id !== appointement.user_id) ? "others-color-events" : `${appointement.status}`
                 }`
@@ -272,6 +277,11 @@ export default function DashboardPage() {
     }
 
     const handleEventClick = (eventClick: EventClickArg) => {
+
+        if (tooltipInstance) {
+            tooltipInstance.dispose();
+            tooltipInstance = null;
+        }
 
         if (!user.isDoctor) {
 
@@ -588,6 +598,7 @@ export default function DashboardPage() {
         calendarRef = {calendarRef}
         selectInfo = {selectInfo}
         eventClickNew = {eventClickNew}
+        tooltipInstance = {tooltipInstance}
       />
 
       <FooterCommon />
