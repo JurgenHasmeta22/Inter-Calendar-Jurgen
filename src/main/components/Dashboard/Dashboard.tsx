@@ -14,6 +14,8 @@ import "@fullcalendar/timegrid/main.css";
 import { setModal } from "../../store/stores/dashboard/dashboard.store";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from '@fullcalendar/list';
+
+import { motion } from "framer-motion";
 // #endregion
 
 
@@ -50,145 +52,71 @@ export default function Dashboard({
                 // #region "Dashboard Calendar" 
             }
 
-            <div className="calendar-wrapper">
+                <div className="calendar-wrapper">
 
-                <section className="side-bar">
-                    
-                    <h3 className="side-bar__title">Calendar Legenda</h3>
+                    <motion.section
+                        initial={{ opacity: 0, x: -200 }}
+                        animate={{ opacity: 1, x: 0, transition: { delay: 1, duration: 2 } }}
+                        className="side-bar"
+                    >
 
-                    {
-
-                        !user?.isDoctor ? (
-                            <h4 className="others-color-events">Others Events</h4>
-                        ): null
-
-                    }
-
-                    <ul className="event-list">
-
-                        <li>
+                        <section className="side-bar">
+                            
+                            <h3 className="side-bar__title">Calendar Legenda</h3>
 
                             {
 
                                 !user?.isDoctor ? (
-
-                                    <h4>
-                                        Patient user events <span>Total: {user.postedAppointements.length}</span>
-                                    </h4>
-
-                                ): (
-
-                                    <h4>
-                                        Doctor events <span>Total: {createEvents().length}</span>
-                                    </h4>
-
-                                )
+                                    <h4 className="others-color-events">Others Events</h4>
+                                ): null
 
                             }
-            
 
-                        </li>
+                            <ul className="event-list">
 
-                        <li className="event-list__item pending">
+                                <li>
 
-                            Pending
+                                    {
 
-                            <span>
+                                        !user?.isDoctor ? (
 
-                                {
+                                            <h4>
+                                                Patient user events <span>Total: {user.postedAppointements.length}</span>
+                                            </h4>
 
-                                    !user?.isDoctor ? (
+                                        ): (
 
-                                        user.postedAppointements.filter((event: any) =>
-                                            event.status.includes("pending")
-                                        ).length
+                                            <h4>
+                                                Doctor events <span>Total: {createEvents().length}</span>
+                                            </h4>
 
-                                    ): (
+                                        )
 
-                                        selectedDoctor?.acceptedAppointemets.filter((event: any) =>
-                                            event.status.includes("pending")
-                                        ).length
+                                    }
+                    
 
-                                    )
+                                </li>
 
-                                }
+                                <li className="event-list__item pending">
 
-                            </span>
-
-                        </li>
-
-                        <li className="event-list__item approved">
-
-                            Approved
-
-                            <span>
-
-                                {
-
-                                    !user?.isDoctor ? (
-
-                                        user.postedAppointements.filter((event: any) =>
-                                            event.status.includes("approved")
-                                        ).length
-
-                                    ): (
-
-                                        selectedDoctor?.acceptedAppointemets.filter((event: any) =>
-                                            event.status.includes("approved")
-                                        ).length
-
-                                    )
-
-                                }
-
-                            </span>
-
-                        </li>
-
-                        <li className="event-list__item cancelled">
-
-                            Refused
-
-                            <span>
-
-                                {
-
-                                    !user?.isDoctor ? (
-
-                                        user?.postedAppointements.filter((event: any) =>
-                                            event.status.includes("cancelled")
-                                        ).length
-
-                                    ): (
-
-                                        user?.acceptedAppointemets.filter((event: any) =>
-                                            event.status.includes("cancelled")
-                                        ).length
-
-                                    )
-                                    
-                                }
-
-                            </span>
-
-                        </li>
-
-                        {
-
-                            user?.isDoctor ? (
-                                
-                                <li className="event-list__item free-event">
-
-                                    Doctor Free Events
+                                    Pending
 
                                     <span>
 
                                         {
 
                                             !user?.isDoctor ? (
-                                                selectedDoctor?.freeAppointements.length
+
+                                                user.postedAppointements.filter((event: any) =>
+                                                    event.status.includes("pending")
+                                                ).length
+
                                             ): (
-                                                user?.freeAppointements.length
+
+                                                selectedDoctor?.acceptedAppointemets.filter((event: any) =>
+                                                    event.status.includes("pending")
+                                                ).length
+
                                             )
 
                                         }
@@ -197,124 +125,215 @@ export default function Dashboard({
 
                                 </li>
 
-                            ): null
+                                <li className="event-list__item approved">
 
-                        }
-                        
-                        {
+                                    Approved
 
-                            user.isDoctor ? (
-
-                                <button className="notifications" onClick={function (e) {
-                                    dispatch(setModal("notification"))
-                                }}>
-                                    
-                                    See Notifications
-        
                                     <span>
-        
+
                                         {
-        
-                                            selectedDoctor?.acceptedAppointemets.filter((event: any) =>
-                                                event.status.includes("pending")
-                                            ).length
+
+                                            !user?.isDoctor ? (
+
+                                                user.postedAppointements.filter((event: any) =>
+                                                    event.status.includes("approved")
+                                                ).length
+
+                                            ): (
+
+                                                selectedDoctor?.acceptedAppointemets.filter((event: any) =>
+                                                    event.status.includes("approved")
+                                                ).length
+
+                                            )
+
+                                        }
+
+                                    </span>
+
+                                </li>
+
+                                <li className="event-list__item cancelled">
+
+                                    Refused
+
+                                    <span>
+
+                                        {
+
+                                            !user?.isDoctor ? (
+
+                                                user?.postedAppointements.filter((event: any) =>
+                                                    event.status.includes("cancelled")
+                                                ).length
+
+                                            ): (
+
+                                                user?.acceptedAppointemets.filter((event: any) =>
+                                                    event.status.includes("cancelled")
+                                                ).length
+
+                                            )
                                             
                                         }
-        
+
                                     </span>
-        
-                                </button>
 
-                            ): null
+                                </li>
 
-                        }
-                        
+                                {
 
-                    </ul>
+                                    user?.isDoctor ? (
+                                        
+                                        <li className="event-list__item free-event">
 
-                </section>
+                                            Doctor Free Events
 
-                <div className="calendar">
+                                            <span>
 
-                    <FullCalendar
+                                                {
 
-                        initialView = "dayGridMonth"
+                                                    !user?.isDoctor ? (
+                                                        selectedDoctor?.freeAppointements.length
+                                                    ): (
+                                                        user?.freeAppointements.length
+                                                    )
 
-                        headerToolbar={{
-                            left: "prev,next",
-                            center: "title",
-                            right: "dayGridMonth, timeGridWeek, timeGridDay, listMonth"
-                        }}
+                                                }
 
-                        plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
+                                            </span>
 
-                        nowIndicator={true}
-                        displayEventEnd={true}
-                        editable = {true}
-                        selectable = {true}
-                        selectMirror={true}
+                                        </li>
 
-                        weekends={false}
-                        height="auto"
-                        
-                        eventTimeFormat={{
-                            hour: "2-digit", //2-digit, numeric
-                            minute: "2-digit", //2-digit, numeric
-                            hour12: false, //true, false
-                        }}
+                                    ): null
 
-                        slotMinTime={"08:00:00"}
-                        slotMaxTime={"16:00:00"}
-                        allDaySlot={false}
+                                }
+                                
+                                {
 
-                        //@ts-ignore
-                        ref = {calendarRef}
-                        dayMaxEvents={true}
-                        dateClick = {handleDateClick}
-                        eventDurationEditable={true}
-                        weekNumbers = {true}
-                        validRange={{ start: todayDate(), end: "2023-01-01" }}
+                                    user.isDoctor ? (
 
-                        selectOverlap={() => {
+                                        <button className="notifications" onClick={function (e) {
+                                            dispatch(setModal("notification"))
+                                        }}>
+                                            
+                                            See Notifications
+                
+                                            <span>
+                
+                                                {
+                
+                                                    selectedDoctor?.acceptedAppointemets.filter((event: any) =>
+                                                        event.status.includes("pending")
+                                                    ).length
+                                                    
+                                                }
+                
+                                            </span>
+                
+                                        </button>
 
-                            //@ts-ignore
-                            let calendarApi = calendarRef.current.getApi();
-                            
-                            if (calendarApi.view.type === "timeGridDay") {
-                              return false;
-                            }
+                                    ): null
 
-                            return true;
+                                }
+                                
 
-                        }}
+                            </ul>
 
-                        selectAllow={(selectInfo) => {
+                        </section>
 
-                            let startDate = selectInfo.start;
-                            let endDate = selectInfo.end;
+                    </motion.section>
 
-                            endDate.setSeconds(endDate.getSeconds() - 1); // allow full day selection
-                            
-                            if (startDate.getDate() === endDate.getDate()) {
-                                return true;
-                            }
+                    <motion.div
+                        initial={{ opacity: 0, y: 850 }}
+                        animate={{ opacity: 1, y: 0, transition: { duration: 2 } }}
+                        className="calendar"
+                    >
 
-                            return false;
+                        <div className="calendar">
 
-                        }}
+                                <FullCalendar
 
-                        // eventDragStop = {handleEventDrop}
-                        // eventDragStart = {handleEventStart}
+                                    initialView = "dayGridMonth"
 
-                        eventClick={handleEventClick}
-                        select = {handleDateSelect}
-                        events = {createEvents()}
+                                    headerToolbar={{
+                                        left: "prev,next",
+                                        center: "title",
+                                        right: "dayGridMonth, timeGridWeek, timeGridDay, listMonth"
+                                    }}
 
-                    />
+                                    plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
+
+                                    nowIndicator={true}
+                                    displayEventEnd={true}
+                                    editable = {true}
+                                    selectable = {true}
+                                    selectMirror={true}
+
+                                    weekends={false}
+                                    height="auto"
+                                    
+                                    eventTimeFormat={{
+                                        hour: "2-digit", //2-digit, numeric
+                                        minute: "2-digit", //2-digit, numeric
+                                        hour12: false, //true, false
+                                    }}
+
+                                    slotMinTime={"08:00:00"}
+                                    slotMaxTime={"16:00:00"}
+                                    allDaySlot={false}
+
+                                    //@ts-ignore
+                                    ref = {calendarRef}
+                                    dayMaxEvents={true}
+                                    dateClick = {handleDateClick}
+                                    eventDurationEditable={true}
+                                    weekNumbers = {true}
+                                    validRange={{ start: todayDate(), end: "2023-01-01" }}
+
+                                    selectOverlap={() => {
+
+                                        //@ts-ignore
+                                        let calendarApi = calendarRef.current.getApi();
+                                        
+                                        if (calendarApi.view.type === "timeGridDay") {
+                                        return false;
+                                        }
+
+                                        return true;
+
+                                    }}
+
+                                    selectAllow={(selectInfo) => {
+
+                                        let startDate = selectInfo.start;
+                                        let endDate = selectInfo.end;
+
+                                        endDate.setSeconds(endDate.getSeconds() - 1); // allow full day selection
+                                        
+                                        if (startDate.getDate() === endDate.getDate()) {
+                                            return true;
+                                        }
+
+                                        return false;
+
+                                    }}
+
+                                    // eventDragStop = {handleEventDrop}
+                                    // eventDragStart = {handleEventStart}
+
+                                    eventClick={handleEventClick}
+                                    select = {handleDateSelect}
+                                    events = {createEvents()}
+
+                                />
+
+
+                        </div>
+
+                    </motion.div>
 
                 </div>
-
-            </div>
 
             {
              // #endregion 

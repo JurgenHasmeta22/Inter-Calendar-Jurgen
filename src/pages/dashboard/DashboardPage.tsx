@@ -42,116 +42,138 @@ import listPlugin from '@fullcalendar/list';
 import IAppointement from "../../main/interfaces/IAppointement";
 import { setUser } from "../../main/store/stores/user/user.store";
 
-import { motion } from "framer-motion"
-
 import Dashboard from "../../main/components/Dashboard/Dashboard"
 import DashboardHeader from "../../main/components/Dashboard/DashboardHeader"
 import DashboardSelect from "../../main/components/Dashboard/DashboardSelect"
+
+import { motion } from "framer-motion";
 // #endregion
 
 
 export default function DashboardPage() {
 
 
-  // #region "Redux state and hooks"
+    // #region "Redux state and hooks"
 
-  const appointements = useSelector((state: RootState) => state.dashboard.appointements);
-  const doctors = useSelector((state: RootState) => state.dashboard.doctors);
-  const patients = useSelector((state: RootState) => state.dashboard.patients);
+    const appointements = useSelector((state: RootState) => state.dashboard.appointements);
+    const doctors = useSelector((state: RootState) => state.dashboard.doctors);
+    const patients = useSelector((state: RootState) => state.dashboard.patients);
 
-  const [selectInfo, setSelectInfo] = useState<DateSelectArg | null>(null);
-  const [eventClickNew, setEventClickNew] = useState<EventClickArg | null>(null);
+    const [selectInfo, setSelectInfo] = useState<DateSelectArg | null>(null);
+    const [eventClickNew, setEventClickNew] = useState<EventClickArg | null>(null);
 
-  const [appointementIndivid, setAppointementIndivid] = useState<IAppointement | null>(null);
+    const [appointementIndivid, setAppointementIndivid] = useState<IAppointement | null>(null);
 
-  let calendarRef = React.createRef();
+    let calendarRef = React.createRef();
 
-  const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
-  const selectedDoctorName = useSelector((state: RootState) => state.dashboard.selectedDoctorName);
+    const selectedDoctor = useSelector((state: RootState) => state.dashboard.selectedDoctor);
+    const selectedDoctorName = useSelector((state: RootState) => state.dashboard.selectedDoctorName);
 
-  const selectedPatient = useSelector((state: RootState) => state.dashboard.selectedPatient);
-  const selectedPatientName = useSelector((state: RootState) => state.dashboard.selectedPatientName);
+    const selectedPatient = useSelector((state: RootState) => state.dashboard.selectedPatient);
+    const selectedPatientName = useSelector((state: RootState) => state.dashboard.selectedPatientName);
 
-  const eventsNew = useSelector((state: RootState) => state.dashboard.eventsNew);
-  const [eventNewState, setEventNewState] = useState<any>([])
-  const modal = useSelector((state: RootState) => state.dashboard.modal);
+    const eventsNew = useSelector((state: RootState) => state.dashboard.eventsNew);
+    const [eventNewState, setEventNewState] = useState<any>([])
+    const modal = useSelector((state: RootState) => state.dashboard.modal);
 
-  const selectedFreeTime = useSelector((state: RootState) => state.dashboard.selectedFreeTime);
+    const selectedFreeTime = useSelector((state: RootState) => state.dashboard.selectedFreeTime);
 
-  const user = useGetUser()
-  const theme = useTheme()
-  const dispatch = useDispatch()
+    const user = useGetUser()
+    const theme = useTheme()
+    const dispatch = useDispatch()
 
-  // #endregion
-
-
-  // #region "fetching stuff and helpers functions"
-  
-  async function getAppointementsFromServer() {
-    let result = await (await axios.get(`/appointements`));
-    dispatch(setAppointements(result.data))
-  }
-
-  async function getDoctorsFromServer() {
-
-    let result = await (await axios.get(`/doctors`));
-
-    dispatch(setSelectedDoctor(null))
-    dispatch(setDoctors(result.data))
-
-    for (const doctor of result.data) {
+    // #endregion
 
 
-        if ( ( doctor.id === user?.id ) && user?.isDoctor) {
-            dispatch(setSelectedDoctor(doctor))
+    // #region "fetching stuff and helpers functions"
+    
+    async function getAppointementsFromServer() {
+        let result = await (await axios.get(`/appointements`));
+        dispatch(setAppointements(result.data))
+    }
+
+    async function getDoctorsFromServer() {
+
+        let result = await (await axios.get(`/doctors`));
+
+        dispatch(setSelectedDoctor(null))
+        dispatch(setDoctors(result.data))
+
+        for (const doctor of result.data) {
+
+
+            if ( ( doctor.id === user?.id ) && user?.isDoctor) {
+                dispatch(setSelectedDoctor(doctor))
+            }
+
         }
 
     }
 
-  }
+    async function getPatientsFromServer() {
 
-  async function getPatientsFromServer() {
+        let result = await (await axios.get(`/users`));
 
-    let result = await (await axios.get(`/users`));
+        dispatch(setSelectedPatient(null))
+        dispatch(setPatients(result.data))
 
-    dispatch(setSelectedPatient(null))
-    dispatch(setPatients(result.data))
+        if (!user?.isDoctor) {
+            dispatch(setSelectedPatient(user))
+        }
 
-    if (!user?.isDoctor) {
-        dispatch(setSelectedPatient(user))
     }
 
-  }
+    async function getAppointementFromServer() {
 
-  async function getAppointementFromServer() {
+        const id = Number(eventClickNew?.event._def.publicId)
 
-    const id = Number(eventClickNew?.event._def.publicId)
+        let result = await (await axios.get(`/appointements/${id}`));
 
-    let result = await (await axios.get(`/appointements/${id}`));
+        setAppointementIndivid(result.data)
 
-    setAppointementIndivid(result.data)
-
-}
-
-useEffect(()=> {
-
-    if (eventClickNew) {
-        getAppointementFromServer()
     }
 
-}, [])
+    useEffect(()=> {
 
-  useEffect(()=> {
-    getAppointementsFromServer()
-  }, [])
+        if (eventClickNew) {
+            getAppointementFromServer()
+        }
 
-  useEffect(()=> {
-    getDoctorsFromServer()
-  }, [])
+        return () => {
+            setAppointementIndivid(null)
+        }
 
-  useEffect(()=> {
-    getPatientsFromServer()
-  }, [])
+    }, [])
+
+    useEffect(()=> {
+
+        getAppointementsFromServer()
+
+        return () => {
+            dispatch(setAppointements([]))
+        }
+
+    }, [])
+
+    useEffect(()=> {
+
+        getDoctorsFromServer()
+
+        return () => {
+            dispatch(setDoctors([]))
+        }
+
+    }, [])
+
+    useEffect(()=> {
+
+        getPatientsFromServer()
+
+        return () => {
+            dispatch(setPatients([]))
+        }
+
+    }, [])
 
   const handleOpen = () => dispatch(setModal("appoinment"));
 

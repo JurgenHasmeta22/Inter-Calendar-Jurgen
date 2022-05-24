@@ -1,4 +1,5 @@
 import useGetUser from "../../hooks/useGetUser"
+import { motion } from "framer-motion";
 
 export default function DashboardHeader() {
 

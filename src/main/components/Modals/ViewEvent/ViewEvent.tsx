@@ -32,7 +32,13 @@ export default function EditEvent({eventClickNew}: any) {
     }
 
     useEffect(()=> {
+
         getAppointementFromServer()
+
+        return () => {
+            setAppointementSpecific(null)
+        }
+
     }, [])
 
     function getPatientUserName() {

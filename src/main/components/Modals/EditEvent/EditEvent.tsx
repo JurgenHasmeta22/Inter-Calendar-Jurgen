@@ -48,7 +48,17 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
     }
 
     useEffect(()=> {
+
         getAppointementFromServer()
+
+        return () => {
+            setAppointementSpecific(null)
+            setStartDateEdit("")
+            setStatusEdit(false)
+            setDescEdit("")
+            setTitleEdit("")
+        }
+
     }, [])
     
     const changeDateFormat = (date: string) => {
