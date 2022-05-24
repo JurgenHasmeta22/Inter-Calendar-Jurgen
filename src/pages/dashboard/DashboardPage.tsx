@@ -86,43 +86,6 @@ export default function DashboardPage() {
 
 
     // #region "fetching stuff and helpers functions"
-    
-    async function getAppointementsFromServer() {
-        let result = await (await axios.get(`/appointements`));
-        dispatch(setAppointements(result.data))
-    }
-
-    async function getDoctorsFromServer() {
-
-        let result = await (await axios.get(`/doctors`));
-
-        dispatch(setSelectedDoctor(null))
-        dispatch(setDoctors(result.data))
-
-        for (const doctor of result.data) {
-
-
-            if ( ( doctor.id === user?.id ) && user?.isDoctor) {
-                dispatch(setSelectedDoctor(doctor))
-            }
-
-        }
-
-    }
-
-    async function getPatientsFromServer() {
-
-        let result = await (await axios.get(`/users`));
-
-        dispatch(setSelectedPatient(null))
-        dispatch(setPatients(result.data))
-
-        if (!user?.isDoctor) {
-            dispatch(setSelectedPatient(user))
-        }
-
-    }
-
     async function getAppointementFromServer() {
 
         const id = Number(eventClickNew?.event._def.publicId)
@@ -147,19 +110,50 @@ export default function DashboardPage() {
 
     useEffect(()=> {
 
+        const controller = new AbortController()
+        const { signal } = controller
+
+        async function getAppointementsFromServer() {
+            let result = await (await axios.get(`/appointements`, { signal }));
+            dispatch(setAppointements(result.data))
+        }
+
         getAppointementsFromServer()
 
         return () => {
             dispatch(setAppointements([]))
+            controller.abort()
         }
 
     }, [])
 
     useEffect(()=> {
 
+        const controller = new AbortController()
+        const { signal } = controller
+
+        async function getDoctorsFromServer() {
+
+            let result = await (await axios.get(`/doctors`, { signal }));
+    
+            dispatch(setSelectedDoctor(null))
+            dispatch(setDoctors(result.data))
+    
+            for (const doctor of result.data) {
+    
+    
+                if ( ( doctor.id === user?.id ) && user?.isDoctor) {
+                    dispatch(setSelectedDoctor(doctor))
+                }
+    
+            }
+    
+        }
+
         getDoctorsFromServer()
 
         return () => {
+            controller.abort()
             dispatch(setDoctors([]))
         }
 
@@ -167,9 +161,26 @@ export default function DashboardPage() {
 
     useEffect(()=> {
 
+        const controller = new AbortController()
+        const { signal } = controller
+
+        async function getPatientsFromServer() {
+
+            let result = await (await axios.get(`/users`, { signal }));
+    
+            dispatch(setSelectedPatient(null))
+            dispatch(setPatients(result.data))
+    
+            if (!user?.isDoctor) {
+                dispatch(setSelectedPatient(user))
+            }
+    
+        }
+
         getPatientsFromServer()
 
         return () => {
+            controller.abort()
             dispatch(setPatients([]))
         }
 

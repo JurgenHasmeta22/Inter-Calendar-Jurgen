@@ -16,6 +16,7 @@ import {
 
 import userEvent from "@testing-library/user-event";
 import useGetUser from "../../../hooks/useGetUser";
+import { motion } from "framer-motion";
 // #endregion
 
 
@@ -69,6 +70,7 @@ function DeleteModal({eventClickNew}: any) {
 
   return (
 
+    
     <div
 
       onClick={() => {
@@ -78,74 +80,81 @@ function DeleteModal({eventClickNew}: any) {
       className="modal-wrapper"
     >
 
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-
-        className="modal-container delete-modal-container"
+      <motion.div
+        initial={{ opacity: 0, x: -200 }}
+        animate={{ opacity: 1, x: 0, transition: { duration: 0.5 } }}
       >
 
-        <header className="modal-header">
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
 
-          <CloseIcon
-            fontSize="large"
-            className="close-icon"
-            sx={{ color: "#50a2fd" }}
+          className="modal-container delete-modal-container"
+        >
 
-            onClick={() => {
-              dispatch(setModal(""));
-            }}
-          />
+          <header className="modal-header">
 
-          <h2>Do u want to delete this Event ?</h2>
+            <CloseIcon
+              fontSize="large"
+              className="close-icon"
+              sx={{ color: "#50a2fd" }}
 
-        </header>
+              onClick={() => {
+                dispatch(setModal(""));
+              }}
+            />
 
-        <main className="modal-body delete-modal-body">
+            <h2>Do u want to delete this Event ?</h2>
 
-          <button
-            onClick={() => {
-              dispatch(setModal(""));
-            }}
+          </header>
 
-            className="general-button cancel-btn"
-          >
+          <main className="modal-body delete-modal-body">
 
-            Cancel
+            <button
+              onClick={() => {
+                dispatch(setModal(""));
+              }}
 
-          </button>
+              className="general-button cancel-btn"
+            >
 
-          <button
-            onClick={handleDeleteEvent}
-            className="general-button delete-btn"
-          >
+              Cancel
 
-            Delete
+            </button>
 
-          </button>
+            <button
+              onClick={handleDeleteEvent}
+              className="general-button delete-btn"
+            >
 
-          <button
-            onClick={handleViewEvent}
-            className="general-button change-btn"
-          >
+              Delete
 
-            View Appointement Details
+            </button>
 
-          </button>
+            <button
+              onClick={handleViewEvent}
+              className="general-button change-btn"
+            >
 
-          <button
-            onClick={handleChangeEvent}
-            className="general-button change-btn"
-          >
+              View Appointement Details
 
-            Change Status
+            </button>
 
-          </button>
+            <button
+              onClick={handleChangeEvent}
+              className="general-button change-btn"
+            >
 
-        </main>
+              Change Status
 
-      </div>
+            </button>
+
+          </main>
+
+        </div>
+
+      </motion.div>
 
     </div>
 

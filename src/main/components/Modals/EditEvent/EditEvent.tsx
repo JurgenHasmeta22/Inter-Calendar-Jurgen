@@ -12,6 +12,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import { setUser } from "../../../store/stores/user/user.store";
 import { setTitle } from "../../../store/stores/modals/modals.store";
+import { motion } from "framer-motion";
 // #endregion
 
 
@@ -208,135 +209,142 @@ export default function EditEvent({eventClickNew, selectInfo}: any) {
                 className="modal-wrapper"
             >
 
-                <div
-                    onClick={(e) => {
-                        e.stopPropagation();
-                    }}
-
-                    className="modal-container delete-modal-container"
+                <motion.section
+                    initial={{ opacity: 0, x: -200 }}
+                    animate={{ opacity: 1, x: 0, transition: { duration: 0.5 } }}
                 >
 
-                    <header className="modal-header">
+                    <div
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
 
-                        <CloseIcon
-                            fontSize="large"
-                            className="close-icon"
-                            sx={{ color: "#50a2fd" }}
+                        className="modal-container delete-modal-container"
+                    >
 
-                            onClick={() => {
-                                dispatch(setModal(""));
-                            }}
-                        />
+                        <header className="modal-header">
 
-                        <h2 className="editing-status">Editing status of event</h2>
+                            <CloseIcon
+                                fontSize="large"
+                                className="close-icon"
+                                sx={{ color: "#50a2fd" }}
 
-                        <span className="status-span-edit">Current Status is: <strong>{appointementSpecific?.status}</strong> </span>
+                                onClick={() => {
+                                    dispatch(setModal(""));
+                                }}
+                            />
 
-                        <form className="form-edit-event" onSubmit={function (e) {
-                            e.preventDefault()
-                            handleSaveChanges()
-                        }}>
+                            <h2 className="editing-status">Editing status of event</h2>
 
-                            <label>
+                            <span className="status-span-edit">Current Status is: <strong>{appointementSpecific?.status}</strong> </span>
 
-                                Title: 
+                            <form className="form-edit-event" onSubmit={function (e) {
+                                e.preventDefault()
+                                handleSaveChanges()
+                            }}>
 
-                                <input
-                                    type="text"
-                                    name="title"
-                                    className="title"
-                                    required
-                                    onChange={(e: any) => {
-                                        setTitleEdit(e.target.value)
-                                    }}
-                                />
+                                <label>
 
-                            </label>
+                                    Title: 
 
-                            <label>
+                                    <input
+                                        type="text"
+                                        name="title"
+                                        className="title"
+                                        required
+                                        onChange={(e: any) => {
+                                            setTitleEdit(e.target.value)
+                                        }}
+                                    />
 
-                                Description: 
+                                </label>
 
-                                <input
-                                    type="text"
-                                    name="description"
-                                    className="description"
-                                    required
-                                    onChange={(e: any) => {
-                                        setDescEdit(e.target.value)
-                                    }}
-                                />
+                                <label>
 
-                            </label>
+                                    Description: 
 
-                            <label>
+                                    <input
+                                        type="text"
+                                        name="description"
+                                        className="description"
+                                        required
+                                        onChange={(e: any) => {
+                                            setDescEdit(e.target.value)
+                                        }}
+                                    />
 
-                                Start date: 
+                                </label>
 
-                                <input
-                                    type="datetime-local"
-                                    name="startDateEdit"
-                                    className="startDateEdit"
-                                    defaultValue={appointementSpecific?.startDate}
-                                    value={startDateEdit}
-                                    min= "2022-05-20T08:00"
-                                    max="2023-06-01T16:00"   
-                                    onChange={(e: any) => {
-                                        // setStartDateEdit(e.target.value)
-                                        handleSetStartDateEdit(e.target.value)
-                                    }}                           
-                                />
+                                <label>
 
-                            </label>
+                                    Start date: 
 
-                            <label>
+                                    <input
+                                        type="datetime-local"
+                                        name="startDateEdit"
+                                        className="startDateEdit"
+                                        defaultValue={appointementSpecific?.startDate}
+                                        value={startDateEdit}
+                                        min= "2022-05-20T08:00"
+                                        max="2023-06-01T16:00"   
+                                        onChange={(e: any) => {
+                                            // setStartDateEdit(e.target.value)
+                                            handleSetStartDateEdit(e.target.value)
+                                        }}                           
+                                    />
 
-                                End date:
-                                
-                                <input
-                                    type="time"
-                                    name="endDateEdit"
-                                    className="endDateEdit"
-                                    // value={endDateEdit.substring(0,3)}
-                                    onChange={(e: any) => {
-                                        handleEndDateChange(e)
-                                    }} 
-                                />
-                                
-                            </label>
+                                </label>
 
-                            {
+                                <label>
 
-                                user?.isDoctor ? (
+                                    End date:
                                     
-                                    <label>
+                                    <input
+                                        type="time"
+                                        name="endDateEdit"
+                                        className="endDateEdit"
+                                        // value={endDateEdit.substring(0,3)}
+                                        onChange={(e: any) => {
+                                            handleEndDateChange(e)
+                                        }} 
+                                    />
+                                    
+                                </label>
 
-                                        Status:
+                                {
 
-                                        <select name="filter-by-sort" id="filter-by-sort" defaultValue={'false'}
-                                        onChange={function (e: any) {
-                                            handleStatusEditChange(e)
-                                        }}>
+                                    user?.isDoctor ? (
+                                        
+                                        <label>
 
-                                            { appointementSpecific?.status !== "approved" ? <option value="approved">Approved</option> : null }
-                                            { appointementSpecific?.status !== "pending" ? <option value="pending">Pending</option> : null }
-                                            { appointementSpecific?.status !== "cancelled" ? <option value="cancelled">Cancelled</option> : null }
+                                            Status:
 
-                                        </select>
-                                
-                                    </label>
+                                            <select name="filter-by-sort" id="filter-by-sort" defaultValue={'false'}
+                                            onChange={function (e: any) {
+                                                handleStatusEditChange(e)
+                                            }}>
 
-                                ): null
+                                                { appointementSpecific?.status !== "approved" ? <option value="approved">Approved</option> : null }
+                                                { appointementSpecific?.status !== "pending" ? <option value="pending">Pending</option> : null }
+                                                { appointementSpecific?.status !== "cancelled" ? <option value="cancelled">Cancelled</option> : null }
 
-                            }
+                                            </select>
+                                    
+                                        </label>
 
-                            <button type="submit">Save Changes</button>
+                                    ): null
 
-                        </form>
+                                }
 
-                    </header>
+                                <button type="submit">Save Changes</button>
 
-                </div>
+                            </form>
+
+                        </header>
+
+                    </div>
+
+                </motion.section>
 
             </div>
         

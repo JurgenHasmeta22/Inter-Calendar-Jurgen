@@ -45,6 +45,8 @@ import IRegister from "../../main/interfaces/IRegister"
 import IUser from "../../main/interfaces/IUser"
 
 import AuthManager from "../../main/utils/authManager"
+
+import { motion } from "framer-motion";
 // #endregion 
 
 
@@ -113,247 +115,254 @@ const RegisterPage : FC = ()=> {
 
         <>
 
-            <ThemeProvider theme={theme}>
+            <motion.section
+                initial={{ opacity: 0, x: -200 }}
+                animate={{ opacity: 1, x: 0, transition: { delay: 0.5, duration: 1 } }}
+            >
 
-                <Container component="main" maxWidth="xs">
+                <ThemeProvider theme={theme}>
 
-                    <CssBaseline />
+                    <Container component="main" maxWidth="xs">
 
-                    <Box
-                        sx={{
-                            marginTop: 8,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
+                        <CssBaseline />
 
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
+                        <Box
+                            sx={{
+                                marginTop: 0,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
 
-                        <Typography component="h1" variant="h5">
-                            Sign up
-                        </Typography>
+                            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                                <LockOutlinedIcon />
+                            </Avatar>
 
-                        <Box component="form" noValidate onSubmit={function (e: any) { 
-                            e.preventDefault() 
-                            // handleRegisterUser() 
-                            dispatch(AuthManager.register(registerData))
-                        }} sx={{ mt: 8, mb: 8 }}>
+                            <Typography component="h1" variant="h5">
+                                Sign up
+                            </Typography>
 
-                            <Grid container spacing={2}>
+                            <Box component="form" noValidate onSubmit={function (e: any) { 
+                                e.preventDefault() 
+                                // handleRegisterUser() 
+                                dispatch(AuthManager.register(registerData))
+                            }} sx={{ mt: 8, mb: 8 }}>
 
-                                <Grid item xs={12} sm={6}>
+                                <Grid container spacing={2}>
 
-                                    <TextField
-                                        autoComplete="given-name"
-                                        name="firstName"
-                                        required
-                                        fullWidth
-                                        id="firstName"
-                                        label="First Name"
-                                        autoFocus
-                                        onChange={(e: any) => {
-                                            dispatch(setFirstName(e.target.value))
-                                        }}
-                                    />
+                                    <Grid item xs={12} sm={6}>
 
-                                </Grid>
+                                        <TextField
+                                            autoComplete="given-name"
+                                            name="firstName"
+                                            required
+                                            fullWidth
+                                            id="firstName"
+                                            label="First Name"
+                                            autoFocus
+                                            onChange={(e: any) => {
+                                                dispatch(setFirstName(e.target.value))
+                                            }}
+                                        />
 
-                                <Grid item xs={12} sm={6}>
+                                    </Grid>
 
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        id="lastName"
-                                        label="Last Name"
-                                        name="lastName"
-                                        autoComplete="family-name"
-                                        onChange={(e: any) => {
-                                            dispatch(setLastName(e.target.value))
-                                        }}
-                                    />
+                                    <Grid item xs={12} sm={6}>
 
-                                </Grid>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            id="lastName"
+                                            label="Last Name"
+                                            name="lastName"
+                                            autoComplete="family-name"
+                                            onChange={(e: any) => {
+                                                dispatch(setLastName(e.target.value))
+                                            }}
+                                        />
 
-                                <Grid item xs={12}>
+                                    </Grid>
 
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        id="email"
-                                        label="Email Address"
-                                        name="email"
-                                        autoComplete="email"
-                                        onChange={(e: any) => {
-                                            dispatch(setEmailRegister(e.target.value))
-                                        }}
-                                    />
-                                    
-                                </Grid>
+                                    <Grid item xs={12}>
 
-                                <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            id="email"
+                                            label="Email Address"
+                                            name="email"
+                                            autoComplete="email"
+                                            onChange={(e: any) => {
+                                                dispatch(setEmailRegister(e.target.value))
+                                            }}
+                                        />
+                                        
+                                    </Grid>
 
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        id="bio"
-                                        label="bio"
-                                        name="bio"
-                                        autoComplete="bio"
-                                        onChange={(e: any) => {
-                                            dispatch(setBio(e.target.value))
-                                        }}
-                                    />
+                                    <Grid item xs={12}>
 
-                                </Grid>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            id="bio"
+                                            label="bio"
+                                            name="bio"
+                                            autoComplete="bio"
+                                            onChange={(e: any) => {
+                                                dispatch(setBio(e.target.value))
+                                            }}
+                                        />
 
-                                <Grid item xs={12}>
+                                    </Grid>
 
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        id="phone"
-                                        label="phone"
-                                        name="phone"
-                                        autoComplete="phone"
-                                        onChange={(e: any) => {
-                                            dispatch(setPhoneNumber(e.target.value))
-                                        }}
-                                    />
+                                    <Grid item xs={12}>
 
-                                </Grid>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            id="phone"
+                                            label="phone"
+                                            name="phone"
+                                            autoComplete="phone"
+                                            onChange={(e: any) => {
+                                                dispatch(setPhoneNumber(e.target.value))
+                                            }}
+                                        />
 
-                                <Grid item xs={12}>
+                                    </Grid>
 
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        id="username"
-                                        label="username"
-                                        name="username"
-                                        autoComplete="username"
-                                        onChange={(e: any) => {
-                                            dispatch(setUserNameRegister(e.target.value))
-                                        }}
-                                    />
+                                    <Grid item xs={12}>
 
-                                </Grid>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            id="username"
+                                            label="username"
+                                            name="username"
+                                            autoComplete="username"
+                                            onChange={(e: any) => {
+                                                dispatch(setUserNameRegister(e.target.value))
+                                            }}
+                                        />
 
-                                <Grid item xs={12}>
+                                    </Grid>
 
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        name="address"
-                                        label="address"
-                                        type="address"
-                                        id="address"
-                                        autoComplete="address"
-                                        onChange={(e: any) => {
-                                            dispatch(setAddress(e.target.value))
-                                        }}
-                                    />
+                                    <Grid item xs={12}>
 
-                                </Grid>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            name="address"
+                                            label="address"
+                                            type="address"
+                                            id="address"
+                                            autoComplete="address"
+                                            onChange={(e: any) => {
+                                                dispatch(setAddress(e.target.value))
+                                            }}
+                                        />
 
-                                <Grid item xs={12}>
+                                    </Grid>
 
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        name="avatar"
-                                        label="avatar"
-                                        type="avatar"
-                                        id="avatar"
-                                        autoComplete="avatar"
-                                        onChange={(e: any) => {
-                                            dispatch(setAvatar(e.target.value))
-                                        }}
-                                    />
+                                    <Grid item xs={12}>
 
-                                </Grid>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            name="avatar"
+                                            label="avatar"
+                                            type="avatar"
+                                            id="avatar"
+                                            autoComplete="avatar"
+                                            onChange={(e: any) => {
+                                                dispatch(setAvatar(e.target.value))
+                                            }}
+                                        />
 
-                                <Grid item xs={12}>
+                                    </Grid>
 
-                                    <FormControl>
+                                    <Grid item xs={12}>
 
-                                        <Grid item xs={12}>
+                                        <FormControl>
 
-                                            <FormLabel id="demo-controlled-radio-buttons-group">Are you a doctor: </FormLabel>
-                                            
-                                            <RadioGroup
-                                                aria-labelledby="demo-controlled-radio-buttons-group"
-                                                name="controlled-radio-buttons-group"
+                                            <Grid item xs={12}>
+
+                                                <FormLabel id="demo-controlled-radio-buttons-group">Are you a doctor: </FormLabel>
                                                 
-                                                value = {isDoctor}
+                                                <RadioGroup
+                                                    aria-labelledby="demo-controlled-radio-buttons-group"
+                                                    name="controlled-radio-buttons-group"
+                                                    
+                                                    value = {isDoctor}
+                                                    
+                                                    onChange={(e: any) => {
+                                                        dispatch(setIsDoctor((e.target.value)))
+                                                    }}
+                                                >
+
+                                                    <FormControlLabel value="false" control={<Radio />} label="false" />
+                                                    <FormControlLabel value="true" control={<Radio />} label="true" />
                                                 
-                                                onChange={(e: any) => {
-                                                    dispatch(setIsDoctor((e.target.value)))
-                                                }}
-                                            >
+                                                </RadioGroup>
 
-                                                <FormControlLabel value="false" control={<Radio />} label="false" />
-                                                <FormControlLabel value="true" control={<Radio />} label="true" />
-                                            
-                                            </RadioGroup>
+                                            </Grid>
 
-                                        </Grid>
+                                        </FormControl>
+                                        
+                                    </Grid>
 
-                                    </FormControl>
-                                    
-                                </Grid>
+                                    <Grid item xs={12}>
 
-                                <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            name="password"
+                                            label="Password"
+                                            type="password"
+                                            id="password"
+                                            autoComplete="new-password"
+                                            onChange={(e: any) => {
+                                                dispatch(setPasswordRegister(e.target.value))
+                                            }}
+                                        />
 
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        name="password"
-                                        label="Password"
-                                        type="password"
-                                        id="password"
-                                        autoComplete="new-password"
-                                        onChange={(e: any) => {
-                                            dispatch(setPasswordRegister(e.target.value))
-                                        }}
-                                    />
+                                    </Grid>
 
                                 </Grid>
 
-                            </Grid>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                >
+                                    Sign Up
+                                </Button>
 
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                Sign Up
-                            </Button>
+                                <Grid container justifyContent="flex-end">
 
-                            <Grid container justifyContent="flex-end">
+                                    <Grid item onClick={() => {
+                                        navigate("/dashboard")
+                                    }}>
 
-                                <Grid item onClick={() => {
-                                    navigate("/dashboard")
-                                }}>
+                                        <Link to="/login">
+                                            Already have an account? Sign in
+                                        </Link>
 
-                                    <Link to="/login">
-                                        Already have an account? Sign in
-                                    </Link>
+                                    </Grid>
 
                                 </Grid>
 
-                            </Grid>
+                            </Box>
 
                         </Box>
 
-                    </Box>
+                    </Container>
 
-                </Container>
+                </ThemeProvider>
 
-            </ThemeProvider>
+            </motion.section>
 
         </>
 

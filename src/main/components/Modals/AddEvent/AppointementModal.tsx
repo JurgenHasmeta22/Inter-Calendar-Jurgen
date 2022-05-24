@@ -28,6 +28,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import React from "react";
 import { DateSelectArg } from "@fullcalendar/react";
+import { motion } from "framer-motion";
 // #endregion
 
 
@@ -142,136 +143,143 @@ function AppointementModal({selectInfo}: any) {
             className="modal-wrapper"
         >
 
-            <div
-                onClick={(e) => {
-                    e.stopPropagation();
-                }}
-
-                className="modal-container"
+            <motion.section
+                initial={{ opacity: 0, x: -200 }}
+                animate={{ opacity: 1, x: 0, transition: { duration: 0.5 } }}
             >
 
-                <header className="modal-header">
+                <div
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
 
-                    <CloseIcon
-                        fontSize="large"
-                        sx={{ color: "#50a2fd" }}
-                        className="close-icon"
-                        
-                        onClick={() => {
-                            dispatch(invalidateModal());
-                        }}
-                    />
+                    className="modal-container"
+                >
 
-                    <h2>Book Now</h2>
+                    <header className="modal-header">
 
-                </header>
-
-                <main className="modal-body">
-
-                    <form
-                        onSubmit={(e: any) => {
-                            e.preventDefault()
-                            postAppointement(e)
-                        }}
-                    >
-
-                        <label>
-
-                            Description: 
-
-                            <input
-                                type="text"
-                                className="description"
-                                name="description"
-                                required
-                                onChange={(e: any) => {
-                                    dispatch(setDescription(e.target.value))
-                                }}
-                            />
-
-                        </label>
-
-                        <label>
-
-                            Title: 
-
-                            <input
-                                type="text"
-                                name="title"
-                                className="title"
-                                required
-                                onChange={(e: any) => {
-                                    dispatch(setTitle(e.target.value))
-                                }}
-                            />
-
-                        </label>
-
-                        <label>
-
-                            Doctor choosen: 
-
-                            <input
-                                type="text"
-                                name="doctor"
-                                className="doctor"
-                                readOnly
-                                value={selectedDoctor?.firstName + " " + selectedDoctor?.lastName}
-                            />
-
-                        </label>
-
-                        <label>
-
-                            Patient: 
-
-                            <input
-                                type="text"
-                                name="patient"
-                                className="patient"
-                                readOnly
-                                value={selectedPatient ? selectedPatient?.firstName + " " + selectedPatient?.lastName : "Free"}
-                            />
-
-                        </label>
-
-                        <label>
-
-                            Start date: 
-
-                            <input
-                                type="datetime-local"
-                                name="startDate"
-                                className="startDate"
-                                disabled
-                                defaultValue={changeDateFormat(selectInfo.startStr)}
-                            />
-
-                        </label>
-
-                        <label>
-
-                            End date:
-
-                            <input
-                                type="datetime-local"
-                                name="endDate"
-                                className="endDate"
-                                disabled
-                                defaultValue={changeDateFormat(selectInfo.endStr)}
-                            />
+                        <CloseIcon
+                            fontSize="large"
+                            sx={{ color: "#50a2fd" }}
+                            className="close-icon"
                             
-                        </label>
+                            onClick={() => {
+                                dispatch(invalidateModal());
+                            }}
+                        />
 
-                        {error !== "" ? <span className="email-error">{error}</span> : null}
+                        <h2>Book Now</h2>
 
-                        <button type="submit">Book an appointement</button>
+                    </header>
 
-                    </form>
+                    <main className="modal-body">
 
-                </main>
+                        <form
+                            onSubmit={(e: any) => {
+                                e.preventDefault()
+                                postAppointement(e)
+                            }}
+                        >
 
-            </div>
+                            <label>
+
+                                Description: 
+
+                                <input
+                                    type="text"
+                                    className="description"
+                                    name="description"
+                                    required
+                                    onChange={(e: any) => {
+                                        dispatch(setDescription(e.target.value))
+                                    }}
+                                />
+
+                            </label>
+
+                            <label>
+
+                                Title: 
+
+                                <input
+                                    type="text"
+                                    name="title"
+                                    className="title"
+                                    required
+                                    onChange={(e: any) => {
+                                        dispatch(setTitle(e.target.value))
+                                    }}
+                                />
+
+                            </label>
+
+                            <label>
+
+                                Doctor choosen: 
+
+                                <input
+                                    type="text"
+                                    name="doctor"
+                                    className="doctor"
+                                    readOnly
+                                    value={selectedDoctor?.firstName + " " + selectedDoctor?.lastName}
+                                />
+
+                            </label>
+
+                            <label>
+
+                                Patient: 
+
+                                <input
+                                    type="text"
+                                    name="patient"
+                                    className="patient"
+                                    readOnly
+                                    value={selectedPatient ? selectedPatient?.firstName + " " + selectedPatient?.lastName : "Free"}
+                                />
+
+                            </label>
+
+                            <label>
+
+                                Start date: 
+
+                                <input
+                                    type="datetime-local"
+                                    name="startDate"
+                                    className="startDate"
+                                    disabled
+                                    defaultValue={changeDateFormat(selectInfo.startStr)}
+                                />
+
+                            </label>
+
+                            <label>
+
+                                End date:
+
+                                <input
+                                    type="datetime-local"
+                                    name="endDate"
+                                    className="endDate"
+                                    disabled
+                                    defaultValue={changeDateFormat(selectInfo.endStr)}
+                                />
+                                
+                            </label>
+
+                            {error !== "" ? <span className="email-error">{error}</span> : null}
+
+                            <button type="submit">Book an appointement</button>
+
+                        </form>
+
+                    </main>
+
+                </div>
+
+            </motion.section>
 
         </div>
 

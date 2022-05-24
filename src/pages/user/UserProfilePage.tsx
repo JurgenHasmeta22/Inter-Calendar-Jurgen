@@ -16,6 +16,7 @@ import ReactPaginate from 'react-paginate';
 import ICurrency from '../../main/interfaces/ICurrency';
 
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { motion } from 'framer-motion';
 // #endregion
 
 
@@ -180,176 +181,183 @@ export default function UserProfilePage({validateUser}:any) {
 
             <HeaderCommon />
 
-            <section className="container-profile-menus">
+            <motion.section
+                initial={{ opacity: 0, x: -200 }}
+                animate={{ opacity: 1, x: 0, transition: { delay: 0.5, duration: 1 } }}
+            >
 
-                <div className="container-profile-nav">
+                <section className="container-profile-menus">
 
-                    <div className="profile-info">
-                        <img src="https://villagesonmacarthur.com/wp-content/uploads/2020/12/Blank-Avatar.png" />
-                        <span className="userName-span">{user?.userName}</span>
+                    <div className="container-profile-nav">
+
+                        <div className="profile-info">
+                            <img src="https://villagesonmacarthur.com/wp-content/uploads/2020/12/Blank-Avatar.png" />
+                            <span className="userName-span">{user?.userName}</span>
+                        </div>
+
                     </div>
 
-                </div>
+                    <div className="container-tabs">
 
-                <div className="container-tabs">
+                        <ul className="list-tabs">
 
-                    <ul className="list-tabs">
-
-                        <li className= {params.tab === "favoriteMovies" ? "clicked": "videos-tab"} onClick={() => {
-                            navigate(`/profile/${user?.userName}/transactions`)
-                            //@ts-ignore
-                        }}>{user.isDoctor === true ? "Doctor Appointements" : "User Appointements"}</li>
-                        
-                        <li className= {params.tab === "aboutUs" ? "clicked": "about-tab"} onClick={() => {
-                            navigate(`/profile/${user?.userName}/about`)
-                            //@ts-ignore
-                        }}>{user.isDoctor === true ? "Doctor Information" : "User Information"}</li>
-
-                    </ul>
-
-                    { 
-
-                        params.tab === "transactions" ? (
-
-                            <>
+                            <li className= {params.tab === "favoriteMovies" ? "clicked": "videos-tab"} onClick={() => {
+                                navigate(`/profile/${user?.userName}/transactions`)
+                                //@ts-ignore
+                            }}>{user.isDoctor === true ? "Doctor Appointements" : "User Appointements"}</li>
                             
-                                { 
+                            <li className= {params.tab === "aboutUs" ? "clicked": "about-tab"} onClick={() => {
+                                navigate(`/profile/${user?.userName}/about`)
+                                //@ts-ignore
+                            }}>{user.isDoctor === true ? "Doctor Information" : "User Information"}</li>
+
+                        </ul>
+
+                        { 
+
+                            params.tab === "transactions" ? (
+
+                                <>
                                 
-                                    !user.isDoctor ? (
-                                        <h3 className="special-video-you">User Appointements</h3>
-                                    ): (
-                                        <h3 className="special-video-you">Doctors Appointements</h3>
-                                    )
-                                }
-
-                                <div className="container-transactions">
-
-                                    {
-
-                                        //@ts-ignore
-                                        user?.isDoctor === false ? (
-
-                                            <ul className='transactions'>
-
-                                                {
-
-                                                    //@ts-ignore
-                                                    user?.postedAppointements?.map(appointement => 
-                                                        
-                                                        <li className='user-list-appointement'>
-
-                                                            <span><strong>Id: </strong> {appointement?.id}</span>
-                                                            <span><strong>Price: </strong> {appointement?.price}</span>
-                                                            <span><strong>Start Date: </strong> {appointement?.startDate}</span>
-                                                            <span><strong>End Date: </strong> {appointement?.endDate}</span>
-                                                            <span><strong>Title: </strong> {appointement?.title}</span>
-                                                            <span><strong>Status: </strong> {appointement?.status}</span>
-                                                            <span><strong>Doctor Id: </strong> {appointement?.doctor_id}</span>
-                                                            <span><strong>Patient: </strong> {user?.userName}</span>
-                                                            <span><strong>Appointement Desc: </strong> {appointement?.description}</span>
-                                                        
-                                                        </li>
-                                                        
-                                                    )
-
-                                                }
-
-                                            </ul>
-
-                                        //@ts-ignore
-                                        ): user?.isDoctor === true ? (
-
-                                            <ul className='transactions'>
-
-                                                {
-
-                                                    //@ts-ignore
-                                                    user?.acceptedAppointemets?.map(appointement => 
-                                                        
-                                                        <li className='user-list-appointement'>
-                                                            
-                                                            <span><strong>Id: </strong> {appointement?.id}</span>
-                                                            <span><strong>Price: </strong> {appointement?.price}</span>
-                                                            <span><strong>Start Date: </strong> {appointement?.startDate}</span>
-                                                            <span><strong>End Date: </strong> {appointement?.endDate}</span>
-                                                            <span><strong>Title: </strong> {appointement?.title}</span>
-                                                            <span><strong>Status: </strong> {appointement?.status}</span>
-                                                            <span><strong>Doctor Id: </strong> {appointement?.doctor_id}</span>
-                                                            <span><strong>Patient Id: </strong> {appointement?.user_id}</span>
-                                                            <span><strong>Doctor userName: </strong> {user?.userName}</span>
-                                                            <span><strong>Appointement Desc: </strong> {appointement?.description}</span>
-                                                        
-                                                        </li>
-                                                        
-                                                    )
-
-                                                }
-
-                                            </ul>
-
-                                        ):null
-
+                                    { 
+                                    
+                                        !user.isDoctor ? (
+                                            <h3 className="special-video-you">User Appointements</h3>
+                                        ): (
+                                            <h3 className="special-video-you">Doctors Appointements</h3>
+                                        )
                                     }
 
-                                    <ReactPaginate
-                                        previousLabel={"< Previous"}
-                                        nextLabel={"Next >"}
-                                        pageCount={pageCount}
-                                        onPageChange={changePage}
-                                        containerClassName={"paginationBttns"}
-                                        previousLinkClassName={"previousBttn"}
-                                        nextLinkClassName={"nextBttn"}
-                                        disabledClassName={"paginationDisabled"}
-                                        activeClassName={"paginationActive"}
-                                    />
+                                    <div className="container-transactions">
 
-                                    <div className='data-grid-wrapper'>
+                                        {
 
-                                        <DataGrid
-                                            rows={rows}
-                                            columns={columns}
-                                            pageSize={5}
-                                            rowsPerPageOptions={[5]}
-                                            checkboxSelection
-                                            disableSelectionOnClick
-                                            className='data-grid'
+                                            //@ts-ignore
+                                            user?.isDoctor === false ? (
+
+                                                <ul className='transactions'>
+
+                                                    {
+
+                                                        //@ts-ignore
+                                                        user?.postedAppointements?.map(appointement => 
+                                                            
+                                                            <li className='user-list-appointement'>
+
+                                                                <span><strong>Id: </strong> {appointement?.id}</span>
+                                                                <span><strong>Price: </strong> {appointement?.price}</span>
+                                                                <span><strong>Start Date: </strong> {appointement?.startDate}</span>
+                                                                <span><strong>End Date: </strong> {appointement?.endDate}</span>
+                                                                <span><strong>Title: </strong> {appointement?.title}</span>
+                                                                <span><strong>Status: </strong> {appointement?.status}</span>
+                                                                <span><strong>Doctor Id: </strong> {appointement?.doctor_id}</span>
+                                                                <span><strong>Patient: </strong> {user?.userName}</span>
+                                                                <span><strong>Appointement Desc: </strong> {appointement?.description}</span>
+                                                            
+                                                            </li>
+                                                            
+                                                        )
+
+                                                    }
+
+                                                </ul>
+
+                                            //@ts-ignore
+                                            ): user?.isDoctor === true ? (
+
+                                                <ul className='transactions'>
+
+                                                    {
+
+                                                        //@ts-ignore
+                                                        user?.acceptedAppointemets?.map(appointement => 
+                                                            
+                                                            <li className='user-list-appointement'>
+                                                                
+                                                                <span><strong>Id: </strong> {appointement?.id}</span>
+                                                                <span><strong>Price: </strong> {appointement?.price}</span>
+                                                                <span><strong>Start Date: </strong> {appointement?.startDate}</span>
+                                                                <span><strong>End Date: </strong> {appointement?.endDate}</span>
+                                                                <span><strong>Title: </strong> {appointement?.title}</span>
+                                                                <span><strong>Status: </strong> {appointement?.status}</span>
+                                                                <span><strong>Doctor Id: </strong> {appointement?.doctor_id}</span>
+                                                                <span><strong>Patient Id: </strong> {appointement?.user_id}</span>
+                                                                <span><strong>Doctor userName: </strong> {user?.userName}</span>
+                                                                <span><strong>Appointement Desc: </strong> {appointement?.description}</span>
+                                                            
+                                                            </li>
+                                                            
+                                                        )
+
+                                                    }
+
+                                                </ul>
+
+                                            ):null
+
+                                        }
+
+                                        <ReactPaginate
+                                            previousLabel={"< Previous"}
+                                            nextLabel={"Next >"}
+                                            pageCount={pageCount}
+                                            onPageChange={changePage}
+                                            containerClassName={"paginationBttns"}
+                                            previousLinkClassName={"previousBttn"}
+                                            nextLinkClassName={"nextBttn"}
+                                            disabledClassName={"paginationDisabled"}
+                                            activeClassName={"paginationActive"}
                                         />
-                                        
+
+                                        <div className='data-grid-wrapper'>
+
+                                            <DataGrid
+                                                rows={rows}
+                                                columns={columns}
+                                                pageSize={5}
+                                                rowsPerPageOptions={[5]}
+                                                checkboxSelection
+                                                disableSelectionOnClick
+                                                className='data-grid'
+                                            />
+                                            
+                                        </div>
+
                                     </div>
+
+                                </>
+
+                            ): params.tab === "about" ? (
+
+                                <div className="container-about">
+                                    
+                                    <span>This is my account username: {user?.userName}</span>
+                                    <span>My firstname is: {user?.firstName}</span>
+                                    <span>My lastname is: {user?.lastName}</span>
+                                    <span>My email is: {user?.email}</span>
+                                    <span>My bio is: {user?.bio}</span>
+                                    <span>My phone number is: {user?.phone}</span>
+                                    <span>My address is: {user?.address}</span>
+                                    <span>My avatar is: {user?.avatar}</span>
+                                    <span>Am i a doctor: {String(user?.isDoctor)}</span>
 
                                 </div>
 
-                            </>
+                            ): (
 
-                        ): params.tab === "about" ? (
+                                <div className="container-void">
+                                    <span>Click in the tabs to change state {user?.userName}</span>
+                                </div>
 
-                            <div className="container-about">
-                                
-                                <span>This is my account username: {user?.userName}</span>
-                                <span>My firstname is: {user?.firstName}</span>
-                                <span>My lastname is: {user?.lastName}</span>
-                                <span>My email is: {user?.email}</span>
-                                <span>My bio is: {user?.bio}</span>
-                                <span>My phone number is: {user?.phone}</span>
-                                <span>My address is: {user?.address}</span>
-                                <span>My avatar is: {user?.avatar}</span>
-                                <span>Am i a doctor: {String(user?.isDoctor)}</span>
+                            )
 
-                            </div>
+                        }
 
-                        ): (
+                    </div>
 
-                            <div className="container-void">
-                                <span>Click in the tabs to change state {user?.userName}</span>
-                            </div>
+                </section>
 
-                        )
-
-                    }
-
-                </div>
-
-            </section>
+            </motion.section>
 
             <FooterCommon />
         

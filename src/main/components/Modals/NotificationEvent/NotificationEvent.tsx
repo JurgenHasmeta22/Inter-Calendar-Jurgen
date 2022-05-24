@@ -18,6 +18,7 @@ import useGetUser from "../../../hooks/useGetUser";
 import { toast } from "react-toastify";
 import { setUser } from "../../../store/stores/user/user.store";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 export default function NotificationEvent() {
 
@@ -185,120 +186,127 @@ export default function NotificationEvent() {
             className="modal-wrapper"
         >
 
-            <div
-                onClick={(e) => {
-                    e.stopPropagation();
-                }}
-
-                className="modal-container"
+            <motion.section
+                initial={{ opacity: 0, x: -200 }}
+                animate={{ opacity: 1, x: 0, transition: { duration: 0.5 } }}
             >
 
-                <header className="modal-header">
+                <div
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
 
-                    <CloseIcon
-                        fontSize="large"
-                        sx={{ color: "#50a2fd" }}
-                        className="close-icon"
-                        
-                        onClick={() => {
-                            dispatch(invalidateModal());
-                        }}
-                    />
+                    className="modal-container"
+                >
 
-                    <h2>Pending Appointements</h2>
+                    <header className="modal-header">
 
-                </header>
-
-                {/* <div className='data-grid-wrapper'>
-
-                    <DataGrid
-                        rows={rows}
-                        columns={columns}
-                        pageSize={3}
-                        rowsPerPageOptions={[3]}
-                        checkboxSelection
-                        disableSelectionOnClick
-                        className='data-grid'
-                    />
-
-                </div> */}
-
-                {
-
-                    rows.length !== 0 ? (
-
-                        <table className='table-data'>
-                
-                    <thead>
-
-                        <tr>
-
-                            <th>Id</th>
-                            <th>Price</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>User id</th>
-                            <th>Doctor id</th>
-                            <th>Category id</th>
-                            <th>Doctor userName</th>
-                            <th>Options</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        {
-
-                        rows.map(post => 
+                        <CloseIcon
+                            fontSize="large"
+                            sx={{ color: "#50a2fd" }}
+                            className="close-icon"
                             
-                            <tr className="post-item" onClick={() => {
-                                
-                            }}>
-                
-                                <td>{post.id}</td>
-                                <td>{post.price}</td>
-                                <td>{post.startDate}</td>
-                                <td>{post.endDate}</td>
-                                <td>{post.title}</td>
-                                <td>{post.description}</td>
-                                <td>{post.status}</td>
-                                <td>{post.user_id}</td>
-                                <td>{post.doctor_id}</td>
-                                <td>{post.category_id}</td>
-                                <td>{selectedDoctor?.userName}</td>
-                                
-                                <td className="special-td">
+                            onClick={() => {
+                                dispatch(invalidateModal());
+                            }}
+                        />
 
-                                    <button onClick={function (e: any) {
-                                        handleButtonApprove(e, post.status, post.doctor_id, post.id)
-                                    }}>Approve</button>
+                        <h2>Pending Appointements</h2>
 
-                                    <button onClick={function (e: any) {
-                                        handleButtonCancel(e, post.status, post.doctor_id, post.id)
-                                    }}>Cancel</button>
+                    </header>
 
-                                </td>
+                    {/* <div className='data-grid-wrapper'>
+
+                        <DataGrid
+                            rows={rows}
+                            columns={columns}
+                            pageSize={3}
+                            rowsPerPageOptions={[3]}
+                            checkboxSelection
+                            disableSelectionOnClick
+                            className='data-grid'
+                        />
+
+                    </div> */}
+
+                    {
+
+                        rows.length !== 0 ? (
+
+                            <table className='table-data'>
+                    
+                        <thead>
+
+                            <tr>
+
+                                <th>Id</th>
+                                <th>Price</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>User id</th>
+                                <th>Doctor id</th>
+                                <th>Category id</th>
+                                <th>Doctor userName</th>
+                                <th>Options</th>
 
                             </tr>
 
-                        )
+                        </thead>
 
-                        }
+                        <tbody>
 
-                    </tbody>
+                            {
 
-                        </table>
+                            rows.map(post => 
+                                
+                                <tr className="post-item" onClick={() => {
+                                    
+                                }}>
+                    
+                                    <td>{post.id}</td>
+                                    <td>{post.price}</td>
+                                    <td>{post.startDate}</td>
+                                    <td>{post.endDate}</td>
+                                    <td>{post.title}</td>
+                                    <td>{post.description}</td>
+                                    <td>{post.status}</td>
+                                    <td>{post.user_id}</td>
+                                    <td>{post.doctor_id}</td>
+                                    <td>{post.category_id}</td>
+                                    <td>{selectedDoctor?.userName}</td>
+                                    
+                                    <td className="special-td">
 
-                    ): null
+                                        <button onClick={function (e: any) {
+                                            handleButtonApprove(e, post.status, post.doctor_id, post.id)
+                                        }}>Approve</button>
 
-                }
+                                        <button onClick={function (e: any) {
+                                            handleButtonCancel(e, post.status, post.doctor_id, post.id)
+                                        }}>Cancel</button>
 
-            </div>
+                                    </td>
+
+                                </tr>
+
+                            )
+
+                            }
+
+                        </tbody>
+
+                            </table>
+
+                        ): null
+
+                    }
+
+                </div>
+
+            </motion.section>
 
         </div>
 

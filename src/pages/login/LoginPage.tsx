@@ -22,6 +22,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { toast } from "react-toastify";
 import useGetUser from "../../main/hooks/useGetUser";
+import { motion } from "framer-motion";
 // #endregion
 
 
@@ -66,97 +67,104 @@ const LoginPage : FC = ()=>{
 
     return (
 
-        <div className="login-wrapper-upper">
+        <motion.div
+            initial={{ opacity: 0, x: -200 }}
+            animate={{ opacity: 1, x: 0, transition: { delay: 0.5, duration: 1 } }}
+        >
 
-            <ThemeProvider theme={theme}>
+            <div className="login-wrapper-upper">
 
-                <Container component="main" maxWidth="xs">
+                <ThemeProvider theme={theme}>
 
-                    <CssBaseline />
+                    <Container component="main" maxWidth="xs">
 
-                    <Box
-                        sx={{
-                            mt: 10,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            placeItems: 'center',
-                            placeContent: 'center'
-                        }}
-                    >
+                        <CssBaseline />
 
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
-
-                        <Typography component="h1" variant="h5">
-                            Sign in
-                        </Typography>
-
-                        <Box >
-
-                            <TextField
-                                onChange={(e) =>  dispatch(setEmailLogin(e.target.value))}
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email: "
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
-                            />
-
-                            <TextField
-                                onChange={(e) => dispatch(setPasswordLogin(e.target.value))}
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                            />
-
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
-                            />
-
-                            <Button onClick={(e) => {
-                                handleSubmit(e)
+                        <Box
+                            sx={{
+                                mt: 10,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                placeItems: 'center',
+                                placeContent: 'center'
                             }}
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                            >
+                        >
 
-                                Sign In
+                            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                                <LockOutlinedIcon />
+                            </Avatar>
 
-                            </Button>
+                            <Typography component="h1" variant="h5">
+                                Sign in
+                            </Typography>
 
-                            <Grid container>
+                            <Box >
 
-                                <Grid item>
+                                <TextField
+                                    onChange={(e) =>  dispatch(setEmailLogin(e.target.value))}
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email: "
+                                    name="email"
+                                    autoComplete="email"
+                                    autoFocus
+                                />
 
-                                    <Link to="/register">
-                                        {"Don't have an account? Sign Up"}
-                                    </Link>
+                                <TextField
+                                    onChange={(e) => dispatch(setPasswordLogin(e.target.value))}
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                />
+
+                                <FormControlLabel
+                                    control={<Checkbox value="remember" color="primary" />}
+                                    label="Remember me"
+                                />
+
+                                <Button onClick={(e) => {
+                                    handleSubmit(e)
+                                }}
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                >
+
+                                    Sign In
+
+                                </Button>
+
+                                <Grid container>
+
+                                    <Grid item>
+
+                                        <Link to="/register">
+                                            {"Don't have an account? Sign Up"}
+                                        </Link>
+
+                                    </Grid>
 
                                 </Grid>
 
-                            </Grid>
+                            </Box>
 
                         </Box>
 
-                    </Box>
+                    </Container>
 
-                </Container>
+                </ThemeProvider>
+                
+            </div>
 
-            </ThemeProvider>
-            
-        </div>
+        </motion.div>
 
     )
     
