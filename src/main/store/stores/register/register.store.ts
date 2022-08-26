@@ -1,83 +1,79 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import IRegister from '../../../interfaces/IRegister';
-import IUser from '../../../interfaces/IUser';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import IRegister from "../../../interfaces/IRegister";
+import IUser from "../../../interfaces/IUser";
 
 const initialState: any = {
-    firstName: "",
-    lastName: "",
-    userName: "",
-    bio: "",
-    address: "",
-    phone: "",
-    email: "",
-    password: "",
-    avatar: "",
-    isDoctor: "false"
+  firstName: "",
+  lastName: "",
+  userName: "",
+  bio: "",
+  address: "",
+  phone: "",
+  email: "",
+  password: "",
+  avatar: "",
+  isDoctor: "false",
 };
 
 const registerStore = createSlice({
-
-  name: 'register',
+  name: "register",
 
   initialState,
 
   reducers: {
-
     setFirstName(state, action: PayloadAction<string>) {
-        state.firstName = action.payload
+      state.firstName = action.payload;
     },
 
     setLastName(state, action: PayloadAction<string>) {
-        state.lastName = action.payload
+      state.lastName = action.payload;
     },
 
     setUserNameRegister(state, action: PayloadAction<string>) {
-        state.userName = action.payload
+      state.userName = action.payload;
     },
 
     setPasswordRegister(state, action: PayloadAction<string>) {
-        state.password = action.payload
+      state.password = action.payload;
     },
 
     setPhoneNumber(state, action: PayloadAction<string>) {
-        state.phone = action.payload
+      state.phone = action.payload;
     },
 
     setEmailRegister(state, action: PayloadAction<string>) {
-        state.email = action.payload
+      state.email = action.payload;
     },
 
     setBio(state, action: PayloadAction<string>) {
-        state.bio = action.payload
+      state.bio = action.payload;
     },
 
     setAddress(state, action: PayloadAction<string>) {
-        state.address = action.payload
+      state.address = action.payload;
     },
 
     setIsDoctor(state, action: PayloadAction<string>) {
-        state.isDoctor = action.payload
+      state.isDoctor = action.payload;
     },
 
     setAvatar(state, action: PayloadAction<string>) {
-        state.avatar = action.payload
-    }
-
-  }
-
+      state.avatar = action.payload;
+    },
+  },
 });
 
 export default registerStore;
 
-export const { 
-    setFirstName, 
-    setLastName, 
-    setUserNameRegister, 
-    setAddress,
-    setBio,
-    setIsDoctor,
-    setEmailRegister, 
-    setPasswordRegister, 
-    setPhoneNumber,
-    setAvatar
+export const {
+  setFirstName,
+  setLastName,
+  setUserNameRegister,
+  setAddress,
+  setBio,
+  setIsDoctor,
+  setEmailRegister,
+  setPasswordRegister,
+  setPhoneNumber,
+  setAvatar,
 } = registerStore.actions;

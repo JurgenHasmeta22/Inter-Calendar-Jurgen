@@ -1,24 +1,20 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import IUser from '../../../interfaces/IUser';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import IUser from "../../../interfaces/IUser";
 
 const userStore = createSlice({
-
-  name: 'user',
+  name: "user",
 
   initialState: null as IUser,
 
   reducers: {
-    
     setUser(_state, action: PayloadAction<IUser>) {
-      return {...action.payload, password:''};
+      return { ...action.payload, password: "" };
     },
 
     invalidateUser() {
-      return null
-    }
-
-  }
-
+      return null;
+    },
+  },
 });
 
 export default userStore;

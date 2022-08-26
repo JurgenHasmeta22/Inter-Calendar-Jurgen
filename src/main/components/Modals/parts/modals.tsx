@@ -6,17 +6,11 @@ interface Props {
 }
 
 export default function Modal(props: Props) {
-
   return (
-
     <div className="modal-wrapper">
-        
       <div className="modal-container">
         <div className="modal-body">{props.children}</div>
       </div>
-
     </div>
-
   );
-
 }

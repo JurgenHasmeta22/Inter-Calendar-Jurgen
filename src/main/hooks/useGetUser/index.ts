@@ -1,9 +1,8 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/redux/rootState';
-import PropertyManager from '../../utils/propertyManager';
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/redux/rootState";
+import PropertyManager from "../../utils/propertyManager";
 
 const useGetUser = () => {
-
   const currentUser = useSelector((state: RootState) => state.user);
 
   if (currentUser && PropertyManager.isDefined(currentUser)) {
@@ -11,7 +10,6 @@ const useGetUser = () => {
   }
 
   return null;
-
 };
 
 export default useGetUser;

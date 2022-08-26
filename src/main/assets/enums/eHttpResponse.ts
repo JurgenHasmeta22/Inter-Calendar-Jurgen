@@ -8,7 +8,7 @@ enum eHttpResponse {
   Conflict = 409,
   Gone = 410,
   TooManyRequests = 429,
-  InternalServerError = 500
+  InternalServerError = 500,
 }
 
 export default eHttpResponse;

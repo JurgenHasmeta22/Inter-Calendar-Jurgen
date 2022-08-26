@@ -1,26 +1,26 @@
 .delete-modal-container {
-    padding: 3rem;
-  }
-  
-  .delete-modal-body {
-    display: grid;
-    gap: 1rem;
-    grid-auto-flow: column;
-  }
+  padding: 3rem;
+}
 
-  .general-button {
-    border: none;
-    border-radius: 5px;
-    font-weight: bolder;
-    font-size: 0.85rem;
-    cursor: pointer;
-    padding: 1rem 2rem;
-  }
-  
-  .cancel-btn {
-    background-color: #8080805d;
-  }
+.delete-modal-body {
+  display: grid;
+  gap: 1rem;
+  grid-auto-flow: column;
+}
 
-  .delete-btn {
-    background-color: #f84b4b;
-  }
+.general-button {
+  border: none;
+  border-radius: 5px;
+  font-weight: bolder;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 1rem 2rem;
+}
+
+.cancel-btn {
+  background-color: #8080805d;
+}
+
+.delete-btn {
+  background-color: #f84b4b;
+}

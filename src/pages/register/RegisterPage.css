@@ -1,205 +1,204 @@
 .signup-page-wrapper {
-    display: grid;
-    place-content: center;
-    height: 50%;
-    grid-template-columns: repeat(1, minmax(200px, 1fr));
-    gap: 1rem;
-  }
-  
-  .main-wrapper {
-    display: grid;
-    align-content: start;
-    place-items: center;
-    justify-content: center;
-    padding-top: 150px;
-  }
+  display: grid;
+  place-content: center;
+  height: 50%;
+  grid-template-columns: repeat(1, minmax(200px, 1fr));
+  gap: 1rem;
+}
 
-  #signup-form {
-    display: grid;
-    gap: 1rem;
-    /*place-content: space-between;
-    */position: sticky;
-    top: 30px;
-    backdrop-filter: blur(10px);
-    display: grid;
-    grid-template-rows: repeat(8, 60px);
-    grid-gap: 15px;
-    width: 400px;
-    height: auto;
-    border-radius: 5px;
-    place-items: center;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
-    outline: 1px solid #4190d1;
-    /* background-color: #d3dfe8; */
-  }
+.main-wrapper {
+  display: grid;
+  align-content: start;
+  place-items: center;
+  justify-content: center;
+  padding-top: 150px;
+}
 
-  #signup-form h1 {
-    font-family: "Permanent Marker";
-    color: #28fccaf5;
-    font-size: 44px;
-    width: 300px;
-    letter-spacing: 1px;
-    padding-top: 30px;
-    padding-bottom: 20px;
+#signup-form {
+  display: grid;
+  gap: 1rem;
+  /*place-content: space-between;
+    */
+  position: sticky;
+  top: 30px;
+  backdrop-filter: blur(10px);
+  display: grid;
+  grid-template-rows: repeat(8, 60px);
+  grid-gap: 15px;
+  width: 400px;
+  height: auto;
+  border-radius: 5px;
+  place-items: center;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  outline: 1px solid #4190d1;
+  /* background-color: #d3dfe8; */
+}
 
-  }
+#signup-form h1 {
+  font-family: "Permanent Marker";
+  color: #28fccaf5;
+  font-size: 44px;
+  width: 300px;
+  letter-spacing: 1px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+}
 
-  #signup-form input {
-    display: grid;
-    height: 30px;
-    border-radius: 5px;
-    border-style: none;
-    padding: 10px;
-    font-size: 13px;
-    height: 50px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
-  }
+#signup-form input {
+  display: grid;
+  height: 30px;
+  border-radius: 5px;
+  border-style: none;
+  padding: 10px;
+  font-size: 13px;
+  height: 50px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
 
-  #username input {
-    width: 300px;
-    height: 50px;
-  }
+#username input {
+  width: 300px;
+  height: 50px;
+}
 
-  #firstname input {
-    width: 300px;
-    height: 50px;
-  }
+#firstname input {
+  width: 300px;
+  height: 50px;
+}
 
-  #lastname input {
-    width: 300px;
-    height: 50px;
-  }
+#lastname input {
+  width: 300px;
+  height: 50px;
+}
 
-  .input-wrapper {
-    display: grid;
-    place-content: center;
-  }
-  
-  #email {
-    display: grid;
-    width: 300px;
-  }
+.input-wrapper {
+  display: grid;
+  place-content: center;
+}
 
-  #password {
-    display: grid;
-    width: 300px;
-  }
+#email {
+  display: grid;
+  width: 300px;
+}
 
-  #signup-form button {
-    display: grid;
-    width: 300px;
-    height: 40px;
-    place-content: center;
-    border-style: none;
-    border-radius: 5px;
-    font-family: "Permanent Marker";
-    background-color: #4190d1;
-    color: whitesmoke;
-    transition: 0.3s;
-  }
+#password {
+  display: grid;
+  width: 300px;
+}
 
-  #signup-form button:hover {
-    cursor: pointer;
-    transform: translate(-3px);
-    transition: 0.3s;
-  }
-  
-  .special-image-2 {
-    height: 100%;
-    width: 170%;
-  }
+#signup-form button {
+  display: grid;
+  width: 300px;
+  height: 40px;
+  place-content: center;
+  border-style: none;
+  border-radius: 5px;
+  font-family: "Permanent Marker";
+  background-color: #4190d1;
+  color: whitesmoke;
+  transition: 0.3s;
+}
 
-  #login-link-wrapper {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    font-weight: 600;
-    place-content: center;
-    gap: 1rem;
-    font-weight: 800;
-    padding-bottom: 20px;
-  }
+#signup-form button:hover {
+  cursor: pointer;
+  transform: translate(-3px);
+  transition: 0.3s;
+}
 
-  #link {
-    display: grid;
-    color: #4190d1;
-    transition: 0.3s;
-  }
+.special-image-2 {
+  height: 100%;
+  width: 170%;
+}
 
-  #link:hover {
-    cursor: pointer;
-    transform: translate(-3px);
-    transition: 0.3s;
-  }
+#login-link-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  font-weight: 600;
+  place-content: center;
+  gap: 1rem;
+  font-weight: 800;
+  padding-bottom: 20px;
+}
 
-  .register {
-    display: grid;
-    display: block;
-    width: 300px;
-    height: 530px;
-    box-shadow: 0 0 0.75rem #0095c7da;
-    border-radius: 10px;
-    padding: 1rem;
-    justify-items: center;
+#link {
+  display: grid;
+  color: #4190d1;
+  transition: 0.3s;
+}
+
+#link:hover {
+  cursor: pointer;
+  transform: translate(-3px);
+  transition: 0.3s;
+}
+
+.register {
+  display: grid;
+  display: block;
+  width: 300px;
+  height: 530px;
+  box-shadow: 0 0 0.75rem #0095c7da;
+  border-radius: 10px;
+  padding: 1rem;
+  justify-items: center;
 }
 
 .button_container {
-    display: grid;
-    align-content: center;
-    gap: 0.6rem;
+  display: grid;
+  align-content: center;
+  gap: 0.6rem;
 }
 
 .labelBlock_register {
-    display: grid;
-    justify-content: center;
+  display: grid;
+  justify-content: center;
 }
 
 .button__register {
-    width: 240px;
-    border-radius: 10px;
-    height: 25px;
-    border: 1px;
-    background: #146dac;
-    margin-top: 0.5rem;
+  width: 240px;
+  border-radius: 10px;
+  height: 25px;
+  border: 1px;
+  background: #146dac;
+  margin-top: 0.5rem;
 }
 
 .labelBlock {
-    font-weight: 300;
-    display: grid;
-    display: block;
-    text-align: center;
+  font-weight: 300;
+  display: grid;
+  display: block;
+  text-align: center;
 }
 
 .register h1 {
-    text-align: center;
+  text-align: center;
 }
 
 .container {
-    display: grid;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
+  display: grid;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .info {
-    text-align: center;
-    cursor: pointer;
+  text-align: center;
+  cursor: pointer;
 }
 
-
 .info:hover {
-    color: crimson;
+  color: crimson;
 }
 
 .inputRegister {
-    padding: 0.5rem;
-    width: 240px;
-    border-radius: 10px;
-    height: 25px;
-    border: 0.1px solid rgb(168, 165, 165);
+  padding: 0.5rem;
+  width: 240px;
+  border-radius: 10px;
+  height: 25px;
+  border: 0.1px solid rgb(168, 165, 165);
 }

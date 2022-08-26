@@ -1,39 +1,39 @@
 .form-edit-event {
-    display: grid;
-    grid-auto-flow: row;
-    grid-gap: 20px;
-    padding-top: 30px;
+  display: grid;
+  grid-auto-flow: row;
+  grid-gap: 20px;
+  padding-top: 30px;
 }
 
 .form-edit-event button {
-    padding: 10px 10px;
-    border: none;
-    outline: none;
-    background-color: rgb(232, 111, 111);
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 700;
+  padding: 10px 10px;
+  border: none;
+  outline: none;
+  background-color: rgb(232, 111, 111);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .form-edit-event input {
-    padding: 5px 10px;
-    margin-left: 15px;
+  padding: 5px 10px;
+  margin-left: 15px;
 }
 
 .Toastify__toast-body {
-    white-space: pre-line;
+  white-space: pre-line;
 }
 
 .form-edit-event select {
-    margin-left: 15px;
-    padding: 10px 10px;
+  margin-left: 15px;
+  padding: 10px 10px;
 }
 .editing-status {
-    font-size: 16px;
-    font-weight: 800;
-    padding-top: 50px;
+  font-size: 16px;
+  font-weight: 800;
+  padding-top: 50px;
 }
 
 .status-span-edit {
-    padding-top: 20px;
+  padding-top: 20px;
 }

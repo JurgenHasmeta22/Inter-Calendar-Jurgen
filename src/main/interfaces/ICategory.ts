@@ -1,5 +1,5 @@
 export default interface ICategory {
-	id?: number
-	code: string
-	description: string
+  id?: number;
+  code: string;
+  description: string;
 }

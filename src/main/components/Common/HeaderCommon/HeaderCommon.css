@@ -1,11 +1,11 @@
 header.header {
   grid-area: header;
-  
+
   width: 100%;
   display: grid;
-  grid-template: 
-  "header-group-1 header-group-2" 100px /
-  0.5fr 0.5fr; /* this is where the bug was wich cause header problems, i had all three at 1fr 1fr 1fr but when i tried auto in the last part all went perfect when responsive*/
+  grid-template:
+    "header-group-1 header-group-2" 100px /
+    0.5fr 0.5fr; /* this is where the bug was wich cause header problems, i had all three at 1fr 1fr 1fr but when i tried auto in the last part all went perfect when responsive*/
   background-color: #012b36;
   grid-gap: 10px;
   align-items: center;
@@ -13,14 +13,14 @@ header.header {
 }
 
 header.header .header-group-1 {
-grid-area: header-group-1;
-display: grid;
-grid-template-columns: 0.5fr 0.5fr;
-grid-gap: 10px;
-align-items: center;
-justify-items: start;
-padding-left: 50px;
-/* place-items: center;
+  grid-area: header-group-1;
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr;
+  grid-gap: 10px;
+  align-items: center;
+  justify-items: start;
+  padding-left: 50px;
+  /* place-items: center;
 place-content: center; */
 }
 
@@ -42,87 +42,86 @@ place-content: center; */
 }
 
 header.header .header-group-1 a {
-font-size: 16px;
-letter-spacing: 1px;
-font-weight: 700;
-font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-color: #5ad2f3;
-font-style: italic;
+  font-size: 16px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  color: #5ad2f3;
+  font-style: italic;
 }
 
 header.header .header-group-1 ul {
-display: grid;
-/* grid-template-columns: 1fr; */
-/* place-items: center; */
+  display: grid;
+  /* grid-template-columns: 1fr; */
+  /* place-items: center; */
 }
 
 .div-inside-li {
-display: grid;
-/* grid-template-columns: 1fr; */
+  display: grid;
+  /* grid-template-columns: 1fr; */
 }
 
 .div-inside-li-special {
-display: grid;
-grid-template-columns: 1fr;
-grid-gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
 }
 
 .div-inside-li-special .genre-drop {
-display: grid;
-grid-template-columns: 0.5fr 0.5fr;
-grid-gap: 15px;
-place-items: center;
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr;
+  grid-gap: 15px;
+  place-items: center;
 }
 
 .div-inside-li-special .dropdown-content ul {
-display: grid;
-grid-template-columns: repeat(3, 0.33fr);
-grid-gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 0.33fr);
+  grid-gap: 20px;
 }
 
 header.header .header-group-1 ul.list-nav li.special-uppercase {
-font-size: 16px;
-font-weight: 700;
-color: #fff;
-text-transform: uppercase;
-font-family: Roboto;
-cursor: pointer;
-padding-bottom: 1px;
-
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: Roboto;
+  cursor: pointer;
+  padding-bottom: 1px;
 }
 
 header.header .header-group-1 ul.list-nav a.special-uppercase {
-font-size: 16px;
-font-weight: 700;
-color: #fff;
-text-transform: uppercase;
-font-family: Roboto;
-cursor: pointer;
-padding-bottom: 1px;
-
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: Roboto;
+  cursor: pointer;
+  padding-bottom: 1px;
 }
 
 ul .special-list-drop {
-text-transform: capitalize;
-font-size: 16px;
-font-weight: 900;
-font-family: Roboto;
-cursor: pointer;
+  text-transform: capitalize;
+  font-size: 16px;
+  font-weight: 900;
+  font-family: Roboto;
+  cursor: pointer;
 }
 
 header .dropbtn img {
-height: 40px;
-width: 40px;
+  height: 40px;
+  width: 40px;
 }
 
 header.header .header-group-1 ul li:hover {
-transition: 0.5s;
--webkit-transition: 0.5s;
--moz-transition: 0.5s;
--ms-transition: 0.5s;
--o-transition: 0.5s;
-border-bottom: 1px solid #f7eeee52;
-color: #e92d2d;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  border-bottom: 1px solid #f7eeee52;
+  color: #e92d2d;
 }
 
 .login-section__info h3 {
@@ -132,16 +131,15 @@ color: #e92d2d;
   font-weight: 200;
 }
 
-
 header.header .header-group-2 {
-grid-area: header-group-2;
-display: grid;
-grid-template-columns: 0.33fr 0.33fr 0.33fr;
-grid-gap: 20px;
-/* justify-content: end; */
-/* justify-items: end;   */
-align-items: center;
-padding-right: 50px;
+  grid-area: header-group-2;
+  display: grid;
+  grid-template-columns: 0.33fr 0.33fr 0.33fr;
+  grid-gap: 20px;
+  /* justify-content: end; */
+  /* justify-items: end;   */
+  align-items: center;
+  padding-right: 50px;
 }
 
 .cart-icon {
@@ -149,86 +147,86 @@ padding-right: 50px;
 }
 
 .button-login-header {
-font-size: 16px;
-font-weight: 700;
-padding: 10px 10px;
-border: none;
-outline: none;
-background-color: #b61e1e;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 10px 10px;
+  border: none;
+  outline: none;
+  background-color: #b61e1e;
 
-display: grid;
-grid-template-columns: 30px 80px;
-place-items: center;
+  display: grid;
+  grid-template-columns: 30px 80px;
+  place-items: center;
 }
 
 .button-login-header:hover {
-background-color: #3684f1;
-transition: 1s;
--webkit-transition: 1s;
--moz-transition: 1s;
--ms-transition: 1s;
--o-transition: 1s;
+  background-color: #3684f1;
+  transition: 1s;
+  -webkit-transition: 1s;
+  -moz-transition: 1s;
+  -ms-transition: 1s;
+  -o-transition: 1s;
 }
 
 .button-search {
-display: grid;
-grid-template-columns: 1fr 0.1fr;
-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 0.1fr;
+  width: 100%;
 }
 
 .button-search input {
-outline: none;
-border: none;
-text-align: center;
-font-size: 14px;
-font-weight: 700;
-padding: 20px 10px;
+  outline: none;
+  border: none;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 20px 10px;
 }
 
 .button-search button {
-font-size: 16px;
-font-weight: 700;
-padding: 15px 15px;
-border: none;
-outline: none;
-background-color: #b61e1e;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 15px 15px;
+  border: none;
+  outline: none;
+  background-color: #b61e1e;
 }
 
 .button-search button:hover {
-background-color: #3684f1;
-transition: 1s;
+  background-color: #3684f1;
+  transition: 1s;
 }
 
 /* Dropdown Button */
 header .dropbtn {
-background-color: transparent;
-color: rgb(247, 245, 245);
-font-size: 14px;
-font-family: sans-serif;
-font-weight: 600;
-letter-spacing: normal;
-border: none;
-cursor: pointer;
-display: grid; 
-/* background-color: #e2850c; */
-grid-template-columns: 0.5fr 0.5fr;
-place-items: center;
-grid-gap: 20px;
+  background-color: transparent;
+  color: rgb(247, 245, 245);
+  font-size: 14px;
+  font-family: sans-serif;
+  font-weight: 600;
+  letter-spacing: normal;
+  border: none;
+  cursor: pointer;
+  display: grid;
+  /* background-color: #e2850c; */
+  grid-template-columns: 0.5fr 0.5fr;
+  place-items: center;
+  grid-gap: 20px;
 }
 
 header .dropbtn:hover {
-color: #fefeff;
-transition: 1s;
-/* border-bottom: 1px solid #ec8251; */
--webkit-transition: 1s;
--moz-transition: 1s;
--ms-transition: 1s;
--o-transition: 1s;
+  color: #fefeff;
+  transition: 1s;
+  /* border-bottom: 1px solid #ec8251; */
+  -webkit-transition: 1s;
+  -moz-transition: 1s;
+  -ms-transition: 1s;
+  -o-transition: 1s;
 }
 
 header .drop-down-content .dropdown {
-position: relative;
-display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 /* .div-inside-li-special .dropdown img {
@@ -237,32 +235,32 @@ width: 30px;
 } */
 
 header .dropdown-content {
-display: none;
-position: absolute;
-background-color: #012b36;
-min-width: 80px;
-box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-z-index: 1;
-/* padding-top: 20px; */
+  display: none;
+  position: absolute;
+  background-color: #012b36;
+  min-width: 80px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  /* padding-top: 20px; */
 }
 
 /* Links inside the dropdown */
 header .dropdown-content button {
-color: rgb(0, 0, 0);
-padding: 15px 15px;
-text-decoration: none;
-display: block;
+  color: rgb(0, 0, 0);
+  padding: 15px 15px;
+  text-decoration: none;
+  display: block;
 }
 
 /* Change color of dropdown links on hover */
 header .dropdown-content button:hover {
-color: rgb(254, 69, 69);
+  color: rgb(254, 69, 69);
 }
 
 /* Show the dropdown menu on hover */
 header .dropdown:hover .dropdown-content {
-display: block;
-background-color: #ffffff;
+  display: block;
+  background-color: #ffffff;
 }
 
 /* Dropdown Button */
@@ -332,6 +330,6 @@ background-color: #ffffff;
 }
 
 .movieLandiaLogo {
-    /* padding-left: 30px; */
-    cursor: pointer;
+  /* padding-left: 30px; */
+  cursor: pointer;
 }

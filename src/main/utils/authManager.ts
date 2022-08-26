@@ -1,7 +1,7 @@
-import JwtManager from './jwtManager';
-import IUser from '../interfaces/IUser';
-import ILoginRequest from '../interfaces/ILoginRequest';
-import axios from 'axios';
+import JwtManager from "./jwtManager";
+import IUser from "../interfaces/IUser";
+import ILoginRequest from "../interfaces/ILoginRequest";
+import axios from "axios";
 
 export interface IUserInfo {
   user: IUser;
@@ -9,36 +9,32 @@ export interface IUserInfo {
 }
 
 class AuthManager {
-
   static get token(): string | null {
     return JwtManager.accessToken;
   }
 
-  static async getUserFromToken(token:string): Promise<IUser> {
-
+  static async getUserFromToken(token: string): Promise<IUser> {
     let userInfo: IUser = null;
 
-      try {
-        let result = await (await axios.get(`validate?token=${token}`)).data;
-        userInfo = result;
-      } 
-      
-      catch (e) {
-        throw e;
-      }
+    try {
+      let result = await (await axios.get(`validate?token=${token}`)).data;
+      userInfo = result;
+    } catch (e) {
+      throw e;
+    }
 
     return userInfo;
-
   }
 
-  static async getTokenWithCredentials(payload: ILoginRequest): Promise<IUserInfo> {
+  static async getTokenWithCredentials(
+    payload: ILoginRequest
+  ): Promise<IUserInfo> {
+    const { data } = await axios.post("/login", payload);
+    const user = await AuthManager.getUserFromToken(data.token);
 
-    const { data }  = await axios.post('/login', payload);
-    const user  = await AuthManager.getUserFromToken(data.token);
-    
     const responseLogin: IUserInfo = {
       user: user,
-      token: data?.token
+      token: data?.token,
     };
 
     if (responseLogin?.token) {
@@ -46,30 +42,28 @@ class AuthManager {
     }
 
     return responseLogin;
-
   }
 
-  static async loginWithCredentials(credentials: ILoginRequest): Promise<IUserInfo> {
+  static async loginWithCredentials(
+    credentials: ILoginRequest
+  ): Promise<IUserInfo> {
     const response = await AuthManager.getTokenWithCredentials(credentials);
     // console.log(response)
     return response;
   }
 
   static async register(user: IUser): Promise<void> {
-
-    const { data }  = await axios.post('/sign-up', user);
+    const { data } = await axios.post("/sign-up", user);
 
     if (data?.token) {
       JwtManager.setAccessToken(data.token);
-      window.location.pathname='/';
+      window.location.pathname = "/";
     }
-
   }
 
   static logout() {
     JwtManager.clearToken();
   }
-
 }
 
 export default AuthManager;

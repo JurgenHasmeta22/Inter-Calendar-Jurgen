@@ -1,10 +1,5 @@
-const TestComponent = ()=>{
+const TestComponent = () => {
+  return <input></input>;
+};
 
-    return (
-        <input>
-        </input>
-    )
-
-}
-
-export default TestComponent
+export default TestComponent;

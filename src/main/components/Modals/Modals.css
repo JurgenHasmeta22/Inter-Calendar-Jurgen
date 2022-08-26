@@ -1,109 +1,109 @@
 .modal-wrapper {
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(39, 37, 37, 0.541);
-    display: grid;
-    backdrop-filter: blur(2px);
-    place-content: center;
-    position: fixed;
-    z-index: 20;
-    /* overflow-y: visible; */
-  }
-  
-  .modal-container {
-    display: grid;
-    background-color: #f1f9ff;
-    place-items: center;
-    border-radius: 1rem;
-    position: relative;
-    padding: 50px;
-    gap: 50px;
-    height: auto;
-    width: auto;
-  }
-  
-  .modal-header {
-    display: grid;
-    place-items: center;
-  }
-  
-  .close-icon {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
-  }
-  
-  .modal-body {
-    padding: 10px;
-    display: grid;
-    grid-template-rows: auto;
-    grid-gap: 10px;
-    height: auto;
-    /* overflow: scroll; */
-  }
-  
-  .modal-header h2 {
-    text-align: center;
-  }
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(39, 37, 37, 0.541);
+  display: grid;
+  backdrop-filter: blur(2px);
+  place-content: center;
+  position: fixed;
+  z-index: 20;
+  /* overflow-y: visible; */
+}
 
-  .modal-container label {
-    font-size: 16px;
-    font-weight: 600;
-  }
-  
-  .modal-body form {
-    gap: 10px;
-    display: grid;
-  }
-  
-  .modal-body form label {
-    display: grid;
-    gap: 0.5rem;
-  }
-  
-  .modal-body form label input {
-    padding: 0.4rem;
-    width: 260px;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  .modal-body form label input:focus {
-    border: none;
-    outline: 2px solid #50a2fd;
-  }
-  
-  .modal-body form button {
-    border: none;
-    padding: 1rem;
-    border-radius: 2rem;
-    background-color: #50a2fd;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .password-error,
-  .email-error {
-    color: red;
-  }
-  
-  .admin_button {
-    display: grid;
-    grid-auto-flow: column;
-    place-items: center;
-    gap: 1rem;
-    padding: unset;
-    position: relative;
-  }
-  
-  .admin_button img {
-    width: 45px;
-    border-radius: 50%;
-    height: 45px;
-    object-fit: cover;
-  }
-  
-  .transition {
-    transition: ease-in 0.5s;
-  }
+.modal-container {
+  display: grid;
+  background-color: #f1f9ff;
+  place-items: center;
+  border-radius: 1rem;
+  position: relative;
+  padding: 50px;
+  gap: 50px;
+  height: auto;
+  width: auto;
+}
+
+.modal-header {
+  display: grid;
+  place-items: center;
+}
+
+.close-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 10px;
+  display: grid;
+  grid-template-rows: auto;
+  grid-gap: 10px;
+  height: auto;
+  /* overflow: scroll; */
+}
+
+.modal-header h2 {
+  text-align: center;
+}
+
+.modal-container label {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.modal-body form {
+  gap: 10px;
+  display: grid;
+}
+
+.modal-body form label {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.modal-body form label input {
+  padding: 0.4rem;
+  width: 260px;
+  border: none;
+  border-radius: 5px;
+}
+
+.modal-body form label input:focus {
+  border: none;
+  outline: 2px solid #50a2fd;
+}
+
+.modal-body form button {
+  border: none;
+  padding: 1rem;
+  border-radius: 2rem;
+  background-color: #50a2fd;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.password-error,
+.email-error {
+  color: red;
+}
+
+.admin_button {
+  display: grid;
+  grid-auto-flow: column;
+  place-items: center;
+  gap: 1rem;
+  padding: unset;
+  position: relative;
+}
+
+.admin_button img {
+  width: 45px;
+  border-radius: 50%;
+  height: 45px;
+  object-fit: cover;
+}
+
+.transition {
+  transition: ease-in 0.5s;
+}
