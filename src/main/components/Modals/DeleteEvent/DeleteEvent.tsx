@@ -1,50 +1,36 @@
-// #region "Importing stuff"
-import { DateSelectArg, EventClickArg } from "@fullcalendar/react";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./DeleteEvent.css";
 import { toast } from "react-toastify";
 import { setUser } from "../../../../main/store/stores/user/user.store";
-import { RootState } from "../../../store/redux/rootState";
-
 import {
   setSelectedDoctor,
   setModal,
   setDoctors,
 } from "../../../store/stores/dashboard/dashboard.store";
-
-import userEvent from "@testing-library/user-event";
-import useGetUser from "../../../hooks/useGetUser";
 import { motion } from "framer-motion";
-// #endregion
 
 function DeleteModal({ eventClickNew }: any) {
-  // #region "Redux and other stats, also hooks"
   const dispatch = useDispatch();
-  const user = useGetUser();
-  const selectedDoctor = useSelector(
-    (state: RootState) => state.dashboard.selectedDoctor
-  );
-  // #endregion
 
-  // #region "Helpers functions and event listeners"
+  const handleChangeEvent = async () => {
+    dispatch(setModal("edit"));
+  };
+  const handleViewEvent = async () => {
+    dispatch(setModal("viewAppo"));
+  };
+
   const handleDeleteEvent = async () => {
     const appointementId = Number(eventClickNew.event._def.publicId);
-
-    // console.log(appointementId)
-
     const dataFromServer = await (
       await axios.delete(`appointements/${appointementId}`)
     ).data;
-
     if (!dataFromServer.error) {
       dispatch(setSelectedDoctor(dataFromServer.updatedDoctor));
       dispatch(setUser(dataFromServer.updatedUser));
       dispatch(setDoctors(dataFromServer.updatedDoctors));
-
       dispatch(setModal(""));
-
       toast.success(dataFromServer.msg);
     } else if (dataFromServer === undefined) {
       toast.error(
@@ -53,15 +39,6 @@ function DeleteModal({ eventClickNew }: any) {
       dispatch(setModal(""));
     }
   };
-
-  const handleChangeEvent = async () => {
-    dispatch(setModal("edit"));
-  };
-
-  const handleViewEvent = async () => {
-    dispatch(setModal("viewAppo"));
-  };
-  // #endregion
 
   return (
     <div
@@ -92,7 +69,6 @@ function DeleteModal({ eventClickNew }: any) {
 
             <h2>Do u want to delete this Event ?</h2>
           </header>
-
           <main className="modal-body delete-modal-body">
             <button
               onClick={() => {
@@ -102,21 +78,18 @@ function DeleteModal({ eventClickNew }: any) {
             >
               Cancel
             </button>
-
             <button
               onClick={handleDeleteEvent}
               className="general-button delete-btn"
             >
               Delete
             </button>
-
             <button
               onClick={handleViewEvent}
               className="general-button change-btn"
             >
               View Appointement Details
             </button>
-
             <button
               onClick={handleChangeEvent}
               className="general-button change-btn"

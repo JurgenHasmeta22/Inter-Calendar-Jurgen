@@ -1,12 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import "../ViewEvent/ViewEvent.css";
 import CloseIcon from "@mui/icons-material/Close";
-
 import useGetUser from "../../../hooks/useGetUser";
-import {
-  setAppointements,
-  setModal,
-} from "../../../store/stores/dashboard/dashboard.store";
+import { setModal } from "../../../store/stores/dashboard/dashboard.store";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import IAppointement from "../../../interfaces/IAppointement";
@@ -18,31 +14,13 @@ export default function EditEvent({ eventClickNew }: any) {
 
   const [appointementSpecific, setAppointementSpecific] =
     useState<IAppointement | null>(null);
-  const [patientUserName, setPatientUserName] = useState<string>(null);
-
   const selectedDoctor = useSelector(
     (state: RootState) => state.dashboard.selectedDoctor
   );
   const patients = useSelector((state: RootState) => state.dashboard.patients);
 
-  async function getAppointementFromServer() {
-    const id = Number(eventClickNew.event._def.publicId);
-
-    let result = await await axios.get(`/appointements/${id}`);
-    setAppointementSpecific(result.data);
-  }
-
-  useEffect(() => {
-    getAppointementFromServer();
-
-    return () => {
-      setAppointementSpecific(null);
-    };
-  }, []);
-
   function getPatientUserName() {
     let patientUserName;
-
     for (const patient of patients) {
       if (appointementSpecific?.user_id === null) {
         patientUserName = "null";
@@ -50,13 +28,20 @@ export default function EditEvent({ eventClickNew }: any) {
         patientUserName = patient.userName;
       }
     }
-
-    // setPatientUserName(patientUserName) dont do it with state updating etc beacause its easier this way
-
-    // console.log(patientUserName)
-
     return patientUserName;
   }
+
+  async function getAppointementFromServer() {
+    const id = Number(eventClickNew.event._def.publicId);
+    let result = await await axios.get(`/appointements/${id}`);
+    setAppointementSpecific(result.data);
+  }
+  useEffect(() => {
+    getAppointementFromServer();
+    return () => {
+      setAppointementSpecific(null);
+    };
+  }, []);
 
   return (
     <>

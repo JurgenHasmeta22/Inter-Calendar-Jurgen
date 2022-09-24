@@ -1,4 +1,3 @@
-// #region "Importing stuff"
 import AppNavigate from "./AppNavigate";
 import PrivateRoute from "./private-route";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
@@ -8,20 +7,14 @@ import ErrorPage from "../pages/error/ErrorPage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import UserProfilePage from "../pages/user/UserProfilePage";
 import "../app/App.css";
-// #endregion
 
 const App = () => {
   return (
     <BrowserRouter>
       <AppNavigate />
-
-      {/* <Modals /> */}
-
       <Routes>
         <Route index element={<Navigate replace to="/login" />} />
-
         <Route path="*" element={<ErrorPage />} />
-
         <Route
           path="/dashboard"
           element={
@@ -30,9 +23,6 @@ const App = () => {
             </PrivateRoute>
           }
         />
-
-        {/* <Route path="/testModal" element={<PrivateRoute><KeepMountedModal/></PrivateRoute>} /> */}
-
         <Route
           path="/profile/:username"
           element={
@@ -42,7 +32,6 @@ const App = () => {
           }
         />
         <Route path="/profile/:username/:tab" element={<UserProfilePage />} />
-
         <Route
           path="/login"
           element={

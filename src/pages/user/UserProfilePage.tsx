@@ -1,74 +1,24 @@
-// #region "Importing stuff"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ReactLoading from "react-loading";
 import { useNavigate, useParams } from "react-router-dom";
 import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon";
 import HeaderCommon from "../../main/components/Common/HeaderCommon/HeaderCommon";
 import useGetUser from "../../main/hooks/useGetUser";
 import "./UserProfilePage.css";
-
-import ITransaction from "../../main/interfaces/ITransaction";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../main/store/redux/rootState";
-import axios from "axios";
-import ReactPaginate from "react-paginate";
-import ICurrency from "../../main/interfaces/ICurrency";
-
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { motion } from "framer-motion";
-// #endregion
 
 export default function UserProfilePage({ validateUser }: any) {
-  // #region "state redux and other react hooks here"
-  const [tab, setTab] = useState<any>("home");
+  const navigate = useNavigate();
+  const params = useParams();
+  const user = useGetUser();
   const [transactionsNumber, setTransactionsNumber] = useState<any>(null);
-
   const [pageNumber, setPageNumber] = useState<any>(0);
   const [itemsPerPage, setItemsPerPage] = useState<any>(10);
 
-  const navigate = useNavigate();
-  const params = useParams();
-
-  const user = useGetUser();
-
-  const dispatch = useDispatch();
-  // #endregion
-
-  // #region "Pagination in frontend"
-
-  let pagesVisited = pageNumber * itemsPerPage;
   let pageCount;
-
   pageCount = Math.ceil(transactionsNumber / itemsPerPage);
 
-  function handleChangingPageNumber(selected: any) {
-    setPageNumber(selected);
-  }
-
-  const changePage = ({ selected }: any) => {
-    handleChangingPageNumber(selected);
-    navigate(`../profile/${user.userName}/transactions/page/${selected + 1}`);
-  };
-
-  // #endregion
-
-  // #region "Checking stuff from server wich came and loading"
-  if (user === null || user?.userName === undefined) {
-    return (
-      <div className="loading-wrapper">
-        <ReactLoading
-          type={"spin"}
-          color={"#000"}
-          height={200}
-          width={100}
-          className="loading"
-        />
-      </div>
-    );
-  }
-  // #endregion
-
-  // #region "Material UI data grid"
   const columns: GridColDef[] = [
     {
       field: "id",
@@ -139,7 +89,6 @@ export default function UserProfilePage({ validateUser }: any) {
       width: 200,
     },
   ];
-
   let rowsOld: any = [];
 
   //@ts-ignore
@@ -148,25 +97,41 @@ export default function UserProfilePage({ validateUser }: any) {
   } else {
     rowsOld = [...user?.acceptedAppointemets];
   }
-
   let newArray = [];
-
   for (const element of rowsOld) {
     const newObject = {
       ...element,
       userName: user?.userName,
     };
-
     newArray.push(newObject);
   }
-
   const rows = [...newArray];
-  // #endregion
+
+  function handleChangingPageNumber(selected: any) {
+    setPageNumber(selected);
+  }
+  const changePage = ({ selected }: any) => {
+    handleChangingPageNumber(selected);
+    navigate(`../profile/${user.userName}/transactions/page/${selected + 1}`);
+  };
+
+  if (user === null || user?.userName === undefined) {
+    return (
+      <div className="loading-wrapper">
+        <ReactLoading
+          type={"spin"}
+          color={"#000"}
+          height={200}
+          width={100}
+          className="loading"
+        />
+      </div>
+    );
+  }
 
   return (
     <main className="main-profile">
       <HeaderCommon />
-
       <motion.section
         initial={{ opacity: 0, x: -200 }}
         animate={{ opacity: 1, x: 0, transition: { delay: 0.5, duration: 1 } }}
@@ -178,7 +143,6 @@ export default function UserProfilePage({ validateUser }: any) {
               <span className="userName-span">{user?.userName}</span>
             </div>
           </div>
-
           <div className="container-tabs">
             <ul className="list-tabs">
               <li
@@ -187,24 +151,27 @@ export default function UserProfilePage({ validateUser }: any) {
                 }
                 onClick={() => {
                   navigate(`/profile/${user?.userName}/transactions`);
-                  //@ts-ignore
                 }}
               >
-                {user.isDoctor === true
-                  ? "Doctor Appointements"
-                  : "User Appointements"}
+                {
+                  //@ts-ignore
+                  user.isDoctor === true
+                    ? "Doctor Appointements"
+                    : "User Appointements"
+                }
               </li>
-
               <li
                 className={params.tab === "aboutUs" ? "clicked" : "about-tab"}
                 onClick={() => {
                   navigate(`/profile/${user?.userName}/about`);
-                  //@ts-ignore
                 }}
               >
-                {user.isDoctor === true
-                  ? "Doctor Information"
-                  : "User Information"}
+                {
+                  //@ts-ignore
+                  user.isDoctor === true
+                    ? "Doctor Information"
+                    : "User Information"
+                }
               </li>
             </ul>
 
@@ -309,19 +276,6 @@ export default function UserProfilePage({ validateUser }: any) {
                       </ul>
                     ) : null
                   }
-
-                  <ReactPaginate
-                    previousLabel={"< Previous"}
-                    nextLabel={"Next >"}
-                    pageCount={pageCount}
-                    onPageChange={changePage}
-                    containerClassName={"paginationBttns"}
-                    previousLinkClassName={"previousBttn"}
-                    nextLinkClassName={"nextBttn"}
-                    disabledClassName={"paginationDisabled"}
-                    activeClassName={"paginationActive"}
-                  />
-
                   <div className="data-grid-wrapper">
                     <DataGrid
                       rows={rows}

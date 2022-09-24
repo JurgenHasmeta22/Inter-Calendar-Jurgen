@@ -1,4 +1,3 @@
-// import "./style.css";
 import AppointementModal from "./AddEvent/AppointementModal";
 import { DateSelectArg, EventClickArg } from "@fullcalendar/react";
 import { useSelector } from "react-redux";
@@ -20,21 +19,16 @@ function UserModals({ eventClickNew, selectInfo }: Props) {
   switch (modal) {
     case "appoinment":
       return <AppointementModal selectInfo={selectInfo} />;
-
     case "deleteEvent":
       return <DeleteModal eventClickNew={eventClickNew} />;
-
     case "notification":
       return <NotificationEvent />;
-
     case "edit":
       return (
         <EditEvent eventClickNew={eventClickNew} selectInfo={selectInfo} />
       );
-
     case "viewAppo":
       return <ViewEvent eventClickNew={eventClickNew} />;
-
     default:
       return null;
   }

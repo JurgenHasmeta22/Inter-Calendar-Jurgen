@@ -7,17 +7,17 @@ import NotificationEvent from "./NotificationEvent/NotificationEvent";
 
 function Modals() {
   const modal = useSelector((state: RootState) => state.dashboard.modal);
-
+  
   switch (modal) {
     case "appoinment":
+      // @ts-ignore
       return <AppointementModal />;
-
     case "deleteEvent":
+      // @ts-ignore
       return <DeleteEvent />;
-
     case "notification":
+      // @ts-ignore
       return <NotificationEvent />;
-
     default:
       return null;
   }

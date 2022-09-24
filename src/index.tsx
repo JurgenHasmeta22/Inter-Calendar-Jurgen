@@ -20,11 +20,9 @@ initApp().then((appStore: any) => {
           draggable
           pauseOnHover
         />
-
         <App />
       </Provider>
     </React.StrictMode>,
-
     document.getElementById("root")
   );
 });

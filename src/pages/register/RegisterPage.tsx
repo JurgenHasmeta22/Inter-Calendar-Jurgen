@@ -1,33 +1,23 @@
-// #region "Importing stuff, components and also importing pieces of state etc"
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
 import "./RegisterPage.css";
 import { RootState } from "../../main/store/redux/rootState";
-import { navigateTo } from "../../main/store/stores/navigation/navigation.store";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../main/store/stores/user/user.store";
-import onRegister from "../../main/store/stores/user/register.store.on-register";
-
-import { useRadioGroup } from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
-
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-// import Link from '@mui/material/Link';
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import {
   setFirstName,
   setLastName,
@@ -40,23 +30,14 @@ import {
   setPasswordRegister,
   setAvatar,
 } from "../../main/store/stores/register/register.store";
-
-import IRegister from "../../main/interfaces/IRegister";
-import IUser from "../../main/interfaces/IUser";
-
 import AuthManager from "../../main/utils/authManager";
-
 import { motion } from "framer-motion";
-// #endregion
 
 const RegisterPage: FC = () => {
-  // #region "Using react hooks and other stuff"
   const navigate = useNavigate();
   const theme = createTheme();
   const dispatch = useDispatch();
-  // #endregion
 
-  // #region "Getting the state from redux toolkiit with using use Selector"
   const firstName = useSelector(
     (state: RootState) => state.registration.firstName
   );
@@ -77,39 +58,6 @@ const RegisterPage: FC = () => {
     (state: RootState) => state.registration.isDoctor
   );
   const avatar = useSelector((state: RootState) => state.registration.avatar);
-  // #endregion
-
-  // #region "Form Register event handler"
-  const registerData: any = {
-    userName,
-    email,
-    password,
-    firstName,
-    lastName,
-    address,
-    bio,
-    phone,
-    avatar,
-    isDoctor,
-  };
-
-  const handleRegisterUser = () => {
-    fetch("http://localhost:4000/sign-up", {
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify(registerData),
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        // dispatch(setUser(data))
-        // console.log(data)
-      });
-  };
-  // #endregion
 
   return (
     <>
@@ -120,7 +68,6 @@ const RegisterPage: FC = () => {
         <ThemeProvider theme={theme}>
           <Container component="main" maxWidth="xs">
             <CssBaseline />
-
             <Box
               sx={{
                 marginTop: 0,
@@ -132,17 +79,26 @@ const RegisterPage: FC = () => {
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                 <LockOutlinedIcon />
               </Avatar>
-
               <Typography component="h1" variant="h5">
                 Sign up
               </Typography>
-
               <Box
                 component="form"
                 noValidate
                 onSubmit={function (e: any) {
                   e.preventDefault();
-                  // handleRegisterUser()
+                  const registerData: any = {
+                    userName,
+                    email,
+                    password,
+                    firstName,
+                    lastName,
+                    address,
+                    bio,
+                    phone,
+                    avatar,
+                    isDoctor,
+                  };
                   dispatch(AuthManager.register(registerData));
                 }}
                 sx={{ mt: 8, mb: 8 }}
@@ -162,7 +118,6 @@ const RegisterPage: FC = () => {
                       }}
                     />
                   </Grid>
-
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
@@ -176,7 +131,6 @@ const RegisterPage: FC = () => {
                       }}
                     />
                   </Grid>
-
                   <Grid item xs={12}>
                     <TextField
                       required
@@ -190,7 +144,6 @@ const RegisterPage: FC = () => {
                       }}
                     />
                   </Grid>
-
                   <Grid item xs={12}>
                     <TextField
                       required
@@ -204,7 +157,6 @@ const RegisterPage: FC = () => {
                       }}
                     />
                   </Grid>
-
                   <Grid item xs={12}>
                     <TextField
                       required
@@ -218,7 +170,6 @@ const RegisterPage: FC = () => {
                       }}
                     />
                   </Grid>
-
                   <Grid item xs={12}>
                     <TextField
                       required
@@ -232,7 +183,6 @@ const RegisterPage: FC = () => {
                       }}
                     />
                   </Grid>
-
                   <Grid item xs={12}>
                     <TextField
                       required
@@ -247,7 +197,6 @@ const RegisterPage: FC = () => {
                       }}
                     />
                   </Grid>
-
                   <Grid item xs={12}>
                     <TextField
                       required
@@ -262,7 +211,6 @@ const RegisterPage: FC = () => {
                       }}
                     />
                   </Grid>
-
                   <Grid item xs={12}>
                     <FormControl>
                       <Grid item xs={12}>
@@ -292,7 +240,6 @@ const RegisterPage: FC = () => {
                       </Grid>
                     </FormControl>
                   </Grid>
-
                   <Grid item xs={12}>
                     <TextField
                       required
@@ -308,7 +255,6 @@ const RegisterPage: FC = () => {
                     />
                   </Grid>
                 </Grid>
-
                 <Button
                   type="submit"
                   fullWidth
@@ -317,7 +263,6 @@ const RegisterPage: FC = () => {
                 >
                   Sign Up
                 </Button>
-
                 <Grid container justifyContent="flex-end">
                   <Grid
                     item

@@ -1,27 +1,14 @@
-// #region "Importing stuff"
-import { useEffect, useState } from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
-
 import "./HeaderCommon.css";
-
-import { RootState } from "../../../store/redux/rootState";
 import onLogout from "../../../store/stores/user/login.store.on-logout";
-
 import useGetUser from "../../../hooks/useGetUser/index";
-import { useDispatch, useSelector } from "react-redux";
-import { navigateTo } from "../../../store/stores/navigation/navigation.store";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { TProduct } from "../../../interfaces/TProduct";
+import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
-// #endregion
 
 export default function HeaderCommon(this: any) {
-  // #region "React hooks"
   const user = useGetUser();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // #endregion
 
   return (
     <>
@@ -34,7 +21,6 @@ export default function HeaderCommon(this: any) {
             <Link to="/dashboard" onClick={() => {}}>
               Hospital Management System
             </Link>
-
             <ul className="list-nav">
               <div className="div-inside-li" onClick={() => {}}>
                 <NavLink to="/dashboard" className="special-uppercase">
@@ -43,7 +29,6 @@ export default function HeaderCommon(this: any) {
               </div>
             </ul>
           </div>
-
           <div className="header-group-2">
             {user.isDoctor ? (
               <li className="special-logo-thing">
@@ -58,7 +43,6 @@ export default function HeaderCommon(this: any) {
                 </span>
               </li>
             )}
-
             {user === null ? (
               <button
                 className="button-login-header"
@@ -82,10 +66,8 @@ export default function HeaderCommon(this: any) {
                       "https://villagesonmacarthur.com/wp-content/uploads/2020/12/Blank-Avatar.png"
                     }
                   />
-
                   {user.userName}
                 </li>
-
                 <div className="dropdown-content">
                   <button
                     className="log-out"
@@ -99,7 +81,6 @@ export default function HeaderCommon(this: any) {
                 </div>
               </div>
             )}
-
             <li className="login-section__info">
               <h3>Call for support +38344255255</h3>
             </li>
